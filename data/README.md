@@ -33,6 +33,9 @@ gate decision is in
 
 ## Reproducible commands
 
+For the shared Python 3.12 developer environment, locked tooling, CI checks,
+and secret-handling rules, see the repository [development guide](../DEVELOPMENT.md).
+
 Run from the repository root:
 
     python .\data\scripts\audit_public_cis_sources.py --repo-root .

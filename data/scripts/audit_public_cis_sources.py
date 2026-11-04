@@ -24,7 +24,6 @@ from statistics import median
 from typing import Any
 from zipfile import ZipFile
 
-
 MAIN_NS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 REL_NS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
 PACKAGE_REL_NS = "http://schemas.openxmlformats.org/package/2006/relationships"
@@ -51,15 +50,11 @@ SOURCES = (
     SourceSpec(
         source_id="mendeley_8wk5hjx7x2_v1",
         display_name="Mexican prospective CIS cohort",
-        raw_relative_path=Path(
-            "data/raw/mendeley_8wk5hjx7x2_v1/Data Base.xlsx"
-        ),
+        raw_relative_path=Path("data/raw/mendeley_8wk5hjx7x2_v1/Data Base.xlsx"),
         data_url="https://doi.org/10.17632/8wk5hjx7x2.1",
         publication_url="https://doi.org/10.1016/j.arcmed.2023.102843",
         license_name="CC BY 4.0",
-        expected_sha256=(
-            "070bfe92c78ef3b0bbd3169b61b8befa98c687b61322298b9143d540ae3c00d7"
-        ),
+        expected_sha256=("070bfe92c78ef3b0bbd3169b61b8befa98c687b61322298b9143d540ae3c00d7"),
         header_row=4,
         identifier_column="Patient",
         outcome_column="group",
@@ -78,15 +73,11 @@ SOURCES = (
     SourceSpec(
         source_id="mendeley_yjfydt34rs_v1",
         display_name="Lithuanian retrospective CIS cohort",
-        raw_relative_path=Path(
-            "data/raw/mendeley_yjfydt34rs_v1/Database.xlsx"
-        ),
+        raw_relative_path=Path("data/raw/mendeley_yjfydt34rs_v1/Database.xlsx"),
         data_url="https://doi.org/10.17632/yjfydt34rs.1",
         publication_url="https://doi.org/10.3390/medicina58091178",
         license_name="CC BY 4.0",
-        expected_sha256=(
-            "0e9e56026c9de83c38edbe934cd93a4e44cd845507a0e844a4b3d1926e1e8880"
-        ),
+        expected_sha256=("0e9e56026c9de83c38edbe934cd93a4e44cd845507a0e844a4b3d1926e1e8880"),
         header_row=1,
         identifier_column="Nr",
         outcome_column="MS",
@@ -137,9 +128,7 @@ def load_first_worksheet(path: Path) -> tuple[str, list[tuple[int, dict[str, Any
         shared_strings: list[str] = []
         if "xl/sharedStrings.xml" in archive.namelist():
             root = ET.fromstring(archive.read("xl/sharedStrings.xml"))
-            shared_strings = [
-                shared_string_text(item) for item in root.findall("m:si", NS)
-            ]
+            shared_strings = [shared_string_text(item) for item in root.findall("m:si", NS)]
 
         workbook = ET.fromstring(archive.read("xl/workbook.xml"))
         relationships = ET.fromstring(archive.read("xl/_rels/workbook.xml.rels"))
@@ -166,9 +155,7 @@ def load_first_worksheet(path: Path) -> tuple[str, list[tuple[int, dict[str, Any
                 kind = cell.attrib.get("t")
                 value_node = cell.find("m:v", NS)
                 if kind == "inlineStr":
-                    value: Any = "".join(
-                        text.text or "" for text in cell.findall(".//m:t", NS)
-                    )
+                    value: Any = "".join(text.text or "" for text in cell.findall(".//m:t", NS))
                 elif value_node is None:
                     value = None
                 elif kind == "s":
@@ -188,9 +175,7 @@ def unique_header_fields(header: dict[str, Any]) -> dict[str, str]:
     result: dict[str, str] = {}
     for column, value in header.items():
         raw_name = normalized_value(value) or f"unnamed_{column}"
-        result[column] = (
-            raw_name if counts[raw_name] == 1 else f"{raw_name} [{column}]"
-        )
+        result[column] = raw_name if counts[raw_name] == 1 else f"{raw_name} [{column}]"
     return result
 
 
@@ -224,9 +209,7 @@ def raw_records(
         None,
     )
     if id_column is None:
-        raise ValueError(
-            f"Identifier {identifier_column!r} not found in source header"
-        )
+        raise ValueError(f"Identifier {identifier_column!r} not found in source header")
 
     records: list[dict[str, Any]] = []
     for row_number, cells in rows:
@@ -247,19 +230,13 @@ def column_summary(records: list[dict[str, Any]], field_name: str) -> dict[str, 
         "field_name": field_name,
         "records": len(values),
         "missing_count": len(values) - len(present),
-        "missing_pct": round(
-            (len(values) - len(present)) / len(values) * 100 if values else 0, 3
-        ),
+        "missing_pct": round((len(values) - len(present)) / len(values) * 100 if values else 0, 3),
         "distinct_non_missing": len(unique_values),
-        "value_type_hint": "numeric"
-        if numeric_values(present)
-        else "categorical_or_mixed",
+        "value_type_hint": "numeric" if numeric_values(present) else "categorical_or_mixed",
     }
     values_as_counts = Counter(normalized_value(value) for value in present)
     if len(values_as_counts) <= 15:
-        result["value_counts"] = dict(
-            sorted(values_as_counts.items(), key=lambda item: item[0])
-        )
+        result["value_counts"] = dict(sorted(values_as_counts.items(), key=lambda item: item[0]))
     numbers = numeric_values(present)
     if numbers:
         result["numeric_min"] = min(numbers)
@@ -268,12 +245,9 @@ def column_summary(records: list[dict[str, Any]], field_name: str) -> dict[str, 
     return result
 
 
-def exact_duplicate_count(
-    records: list[dict[str, Any]], field_names: list[str]
-) -> int:
+def exact_duplicate_count(records: list[dict[str, Any]], field_names: list[str]) -> int:
     fingerprints = [
-        tuple(normalized_value(record.get(field)) for field in field_names)
-        for record in records
+        tuple(normalized_value(record.get(field)) for field in field_names) for record in records
     ]
     return len(fingerprints) - len(set(fingerprints))
 
@@ -299,13 +273,9 @@ def audit_source(repo_root: Path, spec: SourceSpec) -> dict[str, Any]:
     fields = list(headers.values())
     identifier_field = find_field(records, spec.identifier_column)
     outcome_field = find_field(records, spec.outcome_column)
-    identifiers = [
-        normalized_value(record.get(identifier_field)) for record in records
-    ]
+    identifiers = [normalized_value(record.get(identifier_field)) for record in records]
     duplicate_identifier_count = len(identifiers) - len(set(identifiers))
-    outcome_counts = Counter(
-        normalized_value(record.get(outcome_field)) for record in records
-    )
+    outcome_counts = Counter(normalized_value(record.get(outcome_field)) for record in records)
     column_summaries = [column_summary(records, field) for field in fields]
 
     date_like_fields = [
@@ -322,8 +292,7 @@ def audit_source(repo_root: Path, spec: SourceSpec) -> dict[str, Any]:
         "license": spec.license_name,
         "official_sha256": spec.expected_sha256,
         "observed_sha256": sha256_file(raw_path),
-        "hash_matches_official": sha256_file(raw_path).lower()
-        == spec.expected_sha256.lower(),
+        "hash_matches_official": sha256_file(raw_path).lower() == spec.expected_sha256.lower(),
         "file_size_bytes": raw_path.stat().st_size,
         "worksheet": sheet_name,
         "header_row": spec.header_row,
@@ -333,11 +302,7 @@ def audit_source(repo_root: Path, spec: SourceSpec) -> dict[str, Any]:
             {
                 "excel_column": column,
                 "raw_source_header": normalized_value(
-                    next(
-                        cells[column]
-                        for row, cells in rows
-                        if row == spec.header_row
-                    )
+                    next(cells[column] for row, cells in rows if row == spec.header_row)
                 ),
                 "audit_field_name": field_name,
             }
@@ -351,9 +316,7 @@ def audit_source(repo_root: Path, spec: SourceSpec) -> dict[str, Any]:
         },
         "outcome": {
             "source_column": outcome_field,
-            "raw_value_counts": dict(
-                sorted(outcome_counts.items(), key=lambda item: item[0])
-            ),
+            "raw_value_counts": dict(sorted(outcome_counts.items(), key=lambda item: item[0])),
             "interpretation": spec.outcome_interpretation,
         },
         "candidate_temporal_fields": date_like_fields,
@@ -407,8 +370,7 @@ def write_cohort_size_svg(audits: list[dict[str, Any]], output_path: Path) -> No
         y = chart_top + index * (bar_height + gap)
         bar_width = chart_width * value / max_value
         bars.append(
-            f'<text x="32" y="{y + 25}" font-size="16" fill="#1e293b">'
-            f"{escape(label)}</text>"
+            f'<text x="32" y="{y + 25}" font-size="16" fill="#1e293b">{escape(label)}</text>'
         )
         bars.append(
             f'<rect x="{chart_left}" y="{y}" width="{bar_width:.1f}" '
@@ -424,7 +386,7 @@ def write_cohort_size_svg(audits: list[dict[str, Any]], output_path: Path) -> No
   <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="32" y="34" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Public candidate rows remain far below the 2,000-patient aspiration</text>
   <text x="32" y="58" font-family="Arial, sans-serif" font-size="13" fill="#475569">Source: official Mendeley workbooks downloaded 2026-11-04. Counts are raw rows, not approved longitudinal model cohorts.</text>
-  {''.join(bars)}
+  {"".join(bars)}
   <line x1="{chart_left}" y1="{chart_top + chart_height + 16}" x2="{chart_left + chart_width}" y2="{chart_top + chart_height + 16}" stroke="#94a3b8" stroke-width="1"/>
   <text x="{chart_left}" y="{chart_top + chart_height + 40}" font-family="Arial, sans-serif" font-size="13" fill="#475569">Patient rows (count)</text>
 </svg>
@@ -495,11 +457,7 @@ def main() -> int:
     )
     args = parser.parse_args()
     repo_root = args.repo_root.resolve()
-    output_dir = (
-        args.output_dir.resolve()
-        if args.output_dir
-        else repo_root / "data" / "audit"
-    )
+    output_dir = args.output_dir.resolve() if args.output_dir else repo_root / "data" / "audit"
     audits = run(repo_root, output_dir)
     for audit in audits:
         print(

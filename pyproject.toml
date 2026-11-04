@@ -1,0 +1,23 @@
+[project]
+name = "neuropredict-ms"
+version = "0.1.0"
+description = "Research and educational project for longitudinal CIS-to-MS prediction."
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["data/tests"]
+python_files = ["test_*.py"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["data/scripts", "data/tests"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

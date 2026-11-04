@@ -17,7 +17,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-
 PATIENT_REQUIRED = {"patient_id"}
 VISIT_REQUIRED = {"patient_id", "visit_id", "visit_date"}
 OUTCOME_REQUIRED = {
@@ -144,9 +143,7 @@ def validate(
                 "message": "visit_id values must be unique.",
             }
         )
-    orphan_visits = [
-        row for row in visits if row["patient_id"].strip() not in patient_id_set
-    ]
+    orphan_visits = [row for row in visits if row["patient_id"].strip() not in patient_id_set]
     if orphan_visits:
         issues.append(
             {
@@ -194,9 +191,8 @@ def validate(
             }
         )
 
-    duplicate_outcome_patients = (
-        len(outcomes)
-        - len(set(row["patient_id"].strip() for row in outcomes))
+    duplicate_outcome_patients = len(outcomes) - len(
+        set(row["patient_id"].strip() for row in outcomes)
     )
     if duplicate_outcome_patients:
         issues.append(
@@ -212,9 +208,7 @@ def validate(
                 ),
             }
         )
-    orphan_outcomes = [
-        row for row in outcomes if row["patient_id"].strip() not in patient_id_set
-    ]
+    orphan_outcomes = [row for row in outcomes if row["patient_id"].strip() not in patient_id_set]
     if orphan_outcomes:
         issues.append(
             {
@@ -235,8 +229,7 @@ def validate(
                 "check": "patient_outcome_coverage",
                 "count": len(patients_without_outcomes),
                 "message": (
-                    "Every patient in a model-ready cohort requires one "
-                    "documented outcome row."
+                    "Every patient in a model-ready cohort requires one documented outcome row."
                 ),
             }
         )
@@ -256,9 +249,7 @@ def validate(
                     "severity": "critical",
                     "table": "outcomes",
                     "check": "allowed_conversion_status",
-                    "message": (
-                        "conversion_status must be one of 0, 1, unknown, or censored."
-                    ),
+                    "message": ("conversion_status must be one of 0, 1, unknown, or censored."),
                 }
             )
             continue
@@ -285,9 +276,11 @@ def validate(
                 continue
             try:
                 conversion_date = parse_date(conversion_value)
-                if conversion_date <= index_date or (
-                    conversion_date - index_date
-                ).days > required_follow_up_days or conversion_date > last_follow_up:
+                if (
+                    conversion_date <= index_date
+                    or (conversion_date - index_date).days > required_follow_up_days
+                    or conversion_date > last_follow_up
+                ):
                     invalid_conversion_windows += 1
             except (TypeError, ValueError):
                 invalid_conversion_windows += 1
@@ -312,8 +305,7 @@ def validate(
                 "check": "diagnostic_criteria_version",
                 "count": missing_diagnostic_criteria,
                 "message": (
-                    "Class 0 and Class 1 outcomes require a documented "
-                    "diagnostic criteria version."
+                    "Class 0 and Class 1 outcomes require a documented diagnostic criteria version."
                 ),
             }
         )
@@ -325,8 +317,7 @@ def validate(
                 "check": "outcome_certainty",
                 "count": missing_outcome_certainty,
                 "message": (
-                    "Class 0 and Class 1 outcomes require a nonblank outcome "
-                    "certainty assessment."
+                    "Class 0 and Class 1 outcomes require a nonblank outcome certainty assessment."
                 ),
             }
         )
@@ -368,8 +359,7 @@ def validate(
             "patients_with_dated_visits": len(visit_dates),
             "outcome_rows": len(outcomes),
             "outcome_status_counts": dict(sorted(status_counts.items())),
-            "unresolved_or_censored_outcomes": status_counts["unknown"]
-            + status_counts["censored"],
+            "unresolved_or_censored_outcomes": status_counts["unknown"] + status_counts["censored"],
         },
     }
 

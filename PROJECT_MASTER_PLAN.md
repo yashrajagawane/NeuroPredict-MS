@@ -21,14 +21,14 @@
 | BLOCKED | 32 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
 | NOT STARTED | 20 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **16.8% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 26 - Development Environment and Engineering Standards (IN PROGRESS, 50%) | Phase 01 scope is project-owner approved and documented. Phase 02 remains BLOCKED on cohort and clinical evidence; continue independent eligible work. |
+| Overall progress | **17.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 26 - Development Environment and Engineering Standards (IN PROGRESS, 90%) | Developer environment and local checks are implemented; verify the Python 3.12 GitHub CI run after push before closing the phase. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Complete Phase 26 environment and engineering standards; separately pursue a governed longitudinal-cohort feasibility path for Phase 02. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Verify the Python 3.12 CI run for Phase 26, then identify any remaining eligible work. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 26 50%, Phase 27 50%. Thus `(9 x 100 + 50 + 25 + 50 + 50) / 64 = 16.796875%`, displayed as **16.8%**. Phase 02's 50% records the confirmed research objective and label principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 26 90%, and Phase 27 50%. Thus `(9 x 100 + 50 + 25 + 90 + 50) / 64 = 17.421875%`, displayed as **17.4%**. Phase 02's 50% records the confirmed research objective and label principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -72,7 +72,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 23 | Sample Size, Event Count, and Statistical Feasibility | BLOCKED | 0 | Critical | 10, 14, 15, 19 | Eligible patient/event/follow-up counts unknown. | Public cohort cannot establish usable class counts. |
 | 24 | Dataset Freeze and Reproducibility | BLOCKED | 0 | High | 08, 13-23 | No approved modeling cohort to version/freeze. | Current source provenance and manifests cover interim sources only. |
 | 25 | Model Evaluation Protocol and Patient-Level Splitting | BLOCKED | 0 | Critical | 02, 14, 19, 23-24 | Cannot make valid future-conversion partitions without cohort/labels. | Guarded splitter refuses current data; no manifest exists. |
-| 26 | Development Environment and Engineering Standards | IN PROGRESS | 50 | Medium | 00 | Final package lock, CI, and environments not established. | Approved stack is recorded; no dependencies installed or scaffolded. |
+| 26 | Development Environment and Engineering Standards | IN PROGRESS | 90 | Medium | 00 | Python 3.12 CI run pending push verification. | Python/Node versions, locked developer tools, secrets template, Ruff standards, and CI workflow; 13 tests pass locally under Python 3.13. |
 | 27 | Data Contracts and Automated Pipeline Tests | IN PROGRESS | 50 | High | 12, 14, 22, 25-26 | Future approved cohort and additional tests remain. | Current contract, guards, and 13-test evidence in status log. |
 | 28 | Classical Baseline Model Design | BLOCKED | 0 | High | 17, 23, 25 | Modeling target/features/sample size unresolved. | Baseline candidates in model specification only. |
 | 29 | Baseline Model Training | BLOCKED | 0 | Critical | 21, 25, 27-28 | No valid labeled training cohort. | No training evidence. |
@@ -359,12 +359,12 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 26 - Development Environment and Engineering Standards
 
-- **Purpose/outcome:** Establish reproducible approved stack and coding practices. **Status:** IN PROGRESS (50%). **Priority:** Medium. **Dependencies:** 00. **Effort:** 2-5 days.
-- **Tasks:** [x] Approve React/TS/Vite, FastAPI/SQLAlchemy, Supabase, TensorFlow/Keras, pytest. [ ] Select package managers and compatible versions. [ ] Create environment/lock/config/secrets template only when implementation is authorized. [ ] Add formatting, linting, CI, logging standards.
+- **Purpose/outcome:** Establish reproducible approved stack and coding practices. **Status:** IN PROGRESS (90%). **Priority:** Medium. **Dependencies:** 00. **Effort:** 2-5 days.
+- **Tasks:** [x] Approve React/TS/Vite, FastAPI/SQLAlchemy, Supabase, TensorFlow/Keras, pytest. [x] Select package managers and compatible runtime/tool versions (Python 3.12.16, Node 24.22.2, venv/pip, npm). [x] Create environment/lock/config/secrets template. [ ] Verify formatting, linting, CI, and logging standards under Python 3.12 after push.
 - **Tools/inputs:** Approved stack decision, VS Code, Python 3.12, GitHub.
 - **Deliverables:** Reproducible environment specification, developer guide, CI checks.
-- **Acceptance/testing:** Clean setup reproduces checks; no secrets in repo; dependency lock is platform-compatible.
-- **Risks:** Framework/GPU version mismatch. **Evidence:** approved decision in conversation; no environment installed. Remaining work starts after roadmap authorization.
+- **Acceptance/testing:** Developer-tool lock installed in an isolated Python 3.13 environment; 13/13 `unittest` and 13/13 pytest checks pass; Ruff lint and format checks pass; diff check passes. `.env.example` contains only blank variable names/placeholders and is the only dotenv file eligible for Git. CI is configured for Python 3.12; its first run remains pending push, so acceptance is not yet closed.
+- **Risks:** Framework/GPU version mismatch. ML and API runtime dependencies are intentionally deferred to the phases that implement those components; they are not installed by this shared developer setup. The original workbooks remain local-only and relevant CI tests skip when those files are absent.
 
 ### PHASE 27 - Data Contracts and Automated Pipeline Tests
 
@@ -710,7 +710,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | B-04 | 23, 25, 28-43 | Eligible sample size and event count unknown; 2,000 is aspirational and not evidence of adequate power. | Assess actual eligible patients/events and uncertainty before choosing model complexity/splits. | Biostatistician / ML lead | OPEN - HIGH |
 | B-05 | 08, 44-59 | Supabase/cloud hosting suitability for eventual health data is not approved. | Data-governance review of residency, access, retention, security, RLS and institutional policy. | PI / security lead / DPO | OPEN - HIGH |
 | B-06 | 03, 08, 45-54 | Mandatory doctor-facing app and six modules are project-owner approved. Detailed clinical workflow, role policy, and any institutionally required review remain to be established before real-data use. | Complete user/role workflow review and obtain applicable institutional approvals before handling real clinical data. | Project team / institutional authority | OPEN - MEDIUM |
-| B-07 | 26-27 | Approved stack is decided, but environment/package versions/CI have not been implemented. | Authorize environment setup after roadmap priorities/data gates; pin versions compatible with Python 3.12. | Engineering lead | OPEN - MEDIUM |
+| B-07 | 26-27 | Approved stack was decided; shared developer environment and CI were pending. | Select pinned tooling compatible with Python 3.12 and verify the CI workflow. | Engineering lead | OPEN - Phase 26 environment artifacts and local checks completed; Python 3.12 CI run pending push. |
 
 ## E. Milestone register
 
@@ -738,6 +738,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 44-63 | No execution evidence -> NOT STARTED | 0% credited. | No backend, frontend, database migrations, model, deployment, or operations artifacts found. | Application, model, governance and data prerequisites as listed. |
 | 2026-11-04 | 02 | IN PROGRESS -> BLOCKED | Remains at 50%; the task definition and label handling principles are documented, but no operational target is approved. | User-confirmed future CIS-to-MS objective; public-source label audit and longitudinal data contract reviewed. | Obtain approved longitudinal data with dated visits, conversion/follow-up dates, and clinician/supervisor adjudication; do not choose a horizon from the current public workbooks. |
 | 2026-11-04 | 01 | IN PROGRESS 75% -> COMPLETE 100% | Owner-approved scope is reconciled and six-module acceptance criteria are documented. | User explicitly approved both deliverables and all six app modules; aligned project documents and acceptance criteria. No supervisor approval is claimed. | Any institutionally required supervisor review for clinical data use is a separate governance item. |
+| 2026-11-04 | 26 | IN PROGRESS 50% -> IN PROGRESS 90% | Overall score 16.8% -> 17.4%; remaining acceptance check is 3.12 CI. | Added Python 3.12/Node 24 runtime pins, locked developer tools, isolated environment guide, secret template/ignore rules, Ruff standards, formatting cleanup, and read-only GitHub CI. `unittest` 13/13, pytest 13/13, Ruff check and format check passed locally on Python 3.13. Raw-workbook tests explicitly skip in CI when local-only source files are absent. | Python 3.12 is not installed locally; verify the 3.12 CI run after push. ML/API dependency locks are deferred to their implementation phases; no model or app dependencies are installed. |
 
 ## How to maintain this plan
 

@@ -2,21 +2,23 @@
 
 from __future__ import annotations
 
-import csv
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "data" / "scripts"))
 
-from audit_public_cis_sources import audit_source, run, SOURCES  # noqa: E402
+from audit_public_cis_sources import SOURCES, audit_source, run  # noqa: E402
 from validate_longitudinal_cis_contract import validate  # noqa: E402
 
 
 class PublicSourceAuditTests(unittest.TestCase):
+    @unittest.skipUnless(
+        all((REPO_ROOT / source.raw_relative_path).is_file() for source in SOURCES),
+        "requires the local-only source workbooks, which are intentionally not committed",
+    )
     def test_official_workbooks_match_documented_hashes_and_counts(self) -> None:
         mexican = audit_source(REPO_ROOT, SOURCES[0])
         lithuanian = audit_source(REPO_ROOT, SOURCES[1])
@@ -32,6 +34,10 @@ class PublicSourceAuditTests(unittest.TestCase):
         self.assertEqual(lithuanian["outcome"]["raw_value_counts"], {"0": 89, "1": 49})
         self.assertFalse(lithuanian["has_visit_dates"])
 
+    @unittest.skipUnless(
+        all((REPO_ROOT / source.raw_relative_path).is_file() for source in SOURCES),
+        "requires the local-only source workbooks, which are intentionally not committed",
+    )
     def test_audit_outputs_state_no_go_without_fabricating_tables(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             outputs = Path(temp_dir)

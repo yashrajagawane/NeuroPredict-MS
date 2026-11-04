@@ -29,7 +29,9 @@ def main() -> int:
         "feature_timing_reviewed": args.feature_timing_reviewed,
     }
     result = assess_model_readiness(
-        read_csv(args.patients), read_csv(args.visits), read_csv(args.outcomes),
+        read_csv(args.patients),
+        read_csv(args.visits),
+        read_csv(args.outcomes),
         approvals=approvals,
     )
     rendered = json.dumps(result, indent=2)

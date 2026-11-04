@@ -7,3 +7,17 @@ data/secure/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Frontend dependencies and build output
+node_modules/
+dist/

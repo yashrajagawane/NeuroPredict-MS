@@ -20,10 +20,19 @@ def main() -> int:
     for table in ("patients", "visits", "outcomes"):
         parser.add_argument(f"--{table}", required=True, type=Path)
     parser.add_argument("--feature", action="append", required=True, dest="features")
-    for approval in ("source-access-approved", "baseline-cis-confirmed", "label-adjudication-approved", "feature-timing-reviewed"):
+    for approval in (
+        "source-access-approved",
+        "baseline-cis-confirmed",
+        "label-adjudication-approved",
+        "feature-timing-reviewed",
+    ):
         parser.add_argument(f"--{approval}", action="store_true")
     args = parser.parse_args()
-    patients, visits, outcomes = (read_csv(args.patients), read_csv(args.visits), read_csv(args.outcomes))
+    patients, visits, outcomes = (
+        read_csv(args.patients),
+        read_csv(args.visits),
+        read_csv(args.outcomes),
+    )
     approvals = {
         "source_access_approved": args.source_access_approved,
         "baseline_cis_confirmed": args.baseline_cis_confirmed,
@@ -33,7 +42,16 @@ def main() -> int:
     assessment = assess_model_readiness(patients, visits, outcomes, approvals=approvals)
     require_model_ready(assessment)
     sequences = build_patient_sequences(assessment, visits, outcomes, args.features)
-    print(json.dumps({"patient_sequences": len(sequences), "feature_columns": args.features, "sequences_written": False}, indent=2))
+    print(
+        json.dumps(
+            {
+                "patient_sequences": len(sequences),
+                "feature_columns": args.features,
+                "sequences_written": False,
+            },
+            indent=2,
+        )
+    )
     return 0
 
 
