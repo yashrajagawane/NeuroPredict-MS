@@ -1,42 +1,39 @@
 # 11 — Privacy, Safety, and Ethics
 
-## 1. Intended use
+## 1. Intended use and user roles
 
-This project is an educational/research prototype. It is not a medical device, diagnostic service, or substitute for clinical assessment.
+NeuroPredict-MS is a research and educational project investigating future CIS-to-MS conversion and providing a doctor-facing research application. It is not a medical device, clinical diagnostic service, treatment recommender, or substitute for professional judgment. The “doctor” application role is a product requirement, not evidence of clinician endorsement or authority to use patient records.
 
-## 2. Required user-facing disclaimer
+## 2. Required user-facing limitation
 
-Display this near each result:
+Display with every actual prediction:
 
 > Research prediction only — not a medical diagnosis. Do not use this result to make treatment decisions. Consult a qualified healthcare professional for medical assessment.
 
-## 3. Data governance
+Also show that the target is future CIS-to-MS conversion, the model version, prediction timestamp, and known limitations. Do not display a probability as personal risk unless calibration, threshold behavior, and display policy have been reviewed. Before a valid model is available, show an unavailable state and no prediction.
 
-- Confirm dataset source, license, permitted use, and institutional requirements before processing.
-- Use de-identified or properly pseudonymized records.
-- Do not commit patient-level files to GitHub or public repositories.
-- Do not upload sensitive patient data to external AI agents or cloud tools unless explicitly permitted by the data owner and institutional policy.
-- Keep data out of screenshots, logs, prompts, and issue trackers.
-- Store only data necessary for the research objective.
-- Restrict access and protect data at rest and in transit if the application is exposed beyond the local machine.
+## 3. Data governance and privacy
 
-## 4. Model safety
+- Verify source, license, permitted use, ethics/consent basis, institution policy, and data-use agreement before acquiring or processing restricted clinical data.
+- Use pseudonymous IDs and data minimization. Never place direct identifiers in development/test fixtures, logs, Git, screenshots, prompts, or issue trackers.
+- Keep raw, linkage-key, and processed/model layers separate with approved access control. Hashes and manifests must not reveal restricted patient information.
+- Do not upload patient records, credentials, tokens, or secrets to external AI tools or cloud services unless explicitly permitted by the data owner and institution.
+- Require authenticated sessions, server-side role authorization, patient-scoped access, Supabase PostgreSQL RLS, encryption in transit, secure credential storage, and approved retention/deletion/audit procedures before real-record use.
+- Never expose Supabase service-role keys or database credentials in the frontend bundle.
+- Prediction history must record only real system requests/results with approved metadata; unavailable/failed requests cannot contain an invented class.
 
-- Model outputs must be described as experimental estimates.
-- No treatment recommendations.
-- Do not equate model confidence with clinical certainty.
-- Do not show a probability as personal risk unless calibrated and appropriately validated.
-- Explain limitations and possible false positives/false negatives.
-- Any real-world use would require appropriate clinical, ethical, legal, and regulatory review.
+## 4. Model and application safety
+
+- No training or prediction from the existing public interim data for the future-conversion objective.
+- Do not assign unknown or insufficient follow-up as Class 0; exclude post-index information from inputs.
+- Do not equate model confidence with clinical certainty, recommend treatment, or claim prospective validation, fairness, or clinical utility without evidence.
+- Failure, insufficient history, absent model, schema incompatibility, or access denial must fail closed and clearly state that prediction is unavailable.
+- Any real-world use requires separate clinical, ethical, legal, security, and regulatory review.
 
 ## 5. Bias and generalization
 
-Where dataset size and permissions allow, assess whether performance differs across clinically relevant subgroups and care settings. Report sample sizes and uncertainty; do not overinterpret small groups. A lack of subgroup evidence is not proof of fairness.
+When permitted data and adequate subgroup counts exist, report cohort composition and uncertainty for relevant subgroups and centres. Small or absent groups do not support fairness claims. Cross-cohort differences in population, measurement, and diagnostic criteria must be discussed.
 
-## 6. External AI agents
+## 6. External tools and synthetic data
 
-Before sharing a repository or data with Codex/Claude/another agent:
-- Share this documentation pack and non-sensitive code.
-- Keep real patient data, API secrets, credentials, and private identifiers out of the prompt/workspace unless approved.
-- Use synthetic/demo examples for UI and API development.
-- Do not ask an agent to invent missing labels, clinical facts, or validation results.
+Share only non-sensitive code and documentation with external agents/services unless explicit authorization permits more. Synthetic data may support software tests only, must be labelled unmistakably, and must never be presented as genuine patients, clinical predictions, or clinical performance.

@@ -1,95 +1,58 @@
 # 10 — Testing and Evaluation Plan
 
-## 1. Data and preprocessing tests
+This is a plan, not evidence that application or model tests have been implemented. Use `pytest` for Python data/API/ML tests. The frontend test tools will be selected within the approved React stack before UI implementation; do not add a different application framework.
 
-- Required columns are present and correctly typed.
-- Patient IDs are pseudonymous and non-empty.
-- Visit dates parse and sort chronologically.
-- Duplicate patient/visit records are detected.
-- Missingness is reported and handled according to documented rules.
-- Numeric scaling handles constant or invalid columns safely.
-- Preprocessing fit uses training data only.
-- No patient ID appears in more than one partition.
-- Sequence shape matches `(batch, time_steps, features)` for model input.
-- A patient's visits remain in the correct order.
-- Insufficient visits produce a clear outcome rather than a fabricated sequence.
+## 1. Mandatory application module test scenarios
 
-## 2. Model tests
-
-- Model input and output shapes are checked.
-- Binary label mapping is consistent.
-- Training uses only training partition.
-- Hyperparameter selection/early stopping uses validation partition.
-- Final test partition is not used for tuning.
-- Model save/load produces consistent predictions.
-- Baselines and hybrid model use comparable partitions.
-- Random seed/configuration is saved.
-
-## 3. Minimum software test cases
-
-| Test case | Expected result |
+| Module | Required scenarios and expected result |
 |---|---|
-| Valid patient data | Accepted and stored/processed |
-| Missing required field | Clear validation error |
-| Invalid visit date | Rejected with useful error |
-| Duplicate visit | Handled using documented duplicate rule |
-| Visits out of input order | Retrieved/processed chronologically |
-| Unknown patient ID | Not-found response |
-| Too few visits | Clear “insufficient data” response |
-| No trained model artifact | Prediction unavailable response; no fabricated class |
-| Compatible saved model | Prediction returned with version and disclaimer |
-| Database unavailable | Safe error response |
+| Doctor login/authentication | Valid sign-in establishes an authorized session; invalid credentials fail safely; logout/revoked/expired sessions cannot call protected APIs; unauthorized roles and cross-patient access are denied. |
+| Patient registration/management | Unique pseudonymous ID is assigned/validated; duplicates and prohibited direct identifiers are rejected; authorized search/view/update works; unauthorized CRUD is denied and auditable. |
+| Patient visit history | Visits link to the correct patient; missing patient and duplicate visit are rejected or handled by an approved rule; out-of-order input is returned chronologically; repeated dates follow documented ordering behavior. |
+| Clinical data management | Only approved fields can be submitted; invalid type/range/category/unit/date is rejected; missing/unassessed is distinct from zero; measurement time and unit remain traceable. |
+| Research prediction | No model, incompatible schema/artifact, insufficient pre-index history, post-index measurement, invalid input, service failure, or denied caller returns an explicit unavailable/error state with no class; a compatible approved test artifact returns version, timestamp, limitations and disclaimer. |
+| Prediction history/results | Actual events are associated with the correct patient and model version; successful results and unavailable/failed requests are distinguishable; unauthorized history access is denied; no fabricated result is displayed. |
 
-## 4. Model evaluation metrics
+## 2. Data and preprocessing tests
 
-Report at minimum:
-- Accuracy.
-- Precision.
-- Recall/sensitivity.
-- F1-score.
-- Confusion matrix.
+- Required columns, types, identifiers, units, dates, foreign keys, and allowed values are checked.
+- Duplicate patients/visits, inconsistent chronology, missingness, and invalid measurement ranges are reported.
+- No patient ID overlaps partitions; each patient stays in one split.
+- Learned imputation, scaling, encoding, and feature selection fit using training patients only.
+- Sequence shape/order preserves genuine time and excludes all post-index observations.
+- Unknown or insufficiently followed outcomes never become Class 0.
+- Current cross-sectional interim cohorts are refused by future-outcome split/sequence utilities.
 
-Also report where appropriate:
-- Specificity.
-- ROC-AUC.
-- PR-AUC.
-- Calibration and Brier score if probabilities are displayed.
-- Confidence intervals or uncertainty estimates where feasible.
+## 3. Model tests and evaluation
 
-Always state:
-- Positive class.
-- Class counts and prevalence.
-- Decision threshold and how it was selected.
-- Patient-level split strategy.
-- Whether the result is validation, test, cross-validation, external, or prospective evidence.
+- Verify model input/output shapes, serialization, compatible preprocessing, and reproducible configuration.
+- Use train for fitting, validation for model/threshold selection, and an untouched patient-level test partition for final evaluation.
+- Compare appropriate baselines and SimpleRNN → LSTM → Dense on identical patient partitions when data support both.
+- Report class counts, positive class, accuracy, precision, sensitivity/recall, specificity, F1, confusion matrix, ROC-AUC/PR-AUC where appropriate, and uncertainty where feasible.
+- If probabilities are shown, evaluate calibration and document threshold selection.
+- Do not report synthetic-data metrics as clinical performance or claim that a model is accurate based on one metric.
 
-## 5. Evaluation integrity
+## 4. Security and integration tests
 
-- A random row split is not acceptable as the primary split if multiple rows belong to each patient.
-- Do not use future visits or post-index variables to predict an earlier label.
-- Do not tune on the test set.
-- Do not report metrics from synthetic data as clinical performance.
-- Do not state “the model is accurate” based only on a single accuracy score.
-- Do not compare results directly against publications with different labels, populations, horizons, and validation designs.
+- Verify protected frontend routes and, independently, backend authorization and RLS.
+- Test token/session expiry, role denial, IDOR/cross-patient denial, safe errors, and absence of secrets/clinical payloads in logs.
+- Verify frontend/backend schema compatibility, model-unavailable handling, model-version traceability, database failure behavior, and complete authorized flows using non-sensitive fixtures.
+- Use synthetic test fixtures only when clearly labelled; never represent them as genuine patient data.
 
-## 6. Final testing report template
+## 5. Test reporting
 
-- Dataset/version:
-- Number of patients:
-- Number of visit records:
-- Class counts:
-- Target and index time:
-- Split strategy and seed:
-- Preprocessing:
-- Model architecture/version:
-- Baseline models:
-- Accuracy:
-- Precision:
-- Recall/sensitivity:
-- Specificity:
-- F1-score:
-- ROC-AUC / PR-AUC:
-- Confusion matrix:
-- Calibration (if applicable):
-- Limitations:
-- Tests run and results:
+For each test run, record exact command, environment/runtime version, pass/fail counts, relevant dataset/model version (if any), failures, and scope. A past test result is not evidence of a current run. Do not claim tests passed unless executed.
+
+## 6. Evaluation report template
+
+- Dataset/version and permitted-use status:
+- Eligible patients / visits / event and non-event counts:
+- Index/horizon/label rules and diagnostic criteria:
+- Split strategy, patient overlap check, and seed:
+- Preprocessing and leakage checks:
+- Model architecture/version and baselines:
+- Accuracy / precision / recall-sensitivity / specificity / F1:
+- ROC-AUC / PR-AUC / calibration if appropriate:
+- Confusion matrix / uncertainty:
+- Limitations, subgroup support, and generalization boundaries:
+- Exact test commands and results:

@@ -20,23 +20,16 @@ recurrent-model dataset. An approved MSBase/MSBasis feasibility request is
 recommended; OFSEP is a secondary controlled-access route. See
 [source_evidence_ledger.md](../data/reports/source_evidence_ledger.md).
 
-### D-02 — Exact prediction target
-Current presentation wording says MS / Non-MS. Confirm:
-- Is this current MS status classification at a defined visit?
-- Or is the task future conversion from CIS to MS within a fixed horizon?
-- Or is it another future outcome?
+### D-02 — Research objective — RESOLVED; operational target remains open
 
-These are different prediction tasks and need different labels, cohorts, and evaluation.
+**User-confirmed objective:** Predict future conversion from confirmed CIS to MS using genuine longitudinal clinical records. This is not cross-sectional MS/Non-MS classification. Index date, horizon, eligibility, criteria version, and adjudication remain unresolved under D-03 until supported by a suitable approved cohort and clinical review.
 
-**Resolved by current user instruction:** The intended task is future conversion
-from confirmed CIS to MS, not cross-sectional MS/non-MS classification. The
-specific index definition and horizon remain open under D-03.
-
-### D-03 — Label source and timing
-- Who/what defines MS and Non-MS?
-- Does the target apply at baseline, each visit, or a later follow-up?
-- How are uncertain or missing labels handled?
-- What is the prediction index time?
+### D-03 — Operational event, index, and horizon
+- Which approved source and clinical evidence confirm baseline CIS and subsequent MS conversion?
+- Which diagnostic criteria/version and event-date rule apply?
+- Is prediction made at CIS diagnosis or a later landmark, and what information is eligible at that index?
+- Which evidence-based horizon is supported by available follow-up?
+- How are uncertain diagnosis, competing events, missing follow-up, and censoring handled?
 
 **Current evidence:** Do not assign a future-conversion label from either
 public workbook. Mexican group codes remain unlabelled. The Lithuanian final-MS
@@ -75,26 +68,33 @@ incomplete.
 
 ## Product and implementation decisions
 
-### D-06 — Application requirement
-Is a working web app required for the final deliverable, or is a reproducible ML pipeline/notebook sufficient?
+### D-06 — Application requirement — RESOLVED
 
-### D-07 — Backend and frontend
-Recommended simple default: Flask + HTML templates + Bootstrap. Confirm or select FastAPI/React only if needed.
+**User decision:** A doctor-facing web application is a mandatory final deliverable alongside the ML research component. It must include all six modules: doctor login/authentication; patient registration/management; patient visit history; clinical data management; gated research prediction; and prediction history/results. This decision does not constitute implementation, supervisor approval, clinician endorsement, or permission to use real patient data.
 
-### D-08 — Database
-Recommended local default: SQLite. Confirm whether a persistent database or PostgreSQL deployment is needed.
+### D-07 — Frontend and backend — RESOLVED
 
-### D-09 — Authentication
-Is the app local/demo only, or will multiple authorized users access it? Real sensitive data require stronger access controls.
+**User-approved stack:** React + TypeScript + Vite and the approved React libraries; Python 3.12 + FastAPI + SQLAlchemy + Alembic + Pydantic. Do not substitute Flask, Django, or another frontend/backend framework without discussing the change first.
 
-### D-10 — Deployment
-Will the final project run locally, in a lab, or be hosted? Do not deploy sensitive data to an unapproved service.
+### D-08 — Database and identity — RESOLVED AT STACK LEVEL
 
-### D-11 — Output semantics
-Should the interface show only the predicted class, or also a probability? Probability requires calibration/threshold decisions.
+**User-approved stack:** Supabase PostgreSQL, Supabase Auth, PostgreSQL RLS. Exact roles/claims, RLS policies, data residency, and schema remain to be designed and approved before implementation or real-record use.
 
-### D-12 — Final model choice
-Confirm RNN → LSTM as the desired experiment, but allow baseline comparison and a no-go recommendation if the data do not support it.
+### D-09 — Authentication and roles — SCOPE RESOLVED; POLICY DETAILS OPEN
+
+Doctor login/logout, authenticated sessions, role authorization, and protected routes/APIs are mandatory requirements. The role matrix, account provisioning, session policy, and patient-level authorization need detailed design and security review.
+
+### D-10 — Deployment and data hosting — OPEN
+
+Will the final application run locally, in an institution-controlled environment, or be hosted? Supabase/cloud suitability, data residency, retention, backup, and institutional approval must be confirmed before restricted or real patient data is stored.
+
+### D-11 — Prediction output semantics — PARTLY OPEN
+
+The target is future CIS-to-MS conversion, with Class 1 requiring confirmed conversion in the approved horizon and Class 0 requiring adequate follow-up. The index, horizon, label adjudication, threshold, probability calibration, and exact display policy remain open. Do not show a probability as personal risk unless separately validated and approved.
+
+### D-12 — Model choice — ARCHITECTURE CONFIRMED; TRAINING CONDITIONAL
+
+The proposed experiment is SimpleRNN → LSTM → Dense, with appropriate classical baselines. Training remains NO-GO until data, target, index, horizon, feature timing, permissions, and evaluation gates pass. A no-go recommendation remains appropriate if the available data do not support a sequence model.
 
 ## Agent instruction
 

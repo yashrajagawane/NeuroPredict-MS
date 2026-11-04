@@ -26,7 +26,15 @@
     "dataset_confirmed": false,
     "trained_model_confirmed": false,
     "working_application_confirmed": false,
-    "target_definition_confirmed": false
+    "research_objective_confirmed": true,
+    "operational_target_definition_confirmed": false,
+    "prediction_horizon_confirmed": false,
+    "mandatory_doctor_application_confirmed": true,
+    "project_owner_scope_approval_confirmed": true,
+    "supervisor_charter_approval_confirmed": false
   },
-  "provisional_scope": "Binary MS/Non-MS classification using structured longitudinal patient records; confirm target timing before training."
+  "confirmed_research_objective": "Predict future conversion from confirmed CIS to MS using genuine longitudinal patient records; index date, prediction horizon, eligibility, and clinical adjudication remain unresolved.",
+  "confirmed_application_scope": "Mandatory doctor-facing application with authentication and authorization, pseudonymous patient management, chronological visit history, approved clinical data management, gated research prediction, and traceable prediction history/results.",
+  "approved_stack_reference": "../PROJECT_MASTER_PLAN.md",
+  "implementation_status": "Requirements only; application and model are not implemented."
 }

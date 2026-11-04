@@ -1,72 +1,52 @@
 # Instructions for Coding Agents
 
-You are working on a student research prototype concerning Multiple Sclerosis (MS) status prediction from structured longitudinal patient data using a proposed hybrid RNN–LSTM architecture.
+This repository supports a final-year research and educational project on future CIS-to-MS conversion prediction from genuine longitudinal patient records, plus a mandatory doctor-facing research web application. It is not a clinical diagnostic or treatment system.
 
 ## 1. Mandatory first steps
 
-1. Inspect the repository and report its existing folders, source files, datasets, notebooks, model files, and current run status.
-2. Read all project documents in this handoff pack before coding.
-3. Identify existing work and preserve it. Do not overwrite or delete user work without permission.
-4. Compare the repository with the project documents and report discrepancies.
-5. Do not make up missing details. Record unresolved decisions and ask for the one decision that blocks the next phase.
+1. Read the root `PROJECT_MASTER_PLAN.md`; it is the single source of truth for phase order, dependencies, status, and progress.
+2. Read this handoff pack and inspect actual repository files, data, tests, and Git status before acting.
+3. Work on one phase at a time, but continue automatically through eligible phases under the current user authorization. Do not repeat completed phases or skip dependencies. If a phase is externally blocked, document it and continue independent eligible work.
+4. Preserve existing work and report discrepancies; do not assume proposed files exist.
+5. If an external clinical, data-access, ethics, governance, or supervisor decision blocks a phase, document that blocker and continue with the next independent eligible phase. Do not invent approval or evidence.
 
-## 2. Source of truth
-
-Use the project documents as the current intended design. If an actual repository file conflicts with the documents, do not silently choose one. Report the conflict and propose a resolution.
+## 2. Source of truth and fixed decisions
 
 Priority order:
-- Confirmed user instruction in the current conversation.
-- Existing, verified project assets and data dictionary.
-- This handoff pack.
-- General engineering recommendations, clearly labelled as recommendations.
 
-## 3. Critical project constraints
+1. Confirmed user instructions and approvals.
+2. Root `PROJECT_MASTER_PLAN.md` for sequencing and phase state.
+3. Current handoff requirements and verified data dictionaries/reports.
+4. General engineering recommendations, labelled as recommendations.
 
-- The current proposed input is structured patient data collected across multiple visits.
-- The current proposed output is a binary MS / Non-MS class.
-- Do not add MRI image processing to the current implementation unless the user explicitly changes scope.
-- Do not claim that the model is trained, validated, deployed, clinically useful, or accurate until evidence exists.
-- A synthetic dataset may be used only for software pipeline demonstrations unless the user explicitly approves a simulation study. Never present synthetic-data metrics as clinical performance.
-- Do not generate labels from the same input features or arbitrary thresholds and then claim the model discovered clinically meaningful patterns. That creates a circular target/leakage problem.
-- Split data by patient, not by individual visit row. Keep every visit from a patient in only one partition for the primary evaluation.
-- Fit imputation, scaling, feature selection, and other learned preprocessing using training data only. Apply the fitted transforms unchanged to validation, test, and inference data.
-- Preserve chronological order and timestamps. Do not treat unrelated columns as time steps.
-- Never store real patient identifiers, names, contact details, or other direct identifiers in development/test data. Use legally obtained, de-identified data and follow applicable ethics, consent, licensing, and institutional requirements.
-- The app is a research/educational prototype, not a diagnostic device or medical decision system.
+The approved research target is future conversion from confirmed CIS to MS. The index date, prediction horizon, cohort eligibility, diagnostic-criteria version, and outcome adjudication still require suitable data and clinical review. Do not recast the task as cross-sectional MS/Non-MS classification.
 
-## 4. Engineering rules
+The approved stack is React, TypeScript, Vite, Tailwind CSS, shadcn/ui, React Router, TanStack Query, React Hook Form, Zod, Recharts, Lucide React; Python 3.12, FastAPI, SQLAlchemy, Alembic, Pydantic; Supabase PostgreSQL, Supabase Auth, PostgreSQL RLS; Pandas, NumPy, scikit-learn, TensorFlow/Keras, Matplotlib, Seaborn; pytest, Git/GitHub, VS Code, and Jupyter Notebook. Do not introduce another frontend framework, backend framework, or primary database without discussing it first.
 
-- Prefer readable, modular, typed code with clear docstrings and focused functions.
-- Keep data preparation, model training, model inference, API, persistence, and UI concerns separated.
-- Use configuration files/environment variables for settings. Never commit secrets.
-- Add tests for data validation, sequence generation, preprocessing leakage, patient-level splitting, API behavior, and prediction output.
-- Log reproducible experiment metadata: dataset version/hash, feature schema, split strategy, random seed, preprocessing configuration, model architecture, hyperparameters, library versions, and metrics.
-- Save trained model artifacts and preprocessing artifacts together with a version/metadata file.
-- Handle missing or malformed data explicitly; do not silently fill unknown values with arbitrary constants.
-- Keep dependencies minimal and pin compatible versions once the environment is selected.
-- Use migrations or a clearly documented schema evolution path if the database changes.
-- Provide exact run/test commands in README files.
+The web application is a mandatory final deliverable with six modules: (1) doctor authentication/authorization; (2) pseudonymous patient registration and management; (3) chronological patient visit history; (4) approved clinical data management; (5) gated research prediction; and (6) prediction history/results with model-version and audit metadata.
 
-## 5. Medical and evaluation integrity
+## 3. Data and model integrity
 
-- Do not return a real-world diagnosis. UI must state: “Research prediction only — not a medical diagnosis. Do not use this result to make treatment decisions.”
-- Do not display a confidence/probability as a calibrated risk unless calibration and threshold selection have been evaluated and documented.
-- Report class balance, confusion matrix, precision, recall/sensitivity, specificity, F1-score, ROC-AUC and PR-AUC where appropriate. State the positive class and decision threshold.
-- Include uncertainty intervals where feasible. Do not compare scores across different studies as if they were a common leaderboard.
-- A high accuracy score alone is insufficient, especially under class imbalance.
-- Compare the hybrid model against sensible, tuned baselines on identical patient-level splits.
-- If the dataset does not support longitudinal observations for each patient, stop and report that the RNN–LSTM premise is not supported by the data. Do not fabricate sequences.
+- Current Mexican and Lithuanian public interim cohorts are separate and are not valid future-conversion training cohorts. Preserve the documented NO-GO until a suitable, permitted longitudinal cohort passes review.
+- Never fabricate, duplicate, or synthesize clinical patients, visits, dates, labels, or prediction results. Synthetic fixtures may test software only and must be unmistakably labelled.
+- Never use patient or visit identifiers as model features. Do not use conversion dates, final diagnosis, post-index observations, or future follow-up information as predictors.
+- Unknown or insufficiently followed outcomes are not Class 0. Do not select a horizon without cohort follow-up evidence and clinical justification.
+- Split by patient; fit imputation, scaling, encoding, and feature selection on training patients only.
+- Preserve source values and provenance. Do not silently remove, recode, or impute clinical values.
+- Do not train until the target, index, horizon, cohort, features, permissions, and leakage checks pass the master-plan gates.
 
-## 6. Collaboration and delivery
+## 4. Application security and safety
 
-At the end of each phase:
-1. Summarize files changed/created.
-2. State exact commands run and whether they passed.
-3. Show test results and unresolved issues.
-4. State what is genuinely implemented versus planned.
-5. Update project documentation to reflect verified changes.
-6. Do not move to a later phase if an earlier phase has a blocking data/label/design issue.
+- The UI/API must state: “Research prediction only — not a medical diagnosis. Do not use this result to make treatment decisions.”
+- Keep prediction unavailable when the model is missing, unvalidated, incompatible, or the patient history is insufficient. Return a clear unavailable/error state rather than a guessed class.
+- Use pseudonymous identifiers and least-privilege access. Protect routes and APIs; enforce authorization server-side and with approved PostgreSQL RLS policies.
+- Never expose Supabase service-role keys, database credentials, or other secrets to frontend code, Git, logs, prompts, or screenshots.
+- Do not upload restricted patient information to external tools or cloud services without explicit data-owner and institutional approval.
+- The user requirement for a doctor-facing application does not itself establish clinician approval, authorization to access real records, or hosting permission.
 
-## 7. Work style
+## 5. Engineering and delivery
 
-Implement incrementally. Start with repository reconnaissance and Phase 0 in `09_IMPLEMENTATION_ROADMAP.md`. Do not generate the entire app in one unreviewed step. Do not invent a dataset, label definition, feature list, hardware result, or clinical claim.
+- Keep dataset preparation, model training, inference, API, persistence, and UI concerns separate. Training is offline; FastAPI serves only a validated, versioned artifact and matching preprocessing.
+- Prefer typed, readable, modular code with focused tests. Add validation for data contracts, chronology, leakage, patient-level splits, authorization, API failures, and model compatibility when those phases become eligible.
+- Use environment configuration for secrets; pin compatible dependencies when environment work is authorized. Use Alembic for database schema changes.
+- At phase end, report changed files, exact checks and results, acceptance criteria, unresolved blockers, and actual implementation status. Commit and push only work that satisfies the phase’s completion criteria; otherwise follow the master-plan approval rules for partial work.

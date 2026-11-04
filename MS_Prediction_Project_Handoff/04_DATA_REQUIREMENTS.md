@@ -24,22 +24,26 @@ The exact feature names must come from the confirmed dataset, not from assumptio
 | `visit_id` | Unique visit key | Recommended | Can be generated from dataset key if permitted. |
 | `visit_date` | Visit timestamp/date | Yes for sequences | Must support chronological ordering. |
 | `feature_*` | Dataset-defined clinical/structured predictors | TBD | Record type, units, allowed values, and missingness. |
-| `target_label` | MS or Non-MS class | Yes for supervised training | Define label time and source. Do not infer label from arbitrary feature thresholds. |
-| `target_time` | Time at which label/status applies | Strongly recommended | Needed to align label with index time. |
+| `index_date` | Approved prediction/index time | Yes for future-outcome prediction | Must follow the approved baseline or landmark rule; no future observation may enter model input. |
+| `prediction_horizon_months` | Predeclared future outcome window | Yes for fixed-horizon training | Set only after follow-up feasibility and clinical review. |
+| `conversion_status` | Confirmed conversion / no conversion with adequate follow-up / unknown / censored | Yes for supervised training | Class 1 requires confirmed post-index event within horizon; Class 0 requires follow-up through horizon. |
+| `conversion_date` | Date of confirmed CIS-to-MS conversion | Required for Class 1 | Preserve source and diagnostic-criteria evidence; never use as a predictor. |
+| `last_follow_up_date` | Last known observation date | Required to establish Class 0/censoring | Unknown/short follow-up is not a negative label. |
+| `diagnostic_criteria_version` | Criteria used to establish baseline CIS and conversion | Required for adjudication | Preserve source-specific version; do not silently harmonize diagnostic eras. |
 | `source_record_id` | Original record reference | Optional | Keep only if safe and permitted. |
 
-## 4. Label definition — blocking requirement
+## 4. Future CIS-to-MS target — operational details remain blocking
 
-The project currently says “MS / Non-MS,” but this is insufficient as a formal label definition. Confirm:
+The confirmed research objective is to predict whether a patient with confirmed baseline CIS subsequently converts to MS. This is not a current-status MS/Non-MS classifier. The target is not operational until a suitable cohort and clinical review establish the index, horizon, eligibility, diagnostic criteria, and event evidence.
 
-- Does the label represent disease status at the index visit, or a future diagnosis within a fixed horizon?
-- Which diagnostic/clinical source defines MS versus Non-MS?
-- Are controls healthy people, other neurological conditions, or a mixture?
-- How are uncertain, missing, or conflicting diagnoses handled?
-- Is each patient assigned one final label, or can status change across visits?
-- At what time are predictors frozen so post-index information cannot leak into the model?
+- **Class 1:** confirmed conversion after index and on or before the approved horizon, with conversion date and diagnostic criteria/evidence.
+- **Class 0:** no confirmed conversion and last follow-up reaches or exceeds the entire approved horizon.
+- **Unknown/censored:** uncertain diagnosis or follow-up ends before the horizon; never coerce to Class 0.
+- **Index:** either CIS baseline or a later landmark. A landmark sequence design requires genuine pre-index visits and excludes conversion before the landmark.
+- **Predictor cutoff:** all predictor measurements must be available on or before index. Exclude conversion date, final diagnosis, post-index measurements, and future follow-up.
+- The horizon must be selected using a permitted cohort's actual follow-up/event timing and clinical justification. Do not choose among 24/36/60 months from the existing public workbooks, which contain no individual dates.
 
-Do not train until these questions are answered using dataset documentation and project-supervisor guidance.
+Do not train until the target protocol is documented, independently reviewable, and approved by the relevant clinical/project authority.
 
 ## 5. Longitudinal requirements
 

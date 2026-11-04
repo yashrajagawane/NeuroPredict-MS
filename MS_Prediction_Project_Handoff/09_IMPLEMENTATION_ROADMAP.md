@@ -1,133 +1,30 @@
-# 09 — Implementation Roadmap and Phases
+# 09 — Implementation Roadmap Summary
 
-Work phase-by-phase. Do not skip dataset validation to start building a neural network.
+The root [`PROJECT_MASTER_PLAN.md`](../PROJECT_MASTER_PLAN.md) is authoritative for the 64 phase IDs, exact phase order, dependencies, statuses, completion percentages, acceptance evidence, and change history. This file is only a high-level orientation; it does not define alternate phases or permit skipping a master-plan gate.
 
-## Phase 0 — Repository reconnaissance and requirement freeze
+## Mandatory end-state
 
-**Tasks**
-- Inspect existing repository and list current assets.
-- Identify available data files, data licenses, notebooks, model code, LaTeX, and diagrams.
-- Confirm task definition, dataset source, target label, feature schema, and whether a web app is required.
-- Choose one backend framework and one UI approach.
+The final-year project has two required components:
 
-**Deliverables**
-- Repository inventory.
-- Updated `14_OPEN_DECISIONS.md`.
-- Confirmed MVP scope and stack.
+1. A reproducible research pipeline for future conversion from confirmed CIS to MS using genuine, permitted longitudinal observations, with justified labels/index/horizon, data validation, patient-level partitions, baselines, and the proposed SimpleRNN → LSTM experiment only if data support it.
+2. A doctor-facing React/TypeScript application with all six modules: authentication/authorization; pseudonymous patient management; chronological visit history; approved clinical-data management; gated research prediction; and traceable prediction history/results.
 
-**Gate:** Do not proceed to supervised training until the data and target are defensible.
+The approved stack is defined in the master plan. Do not substitute older Flask/SQLite/HTML recommendations in this handoff pack.
 
-## Phase 1 — Project scaffold and environment
+## High-level gated sequence
 
-**Tasks**
-- Create clean folders for app, ML, data, tests, docs, and artifacts.
-- Create Python environment and dependency file.
-- Add configuration example, logging, formatting/linting, and basic CI if appropriate.
+1. Complete the project-owner-approved charter and intended-use/product requirements (Phases 01 and 03).
+2. Establish an operational future CIS-to-MS target, index/horizon, endpoint adjudication, source access, ethics, and data governance (Phases 02-10).
+3. Acquire and validate an approved cohort; define eligibility, labels, features, leakage controls, cleaning, sequence design, sample feasibility, and evaluation protocol (Phases 11-25).
+4. Complete the approved environment, contracts, tests, patient-level split, preprocessing, and sequence pipeline (Phases 26-27 and 31, following dependencies).
+5. Train/evaluate baselines and the hybrid model only after all data gates pass (Phases 28-43).
+6. Build the approved database, authentication, API, six UI modules, integration, and security tests in dependency order (Phases 44-54).
+7. Complete reliability, deployment, governance, operations, usability, reproducibility, and academic handover only when applicable gates pass (Phases 55-63).
 
-**Deliverables**
-- Runnable project scaffold.
-- Setup and run instructions.
-- Health-check test.
+## Current gates
 
-## Phase 2 — Dataset audit and exploratory analysis
-
-**Tasks**
-- Load only permitted data.
-- Validate schema, labels, units, timestamps, duplicates, missingness, class counts, visits per patient, and leakage risk.
-- Produce a data-quality report.
-
-**Deliverables**
-- Data dictionary.
-- EDA notebook/report.
-- Explicit go/no-go recommendation for longitudinal modeling.
-
-**Gate:** Confirm that data genuinely support patient-level longitudinal sequences and the target.
-
-## Phase 3 — Data pipeline
-
-**Tasks**
-- Implement schema validation.
-- Create patient-level split.
-- Fit transforms on training data only.
-- Build chronological sequences and variable-length handling if needed.
-- Add tests for no patient overlap, chronology, shapes, and train-only fitting.
-
-**Deliverables**
-- Reusable preprocessing and sequence builder.
-- Tests and serialized preprocessing artifacts.
-
-## Phase 4 — Baseline models
-
-**Tasks**
-- Train appropriate simple tabular baselines.
-- Use only information available at the index time.
-- Evaluate on the same patient-level splits.
-
-**Deliverables**
-- Baseline metrics, confusion matrices, and experiment record.
-
-## Phase 5 — Hybrid RNN–LSTM model
-
-**Tasks**
-- Implement candidate `SimpleRNN(return_sequences=True) → LSTM → Dense(sigmoid)` or justified variant.
-- Tune using validation data only.
-- Handle class imbalance carefully.
-- Compare to baseline models fairly.
-
-**Deliverables**
-- Versioned model artifact.
-- Training history and configuration.
-- Validation and test report.
-
-**Gate:** If sequences are not meaningful or the model does not outperform/justify complexity, report that honestly.
-
-## Phase 6 — Evaluation and model report
-
-**Tasks**
-- Calculate accuracy, precision, recall, F1, confusion matrix, specificity, ROC-AUC/PR-AUC where appropriate.
-- Document positive class, threshold, class balance, uncertainty, and limitations.
-- Assess calibration if probability is exposed.
-
-**Deliverables**
-- Reproducible model evaluation report and tables/plots.
-
-## Phase 7 — Backend and persistence
-
-**Tasks**
-- Implement patient/visit services if app is required.
-- Connect to SQLite for local prototype.
-- Implement prediction endpoint loading saved artifacts.
-- Handle invalid/incomplete data and model-unavailable scenarios.
-
-**Deliverables**
-- API, database schema, API tests, migration/initialization instructions.
-
-## Phase 8 — Frontend
-
-**Tasks**
-- Build patient list/detail, chronological visit history, and prediction result screens.
-- Show validation and non-diagnostic notice.
-- Keep UI simple and accessible.
-
-**Deliverables**
-- Working demonstrator UI and screenshots.
-
-## Phase 9 — Integration and security review
-
-**Tasks**
-- Test full request-to-result flow.
-- Add authentication if non-public access or sensitive records are used.
-- Check privacy, logs, secrets, and error handling.
-
-**Deliverables**
-- Integrated demo and security checklist.
-
-## Phase 10 — Final testing, documentation, and presentation
-
-**Tasks**
-- Run all tests and clean setup from scratch.
-- Record actual limitations and results.
-- Update architecture diagrams, user guide, README, project report, and PPT.
-
-**Deliverables**
-- Final source, model artifacts (if legitimate), test report, setup guide, demo guide, and updated presentation.
+- The public Mexican and Lithuanian data remain separate interim datasets and are unsuitable for future CIS-to-MS training.
+- No selected index date/horizon, fixed-horizon labels, model-approved inputs, or genuine repeated dated visits exist for the intended task. Model training remains NO-GO.
+- Prediction functionality must remain unavailable until an approved cohort and a valid, tested, versioned model/preprocessor are available.
+- Do not access or store real patient records before source permission and required ethics/security approvals.
+- Continue automatically one phase at a time through eligible work under the current user authorization. If a phase is externally blocked, document the specific dependency and continue with independent eligible work. Commit and push each genuinely completed phase, then report it; do not falsely mark blocked work complete.

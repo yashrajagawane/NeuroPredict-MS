@@ -1,40 +1,29 @@
-# Codex Kickoff Prompt — Build the MS Prediction Project
+# Codex Kickoff Prompt — NeuroPredict-MS
 
-You are the engineering agent for my final-year project:
+You are assisting with the final-year research project **Deep Learning Approach for Prediction of Multiple Sclerosis Using Hybrid RNN–LSTM**.
 
-**Deep Learning Approach for Prediction of Multiple Sclerosis Using Hybrid RNN–LSTM**
+Before any work, read the root `PROJECT_MASTER_PLAN.md`, this handoff pack, existing code/data/tests/reports, and Git status. The root master plan is the single source of truth for phase order, dependencies, status, and acceptance. Execute one phase at a time and continue automatically through eligible phases under the current user authorization; do not pause for approval between phases.
 
-I have provided a project documentation pack in this repository. Before writing code:
+## Confirmed project decisions
 
-1. Read `AGENTS.md` and every relevant document in this pack.
-2. Inspect the existing repository carefully. Do not assume files, datasets, models, or app features exist.
-3. Produce a concise repository inventory: current files, languages/frameworks, dataset/model assets, and how to run existing code.
-4. Compare the actual repository with the PRD/SRS and list any discrepancies.
-5. Review `14_OPEN_DECISIONS.md`. Identify which decisions block dataset/model work.
+- **Research target:** future conversion from confirmed CIS to MS using genuine longitudinal patient records. This is not cross-sectional MS/Non-MS classification. Operational index/horizon/cohort/criteria still require suitable data and clinical review.
+- **Mandatory deliverables:** an evidence-based ML research pipeline and a doctor-facing app with all six modules: (1) authentication/authorization, (2) pseudonymous patient management, (3) patient visit history, (4) approved clinical-data management, (5) gated research prediction, and (6) traceable prediction history/results.
+- **Model:** proposed SimpleRNN → LSTM → Dense, compared with suitable baselines only if data support it.
+- **Approved stack:** React/TypeScript/Vite/Tailwind/shadcn/ui/React Router/TanStack Query/React Hook Form/Zod/Recharts/Lucide; Python 3.12/FastAPI/SQLAlchemy/Alembic/Pydantic; Supabase PostgreSQL/Auth/RLS; Pandas/NumPy/scikit-learn/TensorFlow/Keras/Matplotlib/Seaborn; pytest, Git/GitHub, VS Code, Jupyter Notebook.
+- **Approval:** the project owner has approved the two-part scope and six application modules. Do not claim supervisor approval. Record institutionally required review separately and require it before relevant real-data/clinical activity.
+- **Safety:** research and education only; never diagnose or recommend treatment. Prediction remains unavailable until a valid tested versioned model and preprocessing are trained on approved data.
 
-## Critical requirements
+## Current data and blockers
 
-- Current intended data: structured patient records collected across multiple visits.
-- Current provisional target: MS / Non-MS classification. Confirm whether this represents status at an index visit or a future outcome before training.
-- Proposed model: hybrid RNN → LSTM, evaluated against sensible baselines.
-- Do not add MRI processing to the current scope.
-- Do not invent a dataset, patient count, feature list, labels, sequence length, metrics, or achieved results.
-- Synthetic data can be used for plumbing/UI tests only and must be labelled synthetic.
-- A random visit-row split is not acceptable as the primary evaluation; split by patient.
-- Fit preprocessing on training data only.
-- The result must be described as research-only, not a diagnosis.
+The Mexican and Lithuanian public cohorts are separate interim datasets without the patient-linked repeated dated visits, conversion dates, and adequate follow-up required by the intended future-outcome task. They have zero approved model features and zero valid fixed-horizon labels. Keep the supervised-training NO-GO. Never fabricate or duplicate patients, visits, dates, labels, or predictions.
 
-## First task: Phase 0 only
+Do not expose direct identifiers or secrets. Do not upload restricted health records to unapproved tools/cloud services. Keep patient access behind authorized backend operations and database RLS. Keep model training separate from inference.
 
-Do not implement the entire system yet. Complete repository reconnaissance and Phase 0 from `09_IMPLEMENTATION_ROADMAP.md`.
+## Execution rules
 
-Return:
-1. Repository inventory.
-2. Existing code and assets that can be reused.
-3. Missing inputs and blocking questions.
-4. Proposed final directory structure.
-5. Recommended stack with reasons, distinguishing confirmed from proposed choices.
-6. Phase-by-phase implementation plan tailored to what is actually present.
-7. Any risks or inconsistencies in the current project documents.
-
-Do not start model training or fabricate a dataset. Wait for confirmation of the target/data decisions before implementing blocked phases. You may create a non-destructive project scaffold only if it does not lock in unresolved data assumptions.
+1. Resume only the next eligible master-plan phase; never repeat accepted phases or skip a prerequisite.
+2. If clinical, data-owner, ethics, governance, or supervisor input blocks a phase, record the exact blocker and continue with the next independent eligible phase. Do not claim approval without evidence.
+3. Preserve current source data and user changes. Implement only the selected phase.
+4. Run and report relevant checks honestly. Update tracker evidence and change log.
+5. Commit/push each genuinely completed phase with a meaningful message; stage only phase-related files. Never force-push or stage unrelated/sensitive files. A blocked phase is not reported as complete.
+6. After each completed phase is pushed, report files, tests, acceptance, commit/push status, and next eligible phase; continue automatically if dependencies permit. If blocked, record the dependency and continue independently.

@@ -2,9 +2,7 @@
 
 ## 1. Prediction task
 
-Current provisional task: binary classification of MS versus Non-MS using structured patient records collected across multiple visits.
-
-This must be confirmed with a precise label definition and index time. Do not confuse current status classification with future prognosis, CIS conversion, relapse prediction, or disability progression.
+Confirmed research objective: predict future conversion from confirmed CIS to MS using genuine longitudinal patient records. This is a future-outcome task, not cross-sectional MS-versus-Non-MS status classification. The operational index date, prediction horizon, eligible cohort, diagnostic-criteria version, and adjudication protocol remain unapproved until supported by a suitable dataset and clinical review. The current public interim cohorts fail those requirements; no supervised training is approved.
 
 ## 2. Modeling strategy
 
@@ -101,11 +99,15 @@ Store the model together with:
 
 ## 8. Inference contract
 
-Input: one pseudonymous patient ID or a structured sequence of that patient's permitted visit records.  
-Processing: validate, retrieve, transform with saved artifacts, create sequence, load compatible model.  
-Output: predicted class (`MS` or `Non-MS`), model version, timestamp, and disclaimer.  
-Probability: optional only if the output is clearly described and calibration/threshold behavior is documented.  
-Failure: return a clear reason if data are insufficient, schema is incompatible, or the model artifact is unavailable.
+Input: an authorized request for one pseudonymous patient's eligible, permitted pre-index history.
+
+Processing: authorize, validate timing/schema, retrieve actual visits, transform with saved artifacts, create sequence, and load a compatible model.
+
+Output: approved future-conversion class/status, model version, timestamp, limitations, and disclaimer only when valid inference succeeds.
+
+Probability: optional only if the output is clearly described and calibration/threshold behavior is documented.
+
+Failure: prediction remains unavailable and returns a safe reason if data are insufficient, schema/timing is incompatible, permissions fail, or the model artifact is absent/unvalidated. Never return a guessed class or treat a failure as a prediction.
 
 ## 9. Interpretation and limitation
 

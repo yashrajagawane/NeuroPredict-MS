@@ -4,52 +4,55 @@
 
 **Deep Learning Approach for Prediction of Multiple Sclerosis Using Hybrid RNN–LSTM**
 
-## Problem context
+## Objective and intended use
 
-Multiple Sclerosis is a complex neurological condition. Patient information may be recorded at multiple clinical visits, and the proposed research explores whether a sequence model can learn useful patterns from structured records collected over time.
+This final-year research project will investigate whether genuine, time-ordered clinical observations from patients initially diagnosed with Clinically Isolated Syndrome (CIS) can support prediction of subsequent confirmed conversion to Multiple Sclerosis (MS) within a future, clinically justified period. It is a research and educational prototype, not a diagnostic product or treatment decision system.
 
-## Project idea
+The operational index date, prediction horizon, cohort eligibility criteria, diagnostic-criteria version, and adjudication protocol are not yet established. The available public Mexican and Lithuanian datasets do not provide patient-linked dated visits, conversion dates, or adequate individual follow-up. They are not approved training cohorts. The project must preserve the current NO-GO for supervised training until a suitable cohort is approved and validated.
 
-Build a research prototype that:
+## Machine-learning research component
 
-1. accepts structured patient information and visit records;
-2. validates and prepares the data;
-3. orders visits chronologically and creates patient sequences;
-4. uses a proposed RNN → LSTM model to learn from those sequences;
-5. produces an experimental MS / Non-MS class prediction; and
-6. evaluates the model against held-out patient data using appropriate metrics.
+The required research component will, when data gates pass:
 
-## Current target — important clarification
+1. preserve provenance and validate an approved longitudinal cohort;
+2. define the index, horizon, labels, and censored/unknown outcomes with clinical review;
+3. prepare genuine patient-linked visits without fabricating observations;
+4. split by patient and fit learned preprocessing on training patients only;
+5. compare suitable classical baselines with the proposed **SimpleRNN → LSTM → Dense** model, only when genuine sequences support it; and
+6. report patient-level evaluation, uncertainty, limitations, and reproducibility evidence.
 
-The current presentation plan describes the output as **MS or Non-MS**. This is a binary status-classification task unless the team explicitly changes it. It is not automatically a prediction of future disability progression, relapse, or conversion from CIS. The index time and label definition still need confirmation.
+The target is future CIS-to-MS conversion, not current MS/Non-MS status classification. No horizon, feature set, eligible cohort count, or performance result is currently approved.
 
-## Intended users
+## Mandatory doctor-facing web application
 
-- Doctor / authorized user persona for the planned interface.
-- Student/researcher or project administrator for dataset preparation, model training, and evaluation.
+The final project must include these six modules:
 
-The doctor persona is a design assumption for a demonstration interface, not a claim that clinicians have approved or will use the tool.
+1. Doctor login, logout, authenticated sessions, role authorization, and protected routes.
+2. Patient registration and management using pseudonymous identifiers.
+3. Patient visit history, linked to each patient and displayed chronologically.
+4. Clinical data entry and management with source-approved fields, measurement dates, units, and validation.
+5. Research prediction requests through FastAPI, enabled only after a valid, tested, versioned model exists; otherwise show a clear unavailable state.
+6. Prediction history with actual request/result timestamps, patient association, model version, and appropriate audit metadata. Never fabricate results.
 
-## Current project status
+The app stack and architecture are fixed in the approved technology decision documented in the master plan: React/TypeScript frontend, FastAPI backend, SQLAlchemy, and Supabase PostgreSQL/Auth/RLS. Application requirements do not authorize handling real patient data before required governance approvals.
 
-- Research review and presentation content have been prepared.
-- A proposed workflow and architecture have been discussed.
-- A previous inspection of available files found a LaTeX research review and diagrams, but no confirmed working application, trained model, or dataset. Re-inspect the repository before beginning implementation.
+## Users and boundaries
 
-## Main output
+- **Doctor/authorized user:** manages permitted pseudonymous records and, only when available, requests and reviews research predictions.
+- **Student/researcher/administrator:** prepares approved research data, trains and evaluates models offline, and maintains documented versions.
+- The doctor-facing interface must not claim clinical approval, diagnosis, treatment guidance, or validated clinical utility.
+- No raw MRI image processing is in scope. MRI-derived structured measurements may be used only if supported by the approved source and data dictionary.
+- The web app is mandatory; actual real-data use, hosting, and clinical workflow remain subject to security, ethics, and supervisor approval.
 
-A reproducible research prototype and documentation, not a clinically validated diagnostic product.
+## Success criteria
 
-## Proposed stack
+The project is successful only when all applicable evidence exists:
 
-Python, Pandas, NumPy, scikit-learn, TensorFlow/Keras, Flask, and SQLite for an initial local prototype. Bootstrap/HTML/CSS/JavaScript may be used for a simple UI. Confirm the stack during Phase 0.
+- Approved data provenance, permitted use, cohort definition, and target protocol are documented.
+- Genuine longitudinal sequences and label/follow-up rules pass validation without patient-level or temporal leakage.
+- Baselines and the hybrid model, if data support it, use identical patient-level partitions and are reported with suitable class-wise metrics and limitations.
+- The mandatory six-module application passes module, integration, access-control, validation, and failure-state acceptance tests.
+- Prediction remains disabled when no compatible validated model is available; every actual result is traceable to its patient record, time, and model version.
+- A clean, reproducible research handover is accepted by the project supervisor.
 
-## Success at project level
-
-- Dataset provenance, licensing/permission, target, and feature definitions are documented.
-- Longitudinal sequences are genuinely derived from multiple time-stamped visits per patient.
-- Evaluation uses patient-level separation and has no known preprocessing leakage.
-- Baselines and RNN–LSTM are compared fairly on the same splits.
-- Results include class-wise metrics and limitations.
-- A user can enter/view sample records and request a research prediction only if the app/model is genuinely implemented.
-- The project is reproducible and clearly labelled as non-clinical research.
+The aspirational 2,000-patient goal is not a success criterion that permits fabrication and does not by itself establish statistical adequacy. The project owner has approved this scope; no supervisor approval is claimed. Any institutionally required review for clinical research or real-data use remains a separate governance gate.

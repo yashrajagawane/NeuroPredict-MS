@@ -16,25 +16,26 @@
 | Measure | Current value | Basis |
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
-| COMPLETE | 8 | Acceptance evidence exists for the bounded public-source audit activities listed below. |
-| IN PROGRESS | 4 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| COMPLETE | 9 | Acceptance evidence exists for the bounded public-source audit and project-charter work listed below. |
+| IN PROGRESS | 3 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 32 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
 | NOT STARTED | 20 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **15.6% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 02 - Research Question and Prediction Target Definition (BLOCKED) | The future CIS-to-MS objective is confirmed; operational index/horizon/eligibility cannot be approved from the available evidence. |
+| Overall progress | **16.8% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 26 - Development Environment and Engineering Standards (IN PROGRESS, 50%) | Phase 01 scope is project-owner approved and documented. Phase 02 remains BLOCKED on cohort and clinical evidence; continue independent eligible work. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Obtain clinical investigator/supervisor agreement on target/index/horizon and begin a governed feasibility request for a candidate cohort. | Do not train while data feasibility and label adjudication remain unresolved. |
+| Next recommended action | Complete Phase 26 environment and engineering standards; separately pursue a governed longitudinal-cohort feasibility path for Phase 02. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 01 25%, Phase 02 50%, Phase 03 25%, Phase 26 50%, Phase 27 50%. Thus `(8 x 100 + 25 + 50 + 25 + 50 + 50) / 64 = 15.625%`, displayed as **15.6%**. Phase 02's 50% records the confirmed research objective and label principles; it does not imply an approved operational target. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 26 50%, Phase 27 50%. Thus `(9 x 100 + 50 + 25 + 50 + 50) / 64 = 16.796875%`, displayed as **16.8%**. Phase 02's 50% records the confirmed research objective and label principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
 - Public Mexican source: 273 rows, 272 unique source IDs, one duplicate source identifier retained; group codes 1/2 remain unmapped.
 - Public Lithuanian source: 138 records and unique source IDs; final MS grouping is 0/1 but has no individual conversion or follow-up dates.
 - Cohorts remain separate. The current interim extracts contain source fields, not approved model features. Approved future-conversion model inputs: 0. Valid fixed-horizon labels: 0. Genuine dated repeated visit records available from these downloads: 0.
+- The doctor-facing application with six modules is a mandatory user-confirmed final deliverable, but no application/database implementation exists; real-data access and prediction remain gated.
 - No selected prediction horizon, final index-date rule, eligible model cohort, patient split manifest, trained model, model metrics, API, frontend, or deployment exists.
 - Latest repository status log records 13 tests passing and 0 failing. That was the last recorded run, not a test run for this planning document.
 - Raw source workbooks and processed patient-level extracts are Git-ignored. Do not add them to Git or upload them to unapproved services.
@@ -46,7 +47,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | Phase ID | Phase name | Status | Completion % | Priority | Dependencies | Blocker | Evidence |
 |---|---|---:|---:|---|---|---|---|
 | 00 | Repository Reconnaissance and Current-State Audit | COMPLETE | 100 | Critical | None | - | Repository inventory; test/status log; data reports. |
-| 01 | Project Charter and Scope Definition | IN PROGRESS | 25 | High | 00 | Charter acceptance and web-app scope not formally signed off. | PRD, brief, scope docs; current user objective. |
+| 01 | Project Charter and Scope Definition | COMPLETE | 100 | High | 00 | - | Reconciled PRD/SRS/scope and six-module acceptance criteria; explicit project-owner approval in updated authorization. Supervisor approval is not claimed. |
 | 02 | Research Question and Prediction Target Definition | BLOCKED | 50 | Critical | 01 | No approved longitudinal cohort with patient-level dates; clinician adjudication and operational target approval unavailable. | Confirmed future CIS-to-MS objective; label report and data contract document unresolved requirements. |
 | 03 | Clinical Workflow and Intended-Use Definition | IN PROGRESS | 25 | High | 01-02 | Intended users/workflow are design assumptions pending stakeholder review. | PRD, SRS, UI/UX, safety docs. |
 | 04 | Prediction Index Date and Horizon Design | BLOCKED | 0 | Critical | 02, 09, 23 | No patient-level dated follow-up distributions. | Label validation report. |
@@ -126,13 +127,13 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 01 - Project Charter and Scope Definition
 
-- **Purpose/outcome:** Approve one bounded research prototype and success criteria. **Status:** IN PROGRESS (25%). **Priority:** High. **Dependencies:** 00. **Effort:** 1-2 days plus review.
-- **Description/tasks:** [x] Draft PRD/SRS/scope. [ ] Reconcile stated task with confirmed future CIS conversion. [ ] Confirm mandatory vs optional web app deliverable. [ ] Supervisor approves goals, exclusions, evaluation claims, and decision authority.
-- **Prerequisites/tools/inputs:** Handoff documents, user/supervisor review; approved stack.
-- **Deliverables:** Signed scope, measurable acceptance criteria, change-control rule.
-- **Acceptance/testing:** PRD/SRS/brief use the same target and intended use; excluded clinical uses explicit; named decision owner recorded.
-- **Risks/clinical-security considerations:** Existing handoff still contains current-status MS/non-MS wording; researcher instruction supersedes but documents need coherent update.
-- **Evidence/remaining/blockers:** Documents exist; no sign-off record. **Blocker:** scope/app requirement approval. **Evidence to complete:** approved charter and reconciled docs.
+- **Purpose/outcome:** Define the two mandatory project deliverables, research-only boundaries, measurable success evidence, and change control. **Status:** COMPLETE (100%). **Priority:** High. **Dependencies:** 00. **Effort:** 1-2 days.
+- **Description/tasks:** [x] Draft PRD/SRS/scope. [x] Reconcile the intended task throughout requirements as future CIS-to-MS conversion, while preserving unresolved operational index/horizon. [x] Confirm the doctor-facing web app is mandatory and document all six modules, responsibilities, workflows, security, validation, tests, and acceptance criteria. [x] Record project-owner approval of scope in the updated development authorization.
+- **Prerequisites/tools/inputs:** Handoff documents and confirmed user scope/stack instruction.
+- **Deliverables:** Reconciled project brief, PRD, SRS, scope, architecture/workflow/data/API/safety/UI/testing/acceptance requirements, and approved-stack decision record.
+- **Acceptance/testing:** Research objective and app scope are consistent across requirements; all six modules have functional and acceptance criteria; no clinical-use claims; operational prediction details remain explicitly gated; project-owner approval and decision authority are recorded. **Documentation consistency review and project-owner acceptance completed.**
+- **Risks/clinical-security considerations:** Mandatory app scope does not authorize real-patient data use or deployment. Prediction remains disabled without approved data and a validated versioned model. Doctor-facing wording is a product role requirement, not clinician endorsement.
+- **Evidence/remaining/blockers:** Updated development authorization explicitly approves the two-part scope and six mandatory app modules; aligned handoff documents and acceptance criteria are present. Supervisor approval is not claimed. Any institutional supervisor review required for future clinical research or real-data use remains a separate governance item and does not block independent planning/engineering work. Phase 02 remains blocked on approved dated cohort data and clinical adjudication.
 
 ### PHASE 02 - Research Question and Prediction Target Definition
 
@@ -708,7 +709,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | B-03 | 05, 08, 13-17 | Clinical criteria, inclusion rules, codebooks and adjudication need expert approval. | Appoint clinician reviewer and record adjudication/governance sign-off. | PI / neurologist / ethics office | OPEN - HIGH |
 | B-04 | 23, 25, 28-43 | Eligible sample size and event count unknown; 2,000 is aspirational and not evidence of adequate power. | Assess actual eligible patients/events and uncertainty before choosing model complexity/splits. | Biostatistician / ML lead | OPEN - HIGH |
 | B-05 | 08, 44-59 | Supabase/cloud hosting suitability for eventual health data is not approved. | Data-governance review of residency, access, retention, security, RLS and institutional policy. | PI / security lead / DPO | OPEN - HIGH |
-| B-06 | 01, 03, 46-52 | Whether a full web application is mandatory and who will use it remains unconfirmed. | Supervisor approves app scope and user workflow. | Project supervisor / student team | OPEN - MEDIUM |
+| B-06 | 03, 08, 45-54 | Mandatory doctor-facing app and six modules are project-owner approved. Detailed clinical workflow, role policy, and any institutionally required review remain to be established before real-data use. | Complete user/role workflow review and obtain applicable institutional approvals before handling real clinical data. | Project team / institutional authority | OPEN - MEDIUM |
 | B-07 | 26-27 | Approved stack is decided, but environment/package versions/CI have not been implemented. | Authorize environment setup after roadmap priorities/data gates; pin versions compatible with Python 3.12. | Engineering lead | OPEN - MEDIUM |
 
 ## E. Milestone register
@@ -736,6 +737,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 04-05, 07-08, 10, 13-15, 17, 20-25, 28-43 | No execution / unmet prerequisite -> BLOCKED | 0% credited. | Repository shows missing dates/outcomes, no selected horizon, no final features, no model cohort. | Resolve blockers B-01 through B-04; do not advance by generating synthetic data. |
 | 2026-11-04 | 44-63 | No execution evidence -> NOT STARTED | 0% credited. | No backend, frontend, database migrations, model, deployment, or operations artifacts found. | Application, model, governance and data prerequisites as listed. |
 | 2026-11-04 | 02 | IN PROGRESS -> BLOCKED | Remains at 50%; the task definition and label handling principles are documented, but no operational target is approved. | User-confirmed future CIS-to-MS objective; public-source label audit and longitudinal data contract reviewed. | Obtain approved longitudinal data with dated visits, conversion/follow-up dates, and clinician/supervisor adjudication; do not choose a horizon from the current public workbooks. |
+| 2026-11-04 | 01 | IN PROGRESS 75% -> COMPLETE 100% | Owner-approved scope is reconciled and six-module acceptance criteria are documented. | User explicitly approved both deliverables and all six app modules; aligned project documents and acceptance criteria. No supervisor approval is claimed. | Any institutionally required supervisor review for clinical data use is a separate governance item. |
 
 ## How to maintain this plan
 
