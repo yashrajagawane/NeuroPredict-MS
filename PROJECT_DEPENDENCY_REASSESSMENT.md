@@ -53,7 +53,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 | 46 FastAPI backend | IN PROGRESS (25%; health-only scaffold) | Pinned API runtime, typed liveness/readiness routes, and tests; readiness explicitly reports database/auth/model as unavailable. | Patient, database, authentication, and inference services require their own upstream gates. |
 | 47 Patient/visit management | NOT STARTED | Draft endpoint and validation contracts only. | Governance, schema, auth, and approved source fields before CRUD or real records. |
 | 48 Prediction service | NOT STARTED | Define safe unavailable response contract only. | Versioned approved model and authorized patient-history path. |
-| 49 UI/UX architecture | NOT STARTED; design slice eligible | Route map, component inventory, accessible styles, empty/error/insufficient-data states from existing UX guidance. | Review with representative users; model-specific screens remain unavailable. |
+| 49 UI/UX architecture | IN PROGRESS (40%; provisional design) | Route map, component inventory, empty/error/access-denied/unavailable states, disclaimer placement, and accessibility requirements documented. | Review with representative users; final tokens, contrast checks, responsive implementation, and model-specific screens remain unavailable. |
 | 50 React frontend | NOT STARTED; static foundation eligible | Vite/React/TypeScript shell and research-only empty states; no patient records or prediction values. | Auth/API integration and final design before protected workflows. |
 | 51 Patient screens | NOT STARTED | Static layouts and validation states can be designed without records. | No patient CRUD/timeline/prediction success UI until authorized API and model exist. |
 | 52 Frontend/backend integration | NOT STARTED | No integration until both foundations exist. | Auth, API contracts, and inference gates. |
@@ -71,7 +71,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 
 ## Work selection
 
-Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, and Phase 46 has a health-only API scaffold. The next eligible independent work is UI/UX architecture, followed by a static React shell; these slices do not enable live database use, authentication secrets, patient CRUD, or prediction behavior.
+Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, Phase 46 has a health-only API scaffold, and Phase 49 has provisional UI/UX architecture. A static React shell is the next eligible slice; it does not enable live database use, authentication secrets, patient CRUD, or prediction behavior.
 
 ## Persistent restrictions
 

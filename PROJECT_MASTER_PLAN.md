@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 4 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 5 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 17 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 16 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **19.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 46 - FastAPI Backend Implementation (IN PROGRESS, 25%; health-only scaffold). | Typed liveness/readiness routes and tests exist; patient/auth/database/model APIs remain unavailable. |
+| Overall progress | **20.0% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 49 - UI/UX Architecture and Design System (IN PROGRESS, 40%; provisional design). | Route map, component inventory, safety states, and accessibility checklist exist; user review and visual acceptance remain open. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Define the UI/UX architecture slice and static React foundation while preserving application integration and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Build the static React application shell against the provisional UI map; defer authentication and data integration. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, and Phase 46 25%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25) / 64 = 19.375%`, displayed as **19.4%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, and Phase 49 40%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40) / 64 = 20.0%`. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -96,7 +96,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 46 | FastAPI Backend Implementation | IN PROGRESS | 25 | Medium | 26, 43-45 | Patient/auth/database and inference APIs require Phases 43-45, governance, and validated model readiness. | Health-only scaffold with explicit unavailable integrations in `backend/app/main.py`; 3 API tests pass; no clinical routes or persistence. |
 | 47 | Patient and Visit Management | NOT STARTED | 0 | High | 08, 44-46 | - | No database or API CRUD code. |
 | 48 | Prediction and Model Inference Service | NOT STARTED | 0 | Critical | 43, 46-47 | - | No validated model to serve. |
-| 49 | UI/UX Architecture and Design System | NOT STARTED | 0 | Medium | 03, 46, 48 | - | Guidelines exist; implementation/design files absent. |
+| 49 | UI/UX Architecture and Design System | IN PROGRESS | 40 | Medium | 03, 46, 48 | Clinical-user review and model-dependent screens remain gated; visual/accessibility testing is pending. | Provisional routes, components, states, disclaimers, and accessibility checklist in `17_PROVISIONAL_UI_UX_ARCHITECTURE.md`. |
 | 50 | React Frontend Implementation | NOT STARTED | 0 | Medium | 26, 45-46, 49 | - | No frontend project files. |
 | 51 | Patient, Visit History, and Prediction Screens | NOT STARTED | 0 | High | 47-50 | - | No UI files; data and inference remain unavailable. |
 | 52 | Frontend and Backend Integration | NOT STARTED | 0 | High | 45-51 | - | No app components exist. |
@@ -568,12 +568,12 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 49 - UI/UX Architecture and Design System
 
-- **Purpose/outcome:** Design accessible research workflow. **Status:** NOT STARTED (0%). **Priority:** Medium. **Dependencies:** 03, 46, 48. **Effort:** 3-6 days.
-- **Tasks:** [ ] Define routes/navigation and patient timeline. [ ] Specify loading/error/insufficient data states. [ ] Select accessible colors/typography/components. [ ] Include persistent research disclaimer and model provenance.
+- **Purpose/outcome:** Design accessible research workflow. **Status:** IN PROGRESS (40%; provisional route/state design). **Priority:** Medium. **Dependencies:** 03, 46, 48. **Effort:** 3-6 days.
+- **Tasks:** [x] Define provisional routes/navigation and patient timeline. [x] Specify loading/error/unauthorized/unavailable/empty states. [x] Inventory shared components and keyboard/screen-reader requirements. [x] Specify persistent research disclaimer and future model provenance. [ ] Select and measure final design tokens and responsive components. [ ] Review workflow with representative users and complete accessibility checks.
 - **Tools/inputs:** React stack, UI/UX handoff, user feedback.
-- **Deliverables:** Screen flow, component inventory, design tokens.
-- **Acceptance/testing:** Keyboard/navigation/accessibility review; no predictive output presented as diagnosis; responsive mock review.
-- **Risks:** No real clinical users confirmed. **Remaining:** design has not started.
+- **Deliverables:** Provisional screen flow, component/state inventory, and accessibility requirements in `17_PROVISIONAL_UI_UX_ARCHITECTURE.md`.
+- **Acceptance/testing:** Design artifact reviewed for consistency with the mandatory six modules and no-model state; no user study, visual contrast test, responsive implementation, or screen-reader test has occurred. Full acceptance remains unmet.
+- **Risks:** No representative clinical users confirmed. **Remaining:** confirm workflow terminology, finalize tokens, and validate responsive/accessibility behavior.
 
 ### PHASE 50 - React Frontend Implementation
 
@@ -745,6 +745,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 44 | NOT STARTED 0% -> IN PROGRESS 50% | Overall score 17.7% -> 18.5%; in-progress count 1 -> 2 and not-started count 20 -> 19. | Added a provisional logical ER model, candidate entity keys/relationships/constraints/indexes, and proposed service boundaries in `15_PROVISIONAL_DATA_ARCHITECTURE.md`. No migrations, cloud resources, credentials, or patient records were created. | Final clinical fields, retention, role/RLS propagation, hosting and governance approval remain open; real database work is not authorized by this design artifact. |
 | 2026-11-04 | 45 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 18.5% -> 19.0%; in-progress count 2 -> 3 and not-started count 19 -> 18. | Added provisional identity/authentication trust boundaries, access matrix, credential rules, future security tests, and decision gates in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`. Supabase documentation was checked; no project, credentials, policies, or patient records were created. | Role provisioning, patient scope, session policy, RLS request context, backend integration, and institutional security review remain unresolved; no live security tests were run. |
 | 2026-11-04 | 46 | NOT STARTED 0% -> IN PROGRESS 25% | Overall score 19.0% -> 19.4%; in-progress count 3 -> 4 and not-started count 18 -> 17. | Added a health-only FastAPI app, separate pinned API dependencies, non-sensitive liveness/readiness routes, and tests. Full pytest 17/17, data unittest 14/14, Ruff and package checks pass locally on Python 3.12.10. | Auth, DB, patient, and model endpoints remain gated; hosted CI result not checked and no clinical integration is claimed. |
+| 2026-11-04 | 49 | NOT STARTED 0% -> IN PROGRESS 40% | Overall score 19.4% -> 20.0%; in-progress count 4 -> 5 and not-started count 17 -> 16. | Added provisional app routes, six-module flow, component inventory, loading/error/access-denied/unavailable states, research disclaimer placement, and accessibility checklist in `17_PROVISIONAL_UI_UX_ARCHITECTURE.md`. | Representative-user review, final tokens, visual contrast, responsive implementation, and accessibility testing remain outstanding. |
 
 ## How to maintain this plan
 
