@@ -54,7 +54,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 | 47 Patient/visit management | NOT STARTED | Draft endpoint and validation contracts only. | Governance, schema, auth, and approved source fields before CRUD or real records. |
 | 48 Prediction service | NOT STARTED | Define safe unavailable response contract only. | Versioned approved model and authorized patient-history path. |
 | 49 UI/UX architecture | IN PROGRESS (40%; provisional design) | Route map, component inventory, empty/error/access-denied/unavailable states, disclaimer placement, and accessibility requirements documented. | Review with representative users; final tokens, contrast checks, responsive implementation, and model-specific screens remain unavailable. |
-| 50 React frontend | NOT STARTED; static foundation eligible | Vite/React/TypeScript shell and research-only empty states; no patient records or prediction values. | Auth/API integration and final design before protected workflows. |
+| 50 React frontend | IN PROGRESS (60%; static shell) | Responsive Vite/React/TypeScript shell, six module entry routes, no-auth/no-data states, typed API URL config, components, and tests; no patient records or results. | Auth/API integration, route authorization, error boundaries, formal accessibility acceptance, and final design review before protected workflows. |
 | 51 Patient screens | NOT STARTED | Static layouts and validation states can be designed without records. | No patient CRUD/timeline/prediction success UI until authorized API and model exist. |
 | 52 Frontend/backend integration | NOT STARTED | No integration until both foundations exist. | Auth, API contracts, and inference gates. |
 | 53 Security/privacy audit | NOT STARTED; threat-model planning eligible | Threat-model architecture and secret/data-flow controls. | Live implementation, RLS tests, deployment boundary, and PI/DPO acceptance. |
@@ -71,7 +71,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 
 ## Work selection
 
-Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, Phase 46 has a health-only API scaffold, and Phase 49 has provisional UI/UX architecture. A static React shell is the next eligible slice; it does not enable live database use, authentication secrets, patient CRUD, or prediction behavior.
+Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, Phase 46 has a health-only API scaffold, Phase 49 has provisional UI/UX architecture, and Phase 50 has a static React shell. The next high-priority independent work is threat-model/security planning, followed by additional foundation-test and frontend/backend CI coverage; no live database use, auth secrets, patient CRUD, or prediction behavior is implied.
 
 ## Persistent restrictions
 
