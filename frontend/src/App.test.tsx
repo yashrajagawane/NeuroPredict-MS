@@ -1,16 +1,39 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppRoutes } from "./App";
 
 function renderAt(path = "/") {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <AppRoutes />
-    </MemoryRouter>,
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[path]}>
+        <AppRoutes />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 }
+
+beforeEach(() => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn((input: RequestInfo | URL) => {
+      const body = String(input).endsWith("health/live")
+        ? { status: "ok" }
+        : {
+            status: "not_ready",
+            checks: {
+              database: "not_configured",
+              authentication: "not_configured",
+              model: "not_available",
+            },
+          };
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(body) } as Response);
+    }),
+  );
+});
 
 describe("research application shell", () => {
   it("shows the research-only disclaimer and accurately reports unavailable services", () => {
@@ -23,6 +46,65 @@ describe("research application shell", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/No patient records, authentication provider/)).toBeInTheDocument();
     expect(screen.getAllByText("Research prediction").length).toBeGreaterThan(0);
+  });
+
+  it("reports API availability separately from database, auth, and model readiness", async () => {
+    renderAt();
+
+    await waitFor(() => {
+      expect(screen.getByText(/API process available; application readiness is not ready/)).toBeVisible();
+    });
+    expect(screen.getByText("Database").parentElement!).toHaveTextContent("Not configured");
+    expect(screen.getByText("Authentication").parentElement!).toHaveTextContent("Not configured");
+    expect(screen.getByText("Model").parentElement!).toHaveTextContent("Not available");
+  });
+
+  it("shows a generic API failure state without surfacing server details", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => Promise.reject(new Error("patient data leaked"))));
+    renderAt();
+
+    await waitFor(() => {
+      expect(screen.getByText(/API status is unavailable/)).toBeVisible();
+    });
+    expect(screen.queryByText(/patient data leaked/)).not.toBeInTheDocument();
+  });
+
+  it("announces a pending health check while both endpoints are loading", async () => {
+    const pendingResponses: Array<(response: Response) => void> = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        () =>
+          new Promise<Response>((resolve) => {
+            pendingResponses.push(resolve);
+          }),
+      ),
+    );
+    renderAt();
+
+    expect(screen.getByRole("status")).toHaveTextContent("Checking API availability");
+    await waitFor(() => expect(pendingResponses).toHaveLength(2));
+    pendingResponses.forEach((resolve, index) =>
+      resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve(
+            index === 0
+              ? { status: "ok" }
+              : {
+                  status: "not_ready",
+                  checks: {
+                    database: "not_configured",
+                    authentication: "not_configured",
+                    model: "not_available",
+                  },
+                },
+          ),
+      } as Response),
+    );
+    await waitFor(() =>
+      expect(screen.getByText(/API process available; application readiness is not ready/)).toBeVisible(),
+    );
   });
 
   it("shows prediction unavailable without a class or probability", () => {

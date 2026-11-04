@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
 
 import { Card } from "@/components/ui/card";
+import { ServiceStatusCard } from "@/features/system/ServiceStatusCard";
 
 const navigation = [
   { label: "Overview", to: "/", icon: LayoutDashboard, end: true },
@@ -158,6 +159,8 @@ function OverviewPage() {
           available.
         </p>
       </section>
+
+      <ServiceStatusCard />
 
       <Card className="flex gap-4 border-amber-200 bg-amber-50 p-5 sm:p-6">
         <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-amber-700">

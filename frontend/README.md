@@ -13,7 +13,7 @@ npm run dev
 
 Available checks are `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build`.
 
-`VITE_API_BASE_URL` may point to the FastAPI service. It is a public URL only; never place Supabase secret/service-role keys, database credentials, access tokens, or patient information in a `VITE_` variable. Authentication is deliberately marked unconfigured. The typed API helper is not yet connected to health or patient endpoints.
+`VITE_API_BASE_URL` is a public API base URL; the example uses `/api/v1` and the Vite development server proxies that path to `http://127.0.0.1:8000`. The overview makes read-only liveness/readiness requests and reports the API process separately from unavailable database, authentication, and model integrations. This health check does not expose patient endpoints or credentials. Never place Supabase secret/service-role keys, database credentials, access tokens, or patient information in a `VITE_` variable. Authentication is deliberately marked unconfigured; patient and prediction endpoints remain disconnected.
 
 ## Current scope
 
