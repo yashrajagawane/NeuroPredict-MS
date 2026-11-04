@@ -1,7 +1,7 @@
 # Remaining Phase Dependency Reassessment
 
-**Reviewed:** 2026-11-04
-**Baseline:** `PROJECT_MASTER_PLAN.md` at `dc93a1f` (Phase 26 complete)
+**Reviewed:** 2026-11-05
+**Baseline:** Current repository after successful hosted validation at `a525779` and Phase 58 provisional design work
 **Scope:** Identify safe, independent work slices without weakening clinical, governance, or model-readiness gates.
 
 ## Decision
@@ -60,9 +60,9 @@ Project-owner authorization confirms the doctor-facing application and its six m
 | 53 Security/privacy audit | IN PROGRESS (30%; threat model only) | Provisional assets, actors, trust boundaries, 16 threats, controls, and required evidence documented. | Live implementation review, RLS/IDOR tests, deployment boundary, and institutional/data-owner acceptance. |
 | 54 App testing | IN PROGRESS (30%; foundation tests) | Deterministic data-guard, API readiness, frontend unavailable-state, auth placeholder, and API URL configuration unit tests. | Integration/E2E requires implemented auth, DB, patient UI/API, and inference. |
 | 55 Performance/reliability | NOT STARTED | Define provisional test approach only. | Running service/model and agreed workload/targets. |
-| 56 CI/CD | IN PROGRESS (40%; validation CI only) | Read-only GitHub Actions runs locked Python/API tests, Ruff, Node 24 type/lint/Vitest/build, and npm audit with no secrets or patient files. | Hosted run evidence pending; release/deploy pipeline requires security, reliability, and governance gates. |
+| 56 CI/CD | IN PROGRESS (50%; validation CI only) | Read-only GitHub Actions runs locked Python/API tests, Ruff, Node 24 type/lint/Vitest/build, and npm audit with no secrets or patient files. Hosted run 41892334989 passed for `a525779`. | Release/deploy pipeline requires security, reliability, and governance gates. |
 | 57 Deployment readiness | NOT STARTED | None for health-data deployment. | Governance, security, model artifact, hosting and recovery approval. |
-| 58 Monitoring/drift | NOT STARTED | Privacy-safe metric design can be documented. | Deployed service and approved model/data monitoring. |
+| 58 Monitoring/drift | IN PROGRESS (25%; provisional design) | Document candidate health/error/latency signals, an allowlisted log contract, aggregate-only approval-gated data/model drift, and future alert/retention tests. | No telemetry/dashboard/alerts may be activated without service/model/deployment and privacy approvals (43, 48, 57); no model/cohort exists for drift analysis. |
 | 59 Backup/operations | NOT STARTED | Draft questions only. | Live database, policy-approved retention, and restore target. |
 | 60 Clinical usability review | NOT STARTED | Prepare review script when prototype screens exist. | Representative clinician/user availability and approved intended-use language. |
 | 61 Final handover | NOT STARTED | Keep development docs current. | Final data/model/application deliverables. |
@@ -71,7 +71,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 
 ## Work selection
 
-Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, Phase 46 has a health-only API scaffold, Phase 49 has provisional UI/UX architecture, Phase 50 has a static React shell, Phase 53 has a provisional threat model, Phase 54 has foundation tests, and Phase 56 now has read-only validation CI. The next eligible independent work is privacy-safe operational/monitoring design and technical documentation while hosted CI is checked; no live database use, auth secrets, patient CRUD, prediction behavior, completed security audit, or deployment readiness is implied.
+Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, Phase 45 has a provisional authorization design, Phase 46 has a health-only API scaffold, Phase 49 has provisional UI/UX architecture, Phase 50 has a static React shell, Phase 53 has a provisional threat model, Phase 54 has foundation tests, and Phase 56's read-only validation CI passed hosted run 41892334989. Phase 58 has a provisional privacy-safe observability design; activation, alert testing, and drift analysis remain blocked on the real service/model/deployment and governance approvals. Other work identified remains bounded: Phase 55 can have a test approach drafted but no workload targets are approved; Phase 60 can prepare a non-clinical walkthrough script but user review requires participant availability/approval; Phase 61 documentation can be maintained incrementally but cannot be accepted as a reproducibility handover until its dependencies complete. Do not create live database use, auth secrets, patient CRUD, prediction behavior, completed security audit, or deployment readiness to bypass these gates.
 
 ## Persistent restrictions
 
