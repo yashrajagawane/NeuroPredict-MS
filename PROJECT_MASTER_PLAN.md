@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 2 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 3 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 19 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 18 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **18.5% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 44 - Supabase PostgreSQL Architecture (IN PROGRESS, 50%; provisional design only). | A conceptual schema and access-boundary proposal exists; live database use remains gated by governance and workflow decisions. |
+| Overall progress | **19.0% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 45 - Supabase Authentication and Authorization (IN PROGRESS, 30%; design only). | Trust boundaries and a provisional access matrix are documented; live Auth and RLS remain gated by implementation dependencies and governance. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Continue independent authentication, FastAPI, UI/UX, and React foundation slices while preserving live-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Build a non-sensitive FastAPI health/readiness foundation and continue independent UI/UX and React foundations while preserving live-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, and Phase 44 50%. Thus `(10 x 100 + 50 + 25 + 60 + 50) / 64 = 18.515625%`, displayed as **18.5%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, and Phase 45 30%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30) / 64 = 18.984375%`, displayed as **19.0%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -92,7 +92,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 42 | Final Model Reporting and Model Card | BLOCKED | 0 | High | 36-41 | No model/results to report. | Dataset card exists for data status, not a trained model. |
 | 43 | Model and Preprocessing Artifact Versioning | BLOCKED | 0 | High | 24, 34-36, 42 | No trained model or fitted preprocessing artifact. | No model artifact. |
 | 44 | Supabase PostgreSQL Architecture | IN PROGRESS | 50 | Medium | 01, 03, 08, 12 | Clinical-field, retention, role/RLS, and deployment decisions remain pending. | Provisional logical model, candidate constraints/indexes, and access-boundary decisions in `15_PROVISIONAL_DATA_ARCHITECTURE.md`; no migrations or live data. |
-| 45 | Supabase Authentication and Authorization | NOT STARTED | 0 | Critical | 08, 44, 46 | - | Stack selected; no auth/RLS policy files. |
+| 45 | Supabase Authentication and Authorization | IN PROGRESS | 30 | Critical | 08, 44, 46 | Live Auth/RLS implementation waits for Phase 46 and institutional role/patient-scope decisions. | Provisional trust boundaries, access matrix, and security test requirements in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`; no live policies or credentials. |
 | 46 | FastAPI Backend Implementation | NOT STARTED | 0 | Medium | 26, 43-45 | - | No backend application code. |
 | 47 | Patient and Visit Management | NOT STARTED | 0 | High | 08, 44-46 | - | No database or API CRUD code. |
 | 48 | Prediction and Model Inference Service | NOT STARTED | 0 | Critical | 43, 46-47 | - | No validated model to serve. |
@@ -531,13 +531,13 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 45 - Supabase Authentication and Authorization
 
-- **Purpose/outcome:** Enforce authenticated least-privilege access. **Status:** NOT STARTED (0%). **Priority:** Critical. **Dependencies:** 08, 44, 46. **Effort:** 4-8 days.
-- **Tasks:** [ ] Define roles/claims. [ ] Design RLS policies and service/API access boundaries. [ ] Decide token verification and session expiry. [ ] Test cross-user and unauthorized access.
+- **Purpose/outcome:** Enforce authenticated least-privilege access. **Status:** IN PROGRESS (30%; design only). **Priority:** Critical. **Dependencies:** 08, 44, 46. **Effort:** 4-8 days.
+- **Tasks:** [x] Draft provisional roles/claims and access matrix. [x] Document RLS/service/API trust boundaries and required token-validation properties. [ ] Approve role provisioning, patient scope, session policy, and RLS connection pattern. [ ] Implement and test cross-user and unauthorized access after Phase 46 and governance review.
 - **Tools/inputs:** Supabase Auth/PostgreSQL RLS, FastAPI security dependencies.
 - **Deliverables:** Policy migrations, auth architecture, access matrix.
-- **Acceptance/testing:** Deny-by-default tests cover anon, user, role and service access; browser never receives service-role key.
+- **Acceptance/testing:** Provisional architecture and future test matrix documented in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`; no live Auth/RLS security test was run. Final deny-by-default tests and secret scanning remain required.
 - **Risks:** RLS bypass via privileged credentials; restrict backend secrets and audit access.
-- **Remaining/blocker:** No authorization design or approved deployment boundary.
+- **Remaining/blocker:** Governance decisions, patient-scope definition, Phase 46 backend, and security review block executable authorization.
 
 ### PHASE 46 - FastAPI Backend Implementation
 
@@ -743,6 +743,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 26 | IN PROGRESS 90% -> COMPLETE 100% | Overall score 17.4% -> 17.6%; completed count 9 -> 10. | Installed Python 3.12.10 in an isolated environment; `unittest` 13/13, pytest 13/13, Ruff lint/format, and `pip check` pass under Python 3.12.10. Previous Python 3.13.5 checks also pass. CI is pushed and queued, not reported as passed. | ML/API dependency locks are deferred to their implementation phases; no model or app dependencies are installed. No next phase meets its dependencies while target/cohort and evaluation prerequisites remain blocked. |
 | 2026-11-04 | 27 | IN PROGRESS 50% -> BLOCKED 60% | Overall score 17.6% -> 17.7%; in-progress count 2 -> 1 and blocked count 32 -> 33. | Added explicitly test-only synthetic split checks for seeded reproducibility, disjoint patient assignments, complete eligible coverage, and exclusion of unknown outcomes. 14/14 unittest and pytest checks pass on Python 3.12.10. Added a phase-by-phase dependency reassessment. | Phase 25 and approved-cohort-specific tests remain blocked; no actual split manifest or clinical dataset was created. Phase 44 is next for provisional database architecture only. |
 | 2026-11-04 | 44 | NOT STARTED 0% -> IN PROGRESS 50% | Overall score 17.7% -> 18.5%; in-progress count 1 -> 2 and not-started count 20 -> 19. | Added a provisional logical ER model, candidate entity keys/relationships/constraints/indexes, and proposed service boundaries in `15_PROVISIONAL_DATA_ARCHITECTURE.md`. No migrations, cloud resources, credentials, or patient records were created. | Final clinical fields, retention, role/RLS propagation, hosting and governance approval remain open; real database work is not authorized by this design artifact. |
+| 2026-11-04 | 45 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 18.5% -> 19.0%; in-progress count 2 -> 3 and not-started count 19 -> 18. | Added provisional identity/authentication trust boundaries, access matrix, credential rules, future security tests, and decision gates in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`. Supabase documentation was checked; no project, credentials, policies, or patient records were created. | Role provisioning, patient scope, session policy, RLS request context, backend integration, and institutional security review remain unresolved; no live security tests were run. |
 
 ## How to maintain this plan
 

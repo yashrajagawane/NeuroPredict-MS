@@ -49,7 +49,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 | 42 Model reporting | BLOCKED | None beyond data-readiness documentation. | Completed valid evaluation. |
 | 43 Artifact versioning | BLOCKED | Environment metadata can be recorded. | Approved trained model and fitted preprocessing. |
 | 44 Database architecture | IN PROGRESS (50%; provisional design) | Logical ER/schema, candidate constraints/indexes, and service boundaries documented without deployment or patient records. | Governance and workflow review for clinical columns, retention, RLS, and live persistence. |
-| 45 Authentication/authorization | NOT STARTED; design slice eligible after Phase 44 draft | Draft least-privilege role/access matrix and trust boundaries; no live Auth setup or policy migration. | Institutional role policy, governance, DB/backend implementation, and security testing. |
+| 45 Authentication/authorization | IN PROGRESS (30%; design only) | Provisional trust boundaries, access matrix, credential rules, and future security test requirements documented. | Institutional role/patient-scope policy, governance, Phase 46, RLS context implementation, and security testing. |
 | 46 FastAPI backend | NOT STARTED; minimal foundation eligible | A non-sensitive health/readiness endpoint and typed app config can be built after Phase 26. | Patient, database, authentication, and inference services require their own upstream gates. |
 | 47 Patient/visit management | NOT STARTED | Draft endpoint and validation contracts only. | Governance, schema, auth, and approved source fields before CRUD or real records. |
 | 48 Prediction service | NOT STARTED | Define safe unavailable response contract only. | Versioned approved model and authorized patient-history path. |
@@ -71,7 +71,7 @@ Project-owner authorization confirms the doctor-facing application and its six m
 
 ## Work selection
 
-Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 now has a provisional logical schema. Independent auth-design, FastAPI health/readiness, UI/UX, and static React-shell slices can proceed next; no live database, authentication secrets, patient CRUD, or prediction behavior is implied.
+Phase 27's high-priority test-only split safety coverage is complete as an independent slice; the remainder is blocked by Phase 25. Phase 44 has a provisional logical schema, and Phase 45 has a provisional authorization design. The next highest-priority independent slice is a non-sensitive FastAPI health/readiness foundation, followed by UI/UX and static React-shell work; no live database, authentication secrets, patient CRUD, or prediction behavior is implied.
 
 ## Persistent restrictions
 
