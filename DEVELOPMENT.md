@@ -7,7 +7,8 @@ developer tools and does not install or train the ML stack.
 ## Runtime and package managers
 
 - Python **3.12** for backend and data/ML work (`.python-version` selects the
-  supported 3.12 minor line; use the latest patch available for the platform). Create
+  supported 3.12 minor line; use the latest patch available for the platform.
+  The local Windows check was run on 3.12.10. Create
   isolated environments with the standard-library `venv` module and install
   Python packages with `pip`.
 - Node.js **24.22.2 LTS** for the future React/Vite frontend (`.nvmrc`); use
