@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="330" viewBox="0 0 940 330" role="img" aria-labelledby="title desc">
+  <title id="title">Public candidate cohort rows compared with the 2,000-patient aspiration</title>
+  <desc id="desc">The Mexican workbook has 273 rows, the Lithuanian workbook has 138 rows, and the aspirational cohort size is 2,000. These are raw source rows, not an approved longitudinal training cohort.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="32" y="34" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Public candidate rows remain far below the 2,000-patient aspiration</text>
+  <text x="32" y="58" font-family="Arial, sans-serif" font-size="13" fill="#475569">Source: official Mendeley workbooks downloaded 2026-11-04. Counts are raw rows, not approved longitudinal model cohorts.</text>
+  <text x="32" y="95" font-size="16" fill="#1e293b">Mexican public workbook</text><rect x="255" y="70" width="83.3" height="38" fill="#527da4" /><text x="348.3" y="95" font-size="16" fill="#1e293b">273</text><text x="32" y="151" font-size="16" fill="#1e293b">Lithuanian public workbook</text><rect x="255" y="126" width="42.1" height="38" fill="#6f9e88" /><text x="307.1" y="151" font-size="16" fill="#1e293b">138</text><text x="32" y="207" font-size="16" fill="#1e293b">Aspirational target</text><rect x="255" y="182" width="610.0" height="38" fill="#a16b55" /><text x="875.0" y="207" font-size="16" fill="#1e293b">2,000</text>
+  <line x1="255" y1="256" x2="865" y2="256" stroke="#94a3b8" stroke-width="1"/>
+  <text x="255" y="280" font-family="Arial, sans-serif" font-size="13" fill="#475569">Patient rows (count)</text>
+</svg>

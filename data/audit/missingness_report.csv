@@ -1,0 +1,65 @@
+source_dataset,source_column,records,missing_count,missing_pct,distinct_non_missing,value_type_hint
+mendeley_8wk5hjx7x2_v1,Patient,273,0,0.0,272,numeric
+mendeley_8wk5hjx7x2_v1,Gender,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,Age (y),273,0,0.0,48,numeric
+mendeley_8wk5hjx7x2_v1,Schooling (y),273,1,0.366,12,numeric
+mendeley_8wk5hjx7x2_v1,Breastfeeding,273,0,0.0,3,numeric
+mendeley_8wk5hjx7x2_v1,Varicella,273,0,0.0,3,numeric
+mendeley_8wk5hjx7x2_v1,initial symptom,273,1,0.366,15,numeric
+mendeley_8wk5hjx7x2_v1,Mono or polysymptomatic,273,0,0.0,3,numeric
+mendeley_8wk5hjx7x2_v1,Oligoclonal bands,273,0,0.0,3,numeric
+mendeley_8wk5hjx7x2_v1,LLSSEP,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,ULSSEP,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,VEP,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,BAEP,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,Periventricular MRI,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,Cortical MRI,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,Infratentorial MRI,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,Spinal cord MRI,273,0,0.0,2,numeric
+mendeley_8wk5hjx7x2_v1,initial EDSS,273,148,54.212,3,numeric
+mendeley_8wk5hjx7x2_v1,final EDSS,273,148,54.212,3,numeric
+mendeley_8wk5hjx7x2_v1,group,273,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Nr,138,0,0.0,138,numeric
+mendeley_yjfydt34rs_v1,Sex,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Age,138,0,0.0,51,numeric
+mendeley_yjfydt34rs_v1,Fatigue,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,General weakness,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Pain,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Focal symptoms,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,CN,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,3,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,4,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,5,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,6,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,8,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Pathological reflexes,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Babinski's,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Rossolimo,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Muscle strength,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Reflex asymmetry,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Muscle tone abnormalities,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Proprioception,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Superficial sensation,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Coordination,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Balance,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Urinary incontinence,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Urine retention,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Vertigo,138,0,0.0,2,numeric
+mendeley_yjfydt34rs_v1,Sum of symptoms,138,0,0.0,13,numeric
+mendeley_yjfydt34rs_v1,MRI lesions specific to MS,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,MRI lesions indicative of other diseases,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,Unspecified MRI lesions,138,1,0.725,2,numeric
+mendeley_yjfydt34rs_v1,MRI lesion localisation: infratentorally,138,16,11.594,2,numeric
+mendeley_yjfydt34rs_v1,Periventricular,138,16,11.594,2,numeric
+mendeley_yjfydt34rs_v1,Juxtacortical,138,16,11.594,2,numeric
+mendeley_yjfydt34rs_v1,MRI spinal lesions,138,89,64.493,2,numeric
+mendeley_yjfydt34rs_v1,Patholoigical CSF,138,13,9.42,3,categorical_or_mixed
+mendeley_yjfydt34rs_v1,Increased protein,138,21,15.217,2,numeric
+mendeley_yjfydt34rs_v1,Increased protein (g/l),138,21,15.217,49,numeric
+mendeley_yjfydt34rs_v1,Pleocytosis [AL],138,18,13.043,2,numeric
+mendeley_yjfydt34rs_v1,Pleocytosis [AM],138,18,13.043,24,numeric
+mendeley_yjfydt34rs_v1,OGB + in CSF,138,30,21.739,2,numeric
+mendeley_yjfydt34rs_v1,IgG levels in CSF,138,49,35.507,85,numeric
+mendeley_yjfydt34rs_v1,VEP +,138,23,16.667,2,numeric
+mendeley_yjfydt34rs_v1,BAEP +,138,35,25.362,2,numeric
+mendeley_yjfydt34rs_v1,MS,138,0,0.0,2,numeric

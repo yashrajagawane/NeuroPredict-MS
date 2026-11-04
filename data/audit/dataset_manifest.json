@@ -1,0 +1,1391 @@
+{
+  "manifest_version": "1.0",
+  "generated_at_utc": "2026-11-04T09:52:02.852683+00:00",
+  "intended_prediction_task": "Future conversion from confirmed baseline CIS to MS within a defined post-index horizon.",
+  "dataset_readiness": "NO_GO",
+  "dataset_ready_for_hybrid_rnn_lstm_training": false,
+  "stop_conditions_triggered": [
+    "No public candidate has patient-linked repeated visit records.",
+    "No public candidate has patient-level index, conversion, and last-follow-up dates.",
+    "The intended outcome horizon cannot be validated from the downloaded files."
+  ],
+  "public_source_audits": [
+    {
+      "source_id": "mendeley_8wk5hjx7x2_v1",
+      "display_name": "Mexican prospective CIS cohort",
+      "raw_file": "data/raw/mendeley_8wk5hjx7x2_v1/Data Base.xlsx",
+      "data_url": "https://doi.org/10.17632/8wk5hjx7x2.1",
+      "publication_url": "https://doi.org/10.1016/j.arcmed.2023.102843",
+      "license": "CC BY 4.0",
+      "official_sha256": "070bfe92c78ef3b0bbd3169b61b8befa98c687b61322298b9143d540ae3c00d7",
+      "observed_sha256": "070bfe92c78ef3b0bbd3169b61b8befa98c687b61322298b9143d540ae3c00d7",
+      "hash_matches_official": true,
+      "file_size_bytes": 29846,
+      "worksheet": "Hoja1",
+      "header_row": 4,
+      "source_row_count_with_identifier": 273,
+      "source_column_count": 20,
+      "source_columns": [
+        {
+          "excel_column": "A",
+          "raw_source_header": "Patient",
+          "audit_field_name": "Patient"
+        },
+        {
+          "excel_column": "B",
+          "raw_source_header": "Gender",
+          "audit_field_name": "Gender"
+        },
+        {
+          "excel_column": "C",
+          "raw_source_header": "Age (y)",
+          "audit_field_name": "Age (y)"
+        },
+        {
+          "excel_column": "D",
+          "raw_source_header": "Schooling (y)",
+          "audit_field_name": "Schooling (y)"
+        },
+        {
+          "excel_column": "E",
+          "raw_source_header": "Breastfeeding",
+          "audit_field_name": "Breastfeeding"
+        },
+        {
+          "excel_column": "F",
+          "raw_source_header": "Varicella",
+          "audit_field_name": "Varicella"
+        },
+        {
+          "excel_column": "G",
+          "raw_source_header": "initial symptom",
+          "audit_field_name": "initial symptom"
+        },
+        {
+          "excel_column": "H",
+          "raw_source_header": "Mono or polysymptomatic",
+          "audit_field_name": "Mono or polysymptomatic"
+        },
+        {
+          "excel_column": "I",
+          "raw_source_header": "Oligoclonal bands",
+          "audit_field_name": "Oligoclonal bands"
+        },
+        {
+          "excel_column": "J",
+          "raw_source_header": "LLSSEP",
+          "audit_field_name": "LLSSEP"
+        },
+        {
+          "excel_column": "K",
+          "raw_source_header": "ULSSEP",
+          "audit_field_name": "ULSSEP"
+        },
+        {
+          "excel_column": "L",
+          "raw_source_header": "VEP",
+          "audit_field_name": "VEP"
+        },
+        {
+          "excel_column": "M",
+          "raw_source_header": "BAEP",
+          "audit_field_name": "BAEP"
+        },
+        {
+          "excel_column": "N",
+          "raw_source_header": "Periventricular MRI",
+          "audit_field_name": "Periventricular MRI"
+        },
+        {
+          "excel_column": "O",
+          "raw_source_header": "Cortical MRI",
+          "audit_field_name": "Cortical MRI"
+        },
+        {
+          "excel_column": "P",
+          "raw_source_header": "Infratentorial MRI",
+          "audit_field_name": "Infratentorial MRI"
+        },
+        {
+          "excel_column": "Q",
+          "raw_source_header": "Spinal cord MRI",
+          "audit_field_name": "Spinal cord MRI"
+        },
+        {
+          "excel_column": "R",
+          "raw_source_header": "initial EDSS",
+          "audit_field_name": "initial EDSS"
+        },
+        {
+          "excel_column": "S",
+          "raw_source_header": "final EDSS",
+          "audit_field_name": "final EDSS"
+        },
+        {
+          "excel_column": "T",
+          "raw_source_header": "group",
+          "audit_field_name": "group"
+        }
+      ],
+      "identifier": {
+        "source_column": "Patient",
+        "unique_non_missing_count": 272,
+        "duplicate_identifier_count": 1,
+        "exact_duplicate_row_count": 0
+      },
+      "outcome": {
+        "source_column": "group",
+        "raw_value_counts": {
+          "1": 125,
+          "2": 148
+        },
+        "interpretation": "The workbook's group codes are not documented in a source data dictionary. Group 1 has 125 rows, which matches the publication's 125 reported conversions; this makes the mapping plausible but inferred rather than machine-readable source documentation."
+      },
+      "candidate_temporal_fields": [],
+      "temporal_evidence": "The publication reports 10 years of study follow-up, but the downloadable workbook has no visit IDs, visit dates, conversion dates, last-follow-up dates, or per-visit observations.",
+      "has_patient_linked_repeated_visits": false,
+      "has_visit_dates": false,
+      "has_conversion_dates": false,
+      "has_last_follow_up_dates": false,
+      "can_support_final_longitudinal_rnn_lstm_dataset": false,
+      "column_summaries": [
+        {
+          "field_name": "Patient",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 272,
+          "value_type_hint": "numeric",
+          "numeric_min": 1.0,
+          "numeric_median": 138.0,
+          "numeric_max": 273.0
+        },
+        {
+          "field_name": "Gender",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 105,
+            "2": 168
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 2.0,
+          "numeric_max": 2.0
+        },
+        {
+          "field_name": "Age (y)",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 48,
+          "value_type_hint": "numeric",
+          "numeric_min": 15.0,
+          "numeric_median": 33.0,
+          "numeric_max": 77.0
+        },
+        {
+          "field_name": "Schooling (y)",
+          "records": 273,
+          "missing_count": 1,
+          "missing_pct": 0.366,
+          "distinct_non_missing": 12,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 1,
+            "12": 59,
+            "14": 2,
+            "15": 81,
+            "20": 83,
+            "22": 4,
+            "23": 1,
+            "24": 1,
+            "25": 2,
+            "6": 3,
+            "8": 1,
+            "9": 34
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 15.0,
+          "numeric_max": 25.0
+        },
+        {
+          "field_name": "Breastfeeding",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 131,
+            "2": 57,
+            "3": 85
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 2.0,
+          "numeric_max": 3.0
+        },
+        {
+          "field_name": "Varicella",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 124,
+            "2": 104,
+            "3": 45
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 2.0,
+          "numeric_max": 3.0
+        },
+        {
+          "field_name": "initial symptom",
+          "records": 273,
+          "missing_count": 1,
+          "missing_pct": 0.366,
+          "distinct_non_missing": 15,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 31,
+            "10": 15,
+            "11": 10,
+            "12": 6,
+            "13": 11,
+            "14": 14,
+            "15": 11,
+            "2": 26,
+            "3": 32,
+            "4": 30,
+            "5": 13,
+            "6": 17,
+            "7": 9,
+            "8": 39,
+            "9": 8
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 6.0,
+          "numeric_max": 15.0
+        },
+        {
+          "field_name": "Mono or polysymptomatic",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 81,
+            "2": 186,
+            "3": 6
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 2.0,
+          "numeric_max": 3.0
+        },
+        {
+          "field_name": "Oligoclonal bands",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 186,
+            "1": 76,
+            "2": 11
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 2.0
+        },
+        {
+          "field_name": "LLSSEP",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 157,
+            "1": 116
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "ULSSEP",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 172,
+            "1": 101
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "VEP",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 189,
+            "1": 84
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "BAEP",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 255,
+            "1": 18
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Periventricular MRI",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 135,
+            "1": 138
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Cortical MRI",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 155,
+            "1": 118
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Infratentorial MRI",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 193,
+            "1": 80
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Spinal cord MRI",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 187,
+            "1": 86
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "initial EDSS",
+          "records": 273,
+          "missing_count": 148,
+          "missing_pct": 54.212,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 87,
+            "2": 31,
+            "3": 7
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 1.0,
+          "numeric_max": 3.0
+        },
+        {
+          "field_name": "final EDSS",
+          "records": 273,
+          "missing_count": 148,
+          "missing_pct": 54.212,
+          "distinct_non_missing": 3,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 80,
+            "2": 34,
+            "3": 11
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 1.0,
+          "numeric_max": 3.0
+        },
+        {
+          "field_name": "group",
+          "records": 273,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "1": 125,
+            "2": 148
+          },
+          "numeric_min": 1.0,
+          "numeric_median": 2.0,
+          "numeric_max": 2.0
+        }
+      ]
+    },
+    {
+      "source_id": "mendeley_yjfydt34rs_v1",
+      "display_name": "Lithuanian retrospective CIS cohort",
+      "raw_file": "data/raw/mendeley_yjfydt34rs_v1/Database.xlsx",
+      "data_url": "https://doi.org/10.17632/yjfydt34rs.1",
+      "publication_url": "https://doi.org/10.3390/medicina58091178",
+      "license": "CC BY 4.0",
+      "official_sha256": "0e9e56026c9de83c38edbe934cd93a4e44cd845507a0e844a4b3d1926e1e8880",
+      "observed_sha256": "0e9e56026c9de83c38edbe934cd93a4e44cd845507a0e844a4b3d1926e1e8880",
+      "hash_matches_official": true,
+      "file_size_bytes": 156341,
+      "worksheet": "Database",
+      "header_row": 1,
+      "source_row_count_with_identifier": 138,
+      "source_column_count": 44,
+      "source_columns": [
+        {
+          "excel_column": "A",
+          "raw_source_header": "Nr",
+          "audit_field_name": "Nr"
+        },
+        {
+          "excel_column": "B",
+          "raw_source_header": "Sex",
+          "audit_field_name": "Sex"
+        },
+        {
+          "excel_column": "C",
+          "raw_source_header": "Age",
+          "audit_field_name": "Age"
+        },
+        {
+          "excel_column": "D",
+          "raw_source_header": "Fatigue",
+          "audit_field_name": "Fatigue"
+        },
+        {
+          "excel_column": "E",
+          "raw_source_header": "General weakness",
+          "audit_field_name": "General weakness"
+        },
+        {
+          "excel_column": "F",
+          "raw_source_header": "Pain",
+          "audit_field_name": "Pain"
+        },
+        {
+          "excel_column": "G",
+          "raw_source_header": "Focal symptoms",
+          "audit_field_name": "Focal symptoms"
+        },
+        {
+          "excel_column": "H",
+          "raw_source_header": "CN",
+          "audit_field_name": "CN"
+        },
+        {
+          "excel_column": "I",
+          "raw_source_header": "3",
+          "audit_field_name": "3"
+        },
+        {
+          "excel_column": "J",
+          "raw_source_header": "4",
+          "audit_field_name": "4"
+        },
+        {
+          "excel_column": "K",
+          "raw_source_header": "5",
+          "audit_field_name": "5"
+        },
+        {
+          "excel_column": "L",
+          "raw_source_header": "6",
+          "audit_field_name": "6"
+        },
+        {
+          "excel_column": "M",
+          "raw_source_header": "8",
+          "audit_field_name": "8"
+        },
+        {
+          "excel_column": "N",
+          "raw_source_header": "Pathological reflexes",
+          "audit_field_name": "Pathological reflexes"
+        },
+        {
+          "excel_column": "O",
+          "raw_source_header": "Babinski's",
+          "audit_field_name": "Babinski's"
+        },
+        {
+          "excel_column": "P",
+          "raw_source_header": "Rossolimo",
+          "audit_field_name": "Rossolimo"
+        },
+        {
+          "excel_column": "Q",
+          "raw_source_header": "Muscle strength",
+          "audit_field_name": "Muscle strength"
+        },
+        {
+          "excel_column": "R",
+          "raw_source_header": "Reflex asymmetry",
+          "audit_field_name": "Reflex asymmetry"
+        },
+        {
+          "excel_column": "S",
+          "raw_source_header": "Muscle tone abnormalities",
+          "audit_field_name": "Muscle tone abnormalities"
+        },
+        {
+          "excel_column": "T",
+          "raw_source_header": "Proprioception",
+          "audit_field_name": "Proprioception"
+        },
+        {
+          "excel_column": "U",
+          "raw_source_header": "Superficial sensation",
+          "audit_field_name": "Superficial sensation"
+        },
+        {
+          "excel_column": "V",
+          "raw_source_header": "Coordination",
+          "audit_field_name": "Coordination"
+        },
+        {
+          "excel_column": "W",
+          "raw_source_header": "Balance",
+          "audit_field_name": "Balance"
+        },
+        {
+          "excel_column": "X",
+          "raw_source_header": "Urinary incontinence",
+          "audit_field_name": "Urinary incontinence"
+        },
+        {
+          "excel_column": "Y",
+          "raw_source_header": "Urine retention",
+          "audit_field_name": "Urine retention"
+        },
+        {
+          "excel_column": "Z",
+          "raw_source_header": "Vertigo",
+          "audit_field_name": "Vertigo"
+        },
+        {
+          "excel_column": "AA",
+          "raw_source_header": "Sum of symptoms",
+          "audit_field_name": "Sum of symptoms"
+        },
+        {
+          "excel_column": "AB",
+          "raw_source_header": "MRI lesions specific to MS",
+          "audit_field_name": "MRI lesions specific to MS"
+        },
+        {
+          "excel_column": "AC",
+          "raw_source_header": "MRI lesions indicative of other diseases",
+          "audit_field_name": "MRI lesions indicative of other diseases"
+        },
+        {
+          "excel_column": "AD",
+          "raw_source_header": "Unspecified MRI lesions",
+          "audit_field_name": "Unspecified MRI lesions"
+        },
+        {
+          "excel_column": "AE",
+          "raw_source_header": "MRI lesion localisation: infratentorally",
+          "audit_field_name": "MRI lesion localisation: infratentorally"
+        },
+        {
+          "excel_column": "AF",
+          "raw_source_header": "Periventricular",
+          "audit_field_name": "Periventricular"
+        },
+        {
+          "excel_column": "AG",
+          "raw_source_header": "Juxtacortical",
+          "audit_field_name": "Juxtacortical"
+        },
+        {
+          "excel_column": "AH",
+          "raw_source_header": "MRI spinal lesions",
+          "audit_field_name": "MRI spinal lesions"
+        },
+        {
+          "excel_column": "AI",
+          "raw_source_header": "Patholoigical CSF",
+          "audit_field_name": "Patholoigical CSF"
+        },
+        {
+          "excel_column": "AJ",
+          "raw_source_header": "Increased protein",
+          "audit_field_name": "Increased protein"
+        },
+        {
+          "excel_column": "AK",
+          "raw_source_header": "Increased protein (g/l)",
+          "audit_field_name": "Increased protein (g/l)"
+        },
+        {
+          "excel_column": "AL",
+          "raw_source_header": "Pleocytosis",
+          "audit_field_name": "Pleocytosis [AL]"
+        },
+        {
+          "excel_column": "AM",
+          "raw_source_header": "Pleocytosis",
+          "audit_field_name": "Pleocytosis [AM]"
+        },
+        {
+          "excel_column": "AN",
+          "raw_source_header": "OGB + in CSF",
+          "audit_field_name": "OGB + in CSF"
+        },
+        {
+          "excel_column": "AO",
+          "raw_source_header": "IgG levels in CSF",
+          "audit_field_name": "IgG levels in CSF"
+        },
+        {
+          "excel_column": "AP",
+          "raw_source_header": "VEP +",
+          "audit_field_name": "VEP +"
+        },
+        {
+          "excel_column": "AQ",
+          "raw_source_header": "BAEP +",
+          "audit_field_name": "BAEP +"
+        },
+        {
+          "excel_column": "AR",
+          "raw_source_header": "MS",
+          "audit_field_name": "MS"
+        }
+      ],
+      "identifier": {
+        "source_column": "Nr",
+        "unique_non_missing_count": 138,
+        "duplicate_identifier_count": 0,
+        "exact_duplicate_row_count": 0
+      },
+      "outcome": {
+        "source_column": "MS",
+        "raw_value_counts": {
+          "0": 89,
+          "1": 49
+        },
+        "interpretation": "The MS field is a final-diagnosis indicator with 49 positive and 89 negative rows. A fixed future prediction horizon cannot be validated from the downloadable file."
+      },
+      "candidate_temporal_fields": [],
+      "temporal_evidence": "The publication covers records reviewed from 2015 through 2020, but the workbook has no patient-level baseline, visit, conversion, or last-follow-up dates and no repeated visit rows.",
+      "has_patient_linked_repeated_visits": false,
+      "has_visit_dates": false,
+      "has_conversion_dates": false,
+      "has_last_follow_up_dates": false,
+      "can_support_final_longitudinal_rnn_lstm_dataset": false,
+      "column_summaries": [
+        {
+          "field_name": "Nr",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 138,
+          "value_type_hint": "numeric",
+          "numeric_min": 2.0,
+          "numeric_median": 86.5,
+          "numeric_max": 170.0
+        },
+        {
+          "field_name": "Sex",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 92,
+            "1": 46
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Age",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 51,
+          "value_type_hint": "numeric",
+          "numeric_min": 13.0,
+          "numeric_median": 41.5,
+          "numeric_max": 73.0
+        },
+        {
+          "field_name": "Fatigue",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 121,
+            "1": 17
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "General weakness",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 124,
+            "1": 14
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Pain",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 95,
+            "1": 43
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Focal symptoms",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 25,
+            "1": 113
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "CN",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 62,
+            "1": 76
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "3",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 120,
+            "1": 18
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "4",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 131,
+            "1": 7
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "5",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 130,
+            "1": 8
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "6",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 124,
+            "1": 14
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "8",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 90,
+            "1": 48
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Pathological reflexes",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 73,
+            "1": 65
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Babinski's",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 86,
+            "1": 52
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Rossolimo",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 106,
+            "1": 32
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Muscle strength",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 90,
+            "1": 48
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Reflex asymmetry",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 51,
+            "1": 87
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Muscle tone abnormalities",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 123,
+            "1": 15
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Proprioception",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 101,
+            "1": 36
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Superficial sensation",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 90,
+            "1": 47
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Coordination",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 77,
+            "1": 60
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Balance",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 79,
+            "1": 58
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Urinary incontinence",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 126,
+            "1": 11
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Urine retention",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 133,
+            "1": 4
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Vertigo",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 87,
+            "1": 51
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Sum of symptoms",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 13,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 11,
+            "1": 11,
+            "10": 6,
+            "12": 1,
+            "13": 1,
+            "2": 16,
+            "3": 7,
+            "4": 16,
+            "5": 18,
+            "6": 22,
+            "7": 14,
+            "8": 8,
+            "9": 7
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 5.0,
+          "numeric_max": 13.0
+        },
+        {
+          "field_name": "MRI lesions specific to MS",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 51,
+            "1": 86
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "MRI lesions indicative of other diseases",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 125,
+            "1": 12
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Unspecified MRI lesions",
+          "records": 138,
+          "missing_count": 1,
+          "missing_pct": 0.725,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 97,
+            "1": 40
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "MRI lesion localisation: infratentorally",
+          "records": 138,
+          "missing_count": 16,
+          "missing_pct": 11.594,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 76,
+            "1": 46
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Periventricular",
+          "records": 138,
+          "missing_count": 16,
+          "missing_pct": 11.594,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 70,
+            "1": 52
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Juxtacortical",
+          "records": 138,
+          "missing_count": 16,
+          "missing_pct": 11.594,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 36,
+            "1": 86
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "MRI spinal lesions",
+          "records": 138,
+          "missing_count": 89,
+          "missing_pct": 64.493,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 21,
+            "1": 28
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 1.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Patholoigical CSF",
+          "records": 138,
+          "missing_count": 13,
+          "missing_pct": 9.42,
+          "distinct_non_missing": 3,
+          "value_type_hint": "categorical_or_mixed",
+          "value_counts": {
+            "0": 48,
+            "1": 75,
+            "n": 2
+          }
+        },
+        {
+          "field_name": "Increased protein",
+          "records": 138,
+          "missing_count": 21,
+          "missing_pct": 15.217,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 87,
+            "1": 30
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Increased protein (g/l)",
+          "records": 138,
+          "missing_count": 21,
+          "missing_pct": 15.217,
+          "distinct_non_missing": 49,
+          "value_type_hint": "numeric",
+          "numeric_min": 0.12,
+          "numeric_median": 0.33,
+          "numeric_max": 1.05
+        },
+        {
+          "field_name": "Pleocytosis [AL]",
+          "records": 138,
+          "missing_count": 18,
+          "missing_pct": 13.043,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 72,
+            "1": 48
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "Pleocytosis [AM]",
+          "records": 138,
+          "missing_count": 18,
+          "missing_pct": 13.043,
+          "distinct_non_missing": 24,
+          "value_type_hint": "numeric",
+          "numeric_min": 0.0,
+          "numeric_median": 4.0,
+          "numeric_max": 196.0
+        },
+        {
+          "field_name": "OGB + in CSF",
+          "records": 138,
+          "missing_count": 30,
+          "missing_pct": 21.739,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 68,
+            "1": 40
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "IgG levels in CSF",
+          "records": 138,
+          "missing_count": 49,
+          "missing_pct": 35.507,
+          "distinct_non_missing": 85,
+          "value_type_hint": "numeric",
+          "numeric_min": 0.0,
+          "numeric_median": 33.7,
+          "numeric_max": 361.0
+        },
+        {
+          "field_name": "VEP +",
+          "records": 138,
+          "missing_count": 23,
+          "missing_pct": 16.667,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 67,
+            "1": 48
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "BAEP +",
+          "records": 138,
+          "missing_count": 35,
+          "missing_pct": 25.362,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 74,
+            "1": 29
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        },
+        {
+          "field_name": "MS",
+          "records": 138,
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "distinct_non_missing": 2,
+          "value_type_hint": "numeric",
+          "value_counts": {
+            "0": 89,
+            "1": 49
+          },
+          "numeric_min": 0.0,
+          "numeric_median": 0.0,
+          "numeric_max": 1.0
+        }
+      ]
+    }
+  ],
+  "not_created": {
+    "patients_csv": "No eligible final longitudinal cohort is available.",
+    "visits_csv": "No genuine visit-level records with dates are present.",
+    "outcomes_csv": "No patient-level index/conversion/last-follow-up dates are present."
+  }
+}
