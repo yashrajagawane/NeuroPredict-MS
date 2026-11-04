@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 6 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 7 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 15 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 14 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **20.9% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 50 - React Frontend Implementation (IN PROGRESS, 60%; static shell only). | Vite/React application, responsive navigation, module-unavailable views, typed config, and frontend checks exist; auth/data integration remain gated. |
+| Overall progress | **21.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 53 - Application Security and Privacy Audit (IN PROGRESS, 30%; threat model only). | Provisional assets, trust boundaries, threats, and verification gates documented; no implementation audit or security approval is claimed. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
 | Next recommended action | Complete the eligible system threat-model/security-planning slice, then continue foundation tests and frontend/backend CI while preserving deployment and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, and Phase 50 60%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60) / 64 = 20.9375%`, displayed as **20.9%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, and Phase 53 30%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30) / 64 = 21.40625%`, displayed as **21.4%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -100,7 +100,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 50 | React Frontend Implementation | IN PROGRESS | 60 | Medium | 26, 45-46, 49 | Real auth/session integration, protected route enforcement, error boundaries, and backend data remain gated. | Static React/TypeScript/Vite shell, safe unavailable pages, typed API config, reusable components, tests, and lockfile in `frontend/`; no patient data or secrets. |
 | 51 | Patient, Visit History, and Prediction Screens | NOT STARTED | 0 | High | 47-50 | - | No UI files; data and inference remain unavailable. |
 | 52 | Frontend and Backend Integration | NOT STARTED | 0 | High | 45-51 | - | No app components exist. |
-| 53 | Application Security and Privacy Audit | NOT STARTED | 0 | Critical | 08, 45-48, 52 | - | No deployed application to audit. |
+| 53 | Application Security and Privacy Audit | IN PROGRESS | 30 | Critical | 08, 45-48, 52 | Threat-model planning is provisional; implementation-based audit, governance review, and security tests await application/data gates. | Threat register, trust boundaries, assets, and verification plan in `18_PROVISIONAL_THREAT_MODEL.md`; no penetration test or audit claim. |
 | 54 | Unit, Integration, and End-to-End Testing | NOT STARTED | 0 | High | 27, 46-53 | - | Current tests cover data preparation/contract only. |
 | 55 | Performance and Reliability Testing | NOT STARTED | 0 | Medium | 48, 52, 54 | - | No API/model service. |
 | 56 | CI/CD and Deployment Preparation | NOT STARTED | 0 | Medium | 26, 53-55 | - | No workflow/config files found. |
@@ -604,11 +604,11 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 53 - Application Security and Privacy Audit
 
-- **Purpose/outcome:** Verify security controls before any deployment. **Status:** NOT STARTED (0%). **Priority:** Critical. **Dependencies:** 08, 45-48, 52. **Effort:** 5-10 days.
-- **Tasks:** [ ] Threat model API, frontend, Supabase, secrets and logs. [ ] Test RLS/authorization and IDOR. [ ] Scan dependencies/configuration. [ ] Verify encryption, retention, audit logs and incident procedure.
+- **Purpose/outcome:** Verify security controls before any deployment. **Status:** IN PROGRESS (30%; threat model only). **Priority:** Critical. **Dependencies:** 08, 45-48, 52. **Effort:** 5-10 days.
+- **Tasks:** [x] Document proposed assets, actors, trust boundaries, and threat scenarios across frontend/API/Supabase/offline ML. [x] Record future RLS, auth, secret/log, model artifact, and privacy verification gates. [ ] Test implemented RLS/authorization/IDOR. [ ] Scan deployed configuration and verify encryption, retention, audit logging, incident procedure, and institutional acceptance.
 - **Tools/inputs:** Security review checklist, test deployment with synthetic fixtures, Supabase policies.
-- **Deliverables:** Findings register and remediation evidence.
-- **Acceptance/testing:** No unresolved critical/high findings; secret scan clean; unauthorized access tests deny; DPO/PI accepts data flow.
+- **Deliverables:** Provisional threat register and verification plan in `18_PROVISIONAL_THREAT_MODEL.md`.
+- **Acceptance/testing:** Design-only review against current architecture and known constraints. No live configuration scan, RLS/IDOR test, penetration test, encryption/backup validation, or DPO/PI approval was performed; full audit acceptance remains unmet.
 - **Risks:** Student prototype is not automatically compliant or production-secure.
 
 ### PHASE 54 - Unit, Integration, and End-to-End Testing
@@ -747,6 +747,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 46 | NOT STARTED 0% -> IN PROGRESS 25% | Overall score 19.0% -> 19.4%; in-progress count 3 -> 4 and not-started count 18 -> 17. | Added a health-only FastAPI app, separate pinned API dependencies, non-sensitive liveness/readiness routes, and tests. Full pytest 17/17, data unittest 14/14, Ruff and package checks pass locally on Python 3.12.10. | Auth, DB, patient, and model endpoints remain gated; hosted CI result not checked and no clinical integration is claimed. |
 | 2026-11-04 | 49 | NOT STARTED 0% -> IN PROGRESS 40% | Overall score 19.4% -> 20.0%; in-progress count 4 -> 5 and not-started count 17 -> 16. | Added provisional app routes, six-module flow, component inventory, loading/error/access-denied/unavailable states, research disclaimer placement, and accessibility checklist in `17_PROVISIONAL_UI_UX_ARCHITECTURE.md`. | Representative-user review, final tokens, visual contrast, responsive implementation, and accessibility testing remain outstanding. |
 | 2026-11-05 | 50 | NOT STARTED 0% -> IN PROGRESS 60% | Overall score 20.0% -> 20.9%; in-progress count 5 -> 6 and not-started count 16 -> 15. | Added a static responsive React/TypeScript/Vite app shell, module routes, no-auth/no-data states, typed API URL configuration, reusable Tailwind/shadcn-style components, and tests. Node 24.22.2 typecheck/lint/Vitest 5/5/build and npm audit 0 findings pass. | No Supabase Auth, patient/API integration, route authorization, error boundary, user workflow review, or formal accessibility audit. |
+| 2026-11-05 | 53 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 20.9% -> 21.4%; in-progress count 6 -> 7 and not-started count 15 -> 14. | Added provisional assets, actors, trust boundaries, 16 threat scenarios, required future controls/evidence, and stop conditions in `18_PROVISIONAL_THREAT_MODEL.md`. | No implementation audit, live security tests, penetration test, institutional acceptance, or deployment review has occurred. |
 
 ## How to maintain this plan
 
