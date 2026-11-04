@@ -360,7 +360,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 ### PHASE 26 - Development Environment and Engineering Standards
 
 - **Purpose/outcome:** Establish reproducible approved stack and coding practices. **Status:** IN PROGRESS (90%). **Priority:** Medium. **Dependencies:** 00. **Effort:** 2-5 days.
-- **Tasks:** [x] Approve React/TS/Vite, FastAPI/SQLAlchemy, Supabase, TensorFlow/Keras, pytest. [x] Select package managers and compatible runtime/tool versions (Python 3.12.16, Node 24.22.2, venv/pip, npm). [x] Create environment/lock/config/secrets template. [ ] Verify formatting, linting, CI, and logging standards under Python 3.12 after push.
+- **Tasks:** [x] Approve React/TS/Vite, FastAPI/SQLAlchemy, Supabase, TensorFlow/Keras, pytest. [x] Select package managers and compatible runtime/tool versions (Python 3.12 latest supported patch, Node 24.22.2, venv/pip, npm). [x] Create environment/lock/config/secrets template. [ ] Verify formatting, linting, CI, and logging standards under Python 3.12 after push.
 - **Tools/inputs:** Approved stack decision, VS Code, Python 3.12, GitHub.
 - **Deliverables:** Reproducible environment specification, developer guide, CI checks.
 - **Acceptance/testing:** Developer-tool lock installed in an isolated Python 3.13 environment; 13/13 `unittest` and 13/13 pytest checks pass; Ruff lint and format checks pass; diff check passes. `.env.example` contains only blank variable names/placeholders and is the only dotenv file eligible for Git. CI is configured for Python 3.12; its first run remains pending push, so acceptance is not yet closed.

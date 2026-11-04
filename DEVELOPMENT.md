@@ -6,7 +6,8 @@ developer tools and does not install or train the ML stack.
 
 ## Runtime and package managers
 
-- Python **3.12.16** for backend and data/ML work (`.python-version`). Create
+- Python **3.12** for backend and data/ML work (`.python-version` selects the
+  supported 3.12 minor line; use the latest patch available for the platform). Create
   isolated environments with the standard-library `venv` module and install
   Python packages with `pip`.
 - Node.js **24.22.2 LTS** for the future React/Vite frontend (`.nvmrc`); use
@@ -20,7 +21,7 @@ developer tools and does not install or train the ML stack.
 
 ## Local setup
 
-Install the Python 3.12.16 runtime, then from the repository root run:
+Install a supported Python 3.12 runtime, then from the repository root run:
 
 ```powershell
 py -3.12 -m venv .venv
