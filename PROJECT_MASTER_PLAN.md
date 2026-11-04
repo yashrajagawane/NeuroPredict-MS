@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 2 | Documented planning or reusable validation work has begun but is not fully accepted. |
-| BLOCKED | 32 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
+| IN PROGRESS | 1 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
 | NOT STARTED | 20 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **17.6% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | No unblocked phase is currently eligible after Phase 26. | Phase 02 blocks Phase 03 completion; Phase 25 blocks remaining Phase 27 work; application phases require governance and upstream deliverables. |
+| Overall progress | **17.7% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | No phase is in progress; Phase 44 is the next eligible design slice. | Phase 27 is BLOCKED after its independent split-safety tests; Phase 44 can proceed provisionally without live database use or patient data. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Resolve Phase 02 cohort/target dependencies and Phase 03 workflow review; retain the separate longitudinal cohort access work. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Define a provisional, data-minimized application schema without deploying a database or storing patient data; then continue independent backend and frontend foundations. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, and Phase 27 50%. Thus `(10 x 100 + 50 + 25 + 50) / 64 = 17.578125%`, displayed as **17.6%**. Phase 02's 50% records the confirmed research objective and label principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, and Phase 44 0% until its design work is evidenced. Thus `(10 x 100 + 50 + 25 + 60) / 64 = 17.734375%`, displayed as **17.7%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -37,7 +37,8 @@ Progress is **phase-weighted**, using integer completion estimates anchored to v
 - Cohorts remain separate. The current interim extracts contain source fields, not approved model features. Approved future-conversion model inputs: 0. Valid fixed-horizon labels: 0. Genuine dated repeated visit records available from these downloads: 0.
 - The doctor-facing application with six modules is a mandatory user-confirmed final deliverable, but no application/database implementation exists; real-data access and prediction remain gated.
 - No selected prediction horizon, final index-date rule, eligible model cohort, patient split manifest, trained model, model metrics, API, frontend, or deployment exists.
-- The current environment verification ran 13/13 tests under Python 3.12.10 and 3.13.5; Ruff lint/format checks and `pip check` passed. The pushed GitHub Actions run is still queued and has not reported a result.
+- The latest local verification ran 14/14 tests under Python 3.12.10; Ruff lint/format checks and `pip check` passed. Phase 26's earlier 13-test suite also passed on Python 3.13.5. The pushed GitHub Actions run remains queued and has not reported a result.
+- A task-level reassessment of every incomplete phase is recorded in [PROJECT_DEPENDENCY_REASSESSMENT.md](PROJECT_DEPENDENCY_REASSESSMENT.md). It distinguishes approved no-data design/foundation work from live clinical-data and model gates.
 - Raw source workbooks and processed patient-level extracts are Git-ignored. Do not add them to Git or upload them to unapproved services.
 
 ## B. Master phase tracker
@@ -73,7 +74,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 24 | Dataset Freeze and Reproducibility | BLOCKED | 0 | High | 08, 13-23 | No approved modeling cohort to version/freeze. | Current source provenance and manifests cover interim sources only. |
 | 25 | Model Evaluation Protocol and Patient-Level Splitting | BLOCKED | 0 | Critical | 02, 14, 19, 23-24 | Cannot make valid future-conversion partitions without cohort/labels. | Guarded splitter refuses current data; no manifest exists. |
 | 26 | Development Environment and Engineering Standards | COMPLETE | 100 | Medium | 00 | - | Python/Node versions, locked developer tools, secrets template, Ruff standards, and CI workflow; 13 tests pass under Python 3.12.10 and 3.13.5. |
-| 27 | Data Contracts and Automated Pipeline Tests | IN PROGRESS | 50 | High | 12, 14, 22, 25-26 | Future approved cohort and additional tests remain. | Current contract, guards, and 13-test evidence in status log. |
+| 27 | Data Contracts and Automated Pipeline Tests | BLOCKED | 60 | High | 12, 14, 22, 25-26 | Approved cohort and Phase 25 evaluation protocol are unavailable; only cohort-independent test work can proceed. | Contract guards plus test-only split reproducibility, overlap, and uncertain-outcome exclusion checks; 14 local tests pass. |
 | 28 | Classical Baseline Model Design | BLOCKED | 0 | High | 17, 23, 25 | Modeling target/features/sample size unresolved. | Baseline candidates in model specification only. |
 | 29 | Baseline Model Training | BLOCKED | 0 | Critical | 21, 25, 27-28 | No valid labeled training cohort. | No training evidence. |
 | 30 | Baseline Model Evaluation | BLOCKED | 0 | Critical | 29 | No trained baseline or held-out patient set. | No metrics/artifacts. |
@@ -368,12 +369,12 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 27 - Data Contracts and Automated Pipeline Tests
 
-- **Purpose/outcome:** Enforce data/model-readiness invariants. **Status:** IN PROGRESS (50%). **Priority:** High. **Dependencies:** 12, 14, 22, 25-26. **Effort:** 5-10 days across data release.
-- **Tasks:** [x] Implement longitudinal contract, date/outcome checks and gates. [x] Test refusal of interim cohorts, approval requirements, IDs and sequence timing. [ ] Add approved-cohort type/range/foreign-key and censoring tests. [ ] Add train-only fit/no leakage, split reproducibility/overlap, failure-property tests.
+- **Purpose/outcome:** Enforce data/model-readiness invariants. **Status:** BLOCKED (60%). **Priority:** High. **Dependencies:** 12, 14, 22, 25-26. **Effort:** 5-10 days across data release.
+- **Tasks:** [x] Implement longitudinal contract, date/outcome checks and gates. [x] Test refusal of interim cohorts, approval requirements, IDs and sequence timing. [ ] Add approved-cohort type/range/foreign-key and censoring tests. [x] Add test-only split reproducibility, patient-overlap and uncertain-label exclusion checks. [ ] Add train-only fit and remaining failure-property tests for the approved pipeline.
 - **Tools/inputs:** Existing Python scripts/tests; pytest target stack.
 - **Deliverables:** Contract suite, fixtures that contain no real patient data, test report.
-- **Acceptance/testing:** All checks pass on approved test fixtures; invalid labels/references/dates fail safely; current public cohorts remain rejected.
-- **Risks:** Synthetic fixtures mistaken for research data; label as tests only. **Evidence:** latest logged 13 tests pass. Blocker for completion: final source contract.
+- **Acceptance/testing:** Test-only split fixture passes; 14/14 `unittest` and 14/14 pytest tests pass on Python 3.12.10. This fixture is not a patient cohort, split manifest, or modeling dataset. Full acceptance remains unmet until approved source contracts, Phase 25 policy, and train-only preprocessing checks are verified.
+- **Risks:** Test fixtures mistaken for research data; identifiers and values are visibly test-only and remain in test code. **Blocker for completion:** approved source contract and Phase 25 evaluation protocol.
 
 ### PHASE 28 - Classical Baseline Model Design
 
@@ -740,6 +741,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 01 | IN PROGRESS 75% -> COMPLETE 100% | Owner-approved scope is reconciled and six-module acceptance criteria are documented. | User explicitly approved both deliverables and all six app modules; aligned project documents and acceptance criteria. No supervisor approval is claimed. | Any institutionally required supervisor review for clinical data use is a separate governance item. |
 | 2026-11-04 | 26 | IN PROGRESS 50% -> IN PROGRESS 90% | Overall score 16.8% -> 17.4%; remaining acceptance check is 3.12 CI. | Added Python 3.12/Node 24 runtime pins, locked developer tools, isolated environment guide, secret template/ignore rules, Ruff standards, formatting cleanup, and read-only GitHub CI. `unittest` 13/13, pytest 13/13, Ruff check and format check passed locally on Python 3.13. Raw-workbook tests explicitly skip in CI when local-only source files are absent. | Python 3.12 is not installed locally; verify the 3.12 CI run after push. ML/API dependency locks are deferred to their implementation phases; no model or app dependencies are installed. |
 | 2026-11-04 | 26 | IN PROGRESS 90% -> COMPLETE 100% | Overall score 17.4% -> 17.6%; completed count 9 -> 10. | Installed Python 3.12.10 in an isolated environment; `unittest` 13/13, pytest 13/13, Ruff lint/format, and `pip check` pass under Python 3.12.10. Previous Python 3.13.5 checks also pass. CI is pushed and queued, not reported as passed. | ML/API dependency locks are deferred to their implementation phases; no model or app dependencies are installed. No next phase meets its dependencies while target/cohort and evaluation prerequisites remain blocked. |
+| 2026-11-04 | 27 | IN PROGRESS 50% -> BLOCKED 60% | Overall score 17.6% -> 17.7%; in-progress count 2 -> 1 and blocked count 32 -> 33. | Added explicitly test-only synthetic split checks for seeded reproducibility, disjoint patient assignments, complete eligible coverage, and exclusion of unknown outcomes. 14/14 unittest and pytest checks pass on Python 3.12.10. Added a phase-by-phase dependency reassessment. | Phase 25 and approved-cohort-specific tests remain blocked; no actual split manifest or clinical dataset was created. Phase 44 is next for provisional database architecture only. |
 
 ## How to maintain this plan
 

@@ -37,6 +37,89 @@ def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
         return reader.fieldnames or [], list(reader)
 
 
+def synthetic_ready_fixture() -> tuple[
+    list[dict[str, str]], list[dict[str, str]], list[dict[str, str]]
+]:
+    """Return unmistakably synthetic in-memory records for utility tests only."""
+
+    patients = []
+    visits = []
+    outcomes = []
+    for index in range(21):
+        patient_id = f"TEST-SYNTHETIC-P-{index:03d}"
+        patients.append({"patient_id": patient_id})
+        visits.extend(
+            [
+                {
+                    "patient_id": patient_id,
+                    "visit_id": f"TEST-SYNTHETIC-V-{index:03d}-1",
+                    "visit_date": "2020-01-01",
+                    "edss": "test-fixture-value",
+                },
+                {
+                    "patient_id": patient_id,
+                    "visit_id": f"TEST-SYNTHETIC-V-{index:03d}-2",
+                    "visit_date": "2020-06-01",
+                    "edss": "test-fixture-value",
+                },
+            ]
+        )
+        status = "unknown" if index == 20 else str(index % 2)
+        outcomes.append(
+            {
+                "patient_id": patient_id,
+                "index_date": "2020-06-01",
+                "prediction_horizon_months": "24",
+                "conversion_status": status,
+                "conversion_date": "2021-01-01" if status == "1" else "",
+                "last_follow_up_date": ("2020-12-01" if status == "unknown" else "2022-07-01"),
+                "diagnostic_criteria_version": "TEST-ONLY",
+                "outcome_certainty": "TEST-ONLY",
+            }
+        )
+    return patients, visits, outcomes
+
+
+class PatientSplitUtilityTests(unittest.TestCase):
+    def test_split_is_reproducible_disjoint_and_excludes_uncertain_labels(self) -> None:
+        # These explicitly synthetic records exercise code behavior only; they
+        # are not a cohort, a split manifest, or model-ready research data.
+        patients, visits, outcomes = synthetic_ready_fixture()
+        assessment = assess_model_readiness(
+            patients,
+            visits,
+            outcomes,
+            approvals={
+                "source_access_approved": True,
+                "baseline_cis_confirmed": True,
+                "label_adjudication_approved": True,
+                "feature_timing_reviewed": True,
+            },
+        )
+        self.assertTrue(assessment["ready_for_modeling"])
+
+        first = split_patient_ids(assessment, outcomes, seed=34)
+        repeated = split_patient_ids(assessment, outcomes, seed=34)
+
+        self.assertEqual(first, repeated)
+        train_ids = set(first["train"])
+        validation_ids = set(first["validation"])
+        test_ids = set(first["test"])
+        self.assertFalse(train_ids & validation_ids)
+        self.assertFalse(train_ids & test_ids)
+        self.assertFalse(validation_ids & test_ids)
+
+        eligible_ids = {
+            outcome["patient_id"]
+            for outcome in outcomes
+            if outcome["conversion_status"] in {"0", "1"}
+        }
+        assigned_ids = train_ids | validation_ids | test_ids
+        self.assertEqual(assigned_ids, eligible_ids)
+        self.assertEqual(len(train_ids) + len(validation_ids) + len(test_ids), 20)
+        self.assertNotIn("TEST-SYNTHETIC-P-020", assigned_ids)
+
+
 class InterimDatasetPreparationTests(unittest.TestCase):
     @unittest.skipUnless(
         SOURCE_WORKBOOKS_AVAILABLE,
