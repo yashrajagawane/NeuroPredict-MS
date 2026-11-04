@@ -1,0 +1,32 @@
+{
+  "project": "Deep Learning Approach for Prediction of Multiple Sclerosis Using Hybrid RNN-LSTM",
+  "documentation_pack_version": "1.0",
+  "documents": [
+    "README.md",
+    "AGENTS.md",
+    "00_PROJECT_BRIEF.md",
+    "01_PRD.md",
+    "02_SRS.md",
+    "03_SCOPE_AND_ASSUMPTIONS.md",
+    "04_DATA_REQUIREMENTS.md",
+    "05_ML_MODEL_SPECIFICATION.md",
+    "06_WORKFLOWS.md",
+    "07_SYSTEM_ARCHITECTURE.md",
+    "08_DATABASE_AND_API_DESIGN.md",
+    "09_IMPLEMENTATION_ROADMAP.md",
+    "10_TESTING_AND_EVALUATION.md",
+    "11_PRIVACY_SAFETY_AND_ETHICS.md",
+    "12_UI_UX_GUIDELINES.md",
+    "13_ACCEPTANCE_CRITERIA.md",
+    "14_OPEN_DECISIONS.md",
+    "CODEX_KICKOFF_PROMPT.md",
+    "PROJECT_STATUS_TEMPLATE.md"
+  ],
+  "current_status": {
+    "dataset_confirmed": false,
+    "trained_model_confirmed": false,
+    "working_application_confirmed": false,
+    "target_definition_confirmed": false
+  },
+  "provisional_scope": "Binary MS/Non-MS classification using structured longitudinal patient records; confirm target timing before training."
+}

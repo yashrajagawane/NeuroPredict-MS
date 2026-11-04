@@ -1,0 +1,9 @@
+# Keep patient-level source and derived records local, even when a source is public.
+data/raw/
+data/processed/
+data/secure/
+
+# Python bytecode and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
