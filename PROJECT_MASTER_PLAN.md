@@ -17,26 +17,26 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 11 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 12 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 10 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 9 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **23.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 60 - Clinical Workflow and Usability Review (IN PROGRESS, 20%; protocol only). | A no-data static-shell walkthrough protocol is prepared; participant review, applicable institutional review, fixes, and retest remain pending. |
+| Overall progress | **23.7% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 55 - Performance and Reliability Testing (IN PROGRESS, 20%; plan only). | Test scenarios and measurement fields are documented; no service/model workload test or target has been approved or run. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Arrange an appropriately reviewed walkthrough of the static prototype and continue eligible documentation/test design; preserve operational monitoring, deployment, and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Wait for service/model and workload-target dependencies before executing performance tests; continue only independent documentation and test-design slices. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, Phase 53 30%, Phase 54 30%, Phase 56 50%, Phase 58 25%, and Phase 60 20%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30 + 30 + 50 + 25 + 20) / 64 = 23.4%`. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, Phase 53 30%, Phase 54 30%, Phase 55 20%, Phase 56 50%, Phase 58 25%, and Phase 60 20%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30 + 30 + 20 + 50 + 25 + 20) / 64 = 23.7%`. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
 - Public Mexican source: 273 rows, 272 unique source IDs, one duplicate source identifier retained; group codes 1/2 remain unmapped.
 - Public Lithuanian source: 138 records and unique source IDs; final MS grouping is 0/1 but has no individual conversion or follow-up dates.
 - Cohorts remain separate. The current interim extracts contain source fields, not approved model features. Approved future-conversion model inputs: 0. Valid fixed-horizon labels: 0. Genuine dated repeated visit records available from these downloads: 0.
-- The doctor-facing application with six modules is a mandatory user-confirmed final deliverable, but no application/database implementation exists; real-data access and prediction remain gated.
-- No selected prediction horizon, final index-date rule, eligible model cohort, patient split manifest, trained model, model metrics, API, frontend, or deployment exists.
+- The doctor-facing application with six modules is a mandatory user-confirmed final deliverable. A static React shell and health-only FastAPI scaffold exist; no patient-data application workflow, database instance, or inference integration exists. Real-data access and prediction remain gated.
+- No selected prediction horizon, final index-date rule, eligible model cohort, patient split manifest, trained model, model metrics, live patient API, authenticated frontend workflow, or deployment exists.
 - The latest local verification ran 14/14 tests under Python 3.12.10; Ruff lint/format checks and `pip check` passed. GitHub Actions run 41892334989 for `a525779` completed successfully across Python/API and frontend checks. Phase 26's earlier 13-test suite also passed on Python 3.13.5.
 - A task-level reassessment of every incomplete phase is recorded in [PROJECT_DEPENDENCY_REASSESSMENT.md](PROJECT_DEPENDENCY_REASSESSMENT.md). It distinguishes approved no-data design/foundation work from live clinical-data and model gates.
 - Raw source workbooks and processed patient-level extracts are Git-ignored. Do not add them to Git or upload them to unapproved services.
@@ -102,7 +102,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 52 | Frontend and Backend Integration | NOT STARTED | 0 | High | 45-51 | - | No app components exist. |
 | 53 | Application Security and Privacy Audit | IN PROGRESS | 30 | Critical | 08, 45-48, 52 | Threat-model planning is provisional; implementation-based audit, governance review, and security tests await application/data gates. | Threat register, trust boundaries, assets, and verification plan in `18_PROVISIONAL_THREAT_MODEL.md`; no penetration test or audit claim. |
 | 54 | Unit, Integration, and End-to-End Testing | IN PROGRESS | 30 | High | 27, 46-53 | Auth/database/RLS, patient workflow, inference, full leakage tests, and E2E dependencies remain unavailable. | Existing data contract/split tests plus FastAPI and React foundation tests; no clinical records or integration environment. |
-| 55 | Performance and Reliability Testing | NOT STARTED | 0 | Medium | 48, 52, 54 | - | No API/model service. |
+| 55 | Performance and Reliability Testing | IN PROGRESS | 20 | Medium | 48, 52, 54 | Service/model workflows and approved workload targets are unavailable; only test planning can proceed. | Provisional test scenarios and reporting plan in `21_PROVISIONAL_PERFORMANCE_RELIABILITY_PLAN.md`; no load or inference tests run. |
 | 56 | CI/CD and Deployment Preparation | IN PROGRESS | 50 | Medium | 26, 53-55 | Deployment preparation remains gated. | Locked Python/API and Node frontend checks pass in GitHub Actions run 41892334989 for `a525779`; read-only workflow only, no deployment credentials. |
 | 57 | Production Deployment Readiness | NOT STARTED | 0 | Critical | 08, 43, 53-56 | - | No deployment approval or application. |
 | 58 | Monitoring, Logging, and Model Drift | IN PROGRESS | 25 | Medium | 43, 48, 57 | Operational telemetry, dashboards, alerts, and drift analysis require the service/model/deployment gates; only privacy-safe design can proceed now. | `19_PROVISIONAL_OBSERVABILITY_DESIGN.md`; no telemetry or dashboard is implemented. |
@@ -622,20 +622,20 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 55 - Performance and Reliability Testing
 
-- **Purpose/outcome:** Characterize supported workload and failure behavior. **Status:** NOT STARTED (0%). **Priority:** Medium. **Dependencies:** 48, 52, 54. **Effort:** 3-6 days.
-- **Tasks:** [ ] Measure API latency and inference memory on representative approved/synthetic fixture sizes. [ ] Test DB timeout, model load failure and malformed request. [ ] Establish response targets with supervisor. [ ] Verify bounded resource use.
+- **Purpose/outcome:** Characterize supported workload and failure behavior. **Status:** IN PROGRESS (20%; test design only). **Priority:** Medium. **Dependencies:** 48, 52, 54. **Effort:** 3-6 days.
+- **Tasks:** [x] Specify guarded test progression, candidate measurements, failure scenarios, and report contents. [ ] Measure API latency and inference memory with approved fixture boundaries. [ ] Test database/model failures and malformed requests after those paths exist. [ ] Establish service targets with the responsible owner. [ ] Verify bounded resource use in an authorized environment.
 - **Tools/inputs:** Non-sensitive fixtures, profiling/load tools, deployment-like environment.
-- **Deliverables:** Performance and reliability report.
-- **Acceptance/testing:** Targets and environment recorded; failures safe and explicit; no patient values in performance logs.
+- **Deliverables:** Provisional plan in `MS_Prediction_Project_Handoff/21_PROVISIONAL_PERFORMANCE_RELIABILITY_PLAN.md`; measured report remains pending.
+- **Acceptance/testing:** No workload target or performance test has been approved/run. Future acceptance requires targets and environment to be recorded, failures to be safe/explicit, and patient values to be absent from performance logs.
 - **Risks:** Free hosting resources are variable and not production SLA.
 
 ### PHASE 56 - CI/CD and Deployment Preparation
 
-- **Purpose/outcome:** Automate safe build/test and controlled releases. **Status:** IN PROGRESS (40%; validation CI only). **Priority:** Medium. **Dependencies:** 26, 53-55. **Effort:** 3-6 days.
+- **Purpose/outcome:** Automate safe build/test and controlled releases. **Status:** IN PROGRESS (50%; validation CI only). **Priority:** Medium. **Dependencies:** 26, 53-55. **Effort:** 3-6 days.
 - **Tasks:** [x] Define GitHub checks for Python, API, and frontend tests/type/lint/build/audit. [x] Keep CI secretless with repository read-only permissions. [ ] Design approved secret/environment handling if deployment is authorized. [ ] Separate dev/staging/prod configuration and document rollback/migration sequencing after governance and release decisions.
 - **Tools/inputs:** GitHub Actions, approved runtime/container config, secret manager.
 - **Deliverables:** Updated read-only workflow `.github/workflows/ci.yml`; no deployment runbook yet.
-- **Acceptance/testing:** Workflow syntax reviewed; local commands behind the workflow passed. GitHub Actions run will be checked after push. No secrets, patient files, migration steps, or deployment stages are part of CI. Full release acceptance remains unmet.
+- **Acceptance/testing:** Workflow syntax reviewed; local commands passed; GitHub Actions run 41892334989 passed both Python and frontend jobs for `a525779`. No secrets, patient files, migration steps, or deployment stages are part of CI. Full release acceptance remains unmet.
 - **Risks:** CI must not ingest restricted patient data or artifacts.
 
 ### PHASE 57 - Production Deployment Readiness
@@ -753,6 +753,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-05 | 56 | IN PROGRESS 40% -> IN PROGRESS 50% | Hosted validation workflow passed; score is subsequently recalculated with Phase 58 design work. | GitHub Actions run 41892334989 passed for commit `a525779`; Python/API checks and frontend checks all completed successfully. | Deployment secrets/environments, release controls, rollback, and environment separation remain unimplemented and governance-gated. |
 | 2026-11-05 | 58 | NOT STARTED 0% -> IN PROGRESS 25% | Overall score 22.5% -> 23.0%; in-progress count 9 -> 10 and not-started count 12 -> 11. | Added provisional privacy-safe observability design covering metric allowlist, prohibited fields, log contract, drift review, and future approval/test gates. | No deployed service, approved cohort/model, telemetry, dashboard, alert owner, retention policy, or alert test; Phases 43, 48, and 57 remain dependencies. |
 | 2026-11-05 | 60 | NOT STARTED 0% -> IN PROGRESS 20% | Overall score 23.0% -> 23.4%; in-progress count 10 -> 11 and not-started count 11 -> 10. | Drafted a no-data walkthrough for the static shell, with research-only comprehension, unavailable states, accessibility checks, and privacy limits. | No participant sessions, institutional determination, real patient screens, service workflow, usability findings, fixes, or retest. |
+| 2026-11-05 | 55 | NOT STARTED 0% -> IN PROGRESS 20% | Overall score 23.4% -> 23.7%; in-progress count 11 -> 12 and not-started count 10 -> 9. | Drafted guarded performance/reliability scenarios, candidate measurements, failure cases, and reporting requirements. | No service/model workload, target, database failure test, or deployment-like measurement is approved or run. |
 
 ## How to maintain this plan
 
