@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 10 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 11 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 11 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 10 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **23.0% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 58 - Monitoring, Logging, and Model Drift (IN PROGRESS, 25%; provisional design only). | Privacy-safe signal and logging constraints are documented; no telemetry/dashboard/alerts exist. Phases 43, 48, and 57 gate operational monitoring. |
+| Overall progress | **23.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 60 - Clinical Workflow and Usability Review (IN PROGRESS, 20%; protocol only). | A no-data static-shell walkthrough protocol is prepared; participant review, applicable institutional review, fixes, and retest remain pending. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Continue independently eligible design and test-infrastructure slices; preserve operational monitoring, deployment, and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Arrange an appropriately reviewed walkthrough of the static prototype and continue eligible documentation/test design; preserve operational monitoring, deployment, and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, Phase 53 30%, Phase 54 30%, Phase 56 50%, and Phase 58 25%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30 + 30 + 50 + 25) / 64 = 23.0%`. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, Phase 53 30%, Phase 54 30%, Phase 56 50%, Phase 58 25%, and Phase 60 20%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30 + 30 + 50 + 25 + 20) / 64 = 23.4%`. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -107,7 +107,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 57 | Production Deployment Readiness | NOT STARTED | 0 | Critical | 08, 43, 53-56 | - | No deployment approval or application. |
 | 58 | Monitoring, Logging, and Model Drift | IN PROGRESS | 25 | Medium | 43, 48, 57 | Operational telemetry, dashboards, alerts, and drift analysis require the service/model/deployment gates; only privacy-safe design can proceed now. | `19_PROVISIONAL_OBSERVABILITY_DESIGN.md`; no telemetry or dashboard is implemented. |
 | 59 | Backup, Disaster Recovery, and Operations | NOT STARTED | 0 | High | 44-45, 53, 57 | - | No database instance/runbook. |
-| 60 | Clinical Workflow and Usability Review | NOT STARTED | 0 | High | 03, 49-54 | - | Design assumptions have not been evaluated with users. |
+| 60 | Clinical Workflow and Usability Review | IN PROGRESS | 20 | High | 03, 49-54 | Participant review and any applicable institutional determination are outstanding; current shell has no patient/service workflows. | Draft no-data static-shell walkthrough protocol in `20_PROVISIONAL_USABILITY_WALKTHROUGH.md`; no sessions performed. |
 | 61 | Final Documentation and Reproducibility Package | NOT STARTED | 0 | High | 24, 42-60 | - | Current documents are planning/audit records, not final handover. |
 | 62 | Final Project Acceptance and Academic Presentation | NOT STARTED | 0 | High | 36, 42, 53-61 | - | No final model/app acceptance evidence. |
 | 63 | Maintenance and Future Research Roadmap | NOT STARTED | 0 | Medium | 57-62 | - | No operational system or owner assigned. |
@@ -667,11 +667,11 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 60 - Clinical Workflow and Usability Review
 
-- **Purpose/outcome:** Evaluate usability without claiming clinical effectiveness. **Status:** NOT STARTED (0%). **Priority:** High. **Dependencies:** 03, 49-54. **Effort:** 3-7 days.
-- **Tasks:** [ ] Conduct approved usability walkthrough with intended research users. [ ] Test comprehension of missing/insufficient-data states and disclaimer. [ ] Collect usability findings without patient data. [ ] Fix priority issues and retest.
+- **Purpose/outcome:** Evaluate usability without claiming clinical effectiveness. **Status:** IN PROGRESS (20%; protocol only). **Priority:** High. **Dependencies:** 03, 49-54. **Effort:** 3-7 days.
+- **Tasks:** [x] Draft no-data walkthrough protocol for the static prototype. [ ] Obtain any required institutional determination and conduct a walkthrough with intended research users. [ ] Test comprehension of research-only limitation and unavailable states. [ ] Document de-identified findings, fix priorities, and retest.
 - **Tools/inputs:** Prototype, task script, consent/ethics rules if applicable.
-- **Deliverables:** Usability report and issue disposition.
-- **Acceptance/testing:** Users understand tool is research-only and cannot replace diagnosis; all critical use errors resolved.
+- **Deliverables:** Draft protocol in `MS_Prediction_Project_Handoff/20_PROVISIONAL_USABILITY_WALKTHROUGH.md`; usability report and issue disposition remain pending.
+- **Acceptance/testing:** No participant sessions or acceptance evidence yet. Required future review must show participants understand research-only limitations; critical use errors must be addressed and retested. Current protocol is limited to the static shell and has no clinical workflow validation.
 - **Risks:** Usability feedback is not evidence of clinical utility.
 
 ### PHASE 61 - Final Documentation and Reproducibility Package
@@ -752,6 +752,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-05 | 56 | NOT STARTED 0% -> IN PROGRESS 40% | Overall score 21.9% -> 22.5%; in-progress count 8 -> 9 and not-started count 13 -> 12. | Extended read-only GitHub Actions to install locked API/dev dependencies, run Python/unittest/pytest/Ruff checks, and run Node 24 typecheck/lint/Vitest/build/npm audit. | Hosted workflow result not yet checked; no secrets, data files, deployment stages, DB migrations, or release environments included. |
 | 2026-11-05 | 56 | IN PROGRESS 40% -> IN PROGRESS 50% | Hosted validation workflow passed; score is subsequently recalculated with Phase 58 design work. | GitHub Actions run 41892334989 passed for commit `a525779`; Python/API checks and frontend checks all completed successfully. | Deployment secrets/environments, release controls, rollback, and environment separation remain unimplemented and governance-gated. |
 | 2026-11-05 | 58 | NOT STARTED 0% -> IN PROGRESS 25% | Overall score 22.5% -> 23.0%; in-progress count 9 -> 10 and not-started count 12 -> 11. | Added provisional privacy-safe observability design covering metric allowlist, prohibited fields, log contract, drift review, and future approval/test gates. | No deployed service, approved cohort/model, telemetry, dashboard, alert owner, retention policy, or alert test; Phases 43, 48, and 57 remain dependencies. |
+| 2026-11-05 | 60 | NOT STARTED 0% -> IN PROGRESS 20% | Overall score 23.0% -> 23.4%; in-progress count 10 -> 11 and not-started count 11 -> 10. | Drafted a no-data walkthrough for the static shell, with research-only comprehension, unavailable states, accessibility checks, and privacy limits. | No participant sessions, institutional determination, real patient screens, service workflow, usability findings, fixes, or retest. |
 
 ## How to maintain this plan
 
