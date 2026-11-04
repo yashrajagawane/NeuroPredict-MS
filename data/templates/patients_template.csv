@@ -1,0 +1,1 @@
+patient_id,source_cohort_id,source_patient_key,site_id,birth_year_or_age_at_cis,sex_at_record,cis_presentation,cis_onset_date,cis_diagnosis_date,cis_diagnostic_criteria_version,ocb_status,ocb_test_date,igg_index,igg_test_date

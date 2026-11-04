@@ -1,0 +1,1 @@
+patient_id,landmark_id,index_date,index_definition,prediction_horizon_months,conversion_status,conversion_date,last_follow_up_date,ms_diagnosis_date,diagnostic_criteria_version,outcome_certainty,censoring_reason
