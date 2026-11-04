@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 7 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 8 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 14 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 13 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **21.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 53 - Application Security and Privacy Audit (IN PROGRESS, 30%; threat model only). | Provisional assets, trust boundaries, threats, and verification gates documented; no implementation audit or security approval is claimed. |
+| Overall progress | **21.9% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 54 - Unit, Integration, and End-to-End Testing (IN PROGRESS, 30%; foundation tests only). | Test coverage exists for data guards, API health, frontend unavailable states, and safe config; clinical/auth/database integration remains gated. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Complete the eligible system threat-model/security-planning slice, then continue foundation tests and frontend/backend CI while preserving deployment and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Extend CI to run the Python, FastAPI, and React foundation checks without secrets or clinical data; deployment remains gated. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, and Phase 53 30%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30) / 64 = 21.40625%`, displayed as **21.4%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, Phase 46 25%, Phase 49 40%, Phase 50 60%, Phase 53 30%, and Phase 54 30%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25 + 40 + 60 + 30 + 30) / 64 = 21.875%`, displayed as **21.9%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -101,7 +101,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 51 | Patient, Visit History, and Prediction Screens | NOT STARTED | 0 | High | 47-50 | - | No UI files; data and inference remain unavailable. |
 | 52 | Frontend and Backend Integration | NOT STARTED | 0 | High | 45-51 | - | No app components exist. |
 | 53 | Application Security and Privacy Audit | IN PROGRESS | 30 | Critical | 08, 45-48, 52 | Threat-model planning is provisional; implementation-based audit, governance review, and security tests await application/data gates. | Threat register, trust boundaries, assets, and verification plan in `18_PROVISIONAL_THREAT_MODEL.md`; no penetration test or audit claim. |
-| 54 | Unit, Integration, and End-to-End Testing | NOT STARTED | 0 | High | 27, 46-53 | - | Current tests cover data preparation/contract only. |
+| 54 | Unit, Integration, and End-to-End Testing | IN PROGRESS | 30 | High | 27, 46-53 | Auth/database/RLS, patient workflow, inference, full leakage tests, and E2E dependencies remain unavailable. | Existing data contract/split tests plus FastAPI and React foundation tests; no clinical records or integration environment. |
 | 55 | Performance and Reliability Testing | NOT STARTED | 0 | Medium | 48, 52, 54 | - | No API/model service. |
 | 56 | CI/CD and Deployment Preparation | NOT STARTED | 0 | Medium | 26, 53-55 | - | No workflow/config files found. |
 | 57 | Production Deployment Readiness | NOT STARTED | 0 | Critical | 08, 43, 53-56 | - | No deployment approval or application. |
@@ -581,7 +581,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 - **Tasks:** [x] Scaffold Vite/React/TypeScript with the relevant approved UI/runtime libraries. Form/chart packages remain deferred until approved form/data use exists. [x] Create responsive route/layout/component structure for module entry points. [x] Add typed API base URL and explicit unconfigured auth-state type; no provider or token handling. [x] Add lint/type/test scripts and a non-secret public API URL example. [ ] Implement approved Auth integration, protected-route behavior, backend contract integration, and error boundaries after their dependencies pass.
 - **Tools/inputs:** React, TypeScript, Vite, Tailwind, shadcn/ui, Router, TanStack Query, RHF, Zod, Recharts, Lucide.
 - **Deliverables:** Static frontend foundation and module unavailable states in `frontend/`.
-- **Acceptance/testing:** Node 24.22.2 `typecheck`, ESLint, Vitest 5/5, Vite production build, and `npm audit` (0 vulnerabilities) passed. Desktop and mobile rendering inspected; no secrets or patient data in the static bundle. Auth route guards, production error boundaries, real API integration, and formal accessibility/contrast audit are not yet implemented.
+- **Acceptance/testing:** Node 24.22.2 `typecheck`, ESLint, Vitest 8/8, Vite production build, and `npm audit` (0 vulnerabilities) passed. Desktop and mobile rendering inspected; no secrets or patient data in the static bundle. Auth route guards, production error boundaries, real API integration, and formal accessibility/contrast audit are not yet implemented.
 - **Risks:** Frontend may not access sensitive DB directly. All patient data must be mediated by backend.
 
 ### PHASE 51 - Patient, Visit History, and Prediction Screens
@@ -613,11 +613,11 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 54 - Unit, Integration, and End-to-End Testing
 
-- **Purpose/outcome:** Verify complete data-to-app behavior. **Status:** NOT STARTED (0%). **Priority:** High. **Dependencies:** 27, 46-53. **Effort:** 8-15 days.
-- **Tasks:** [ ] Unit test validation, labels, sequences, train-only preprocessing. [ ] Integration test DB migrations/RLS/API. [ ] E2E test auth, patient/visit flow and model-unavailable response. [ ] Record coverage and failures.
+- **Purpose/outcome:** Verify complete data-to-app behavior. **Status:** IN PROGRESS (30%; foundation tests only). **Priority:** High. **Dependencies:** 27, 46-53. **Effort:** 8-15 days.
+- **Tasks:** [x] Add deterministic unit tests for existing data-contract/split guards and non-sensitive API/frontend foundation states. [ ] Complete approved-sequence, leakage, train-only preprocessing, and label property tests when a valid cohort contract exists. [ ] Integration test DB migrations/RLS/API after authorized DB and auth implementation. [ ] E2E test auth, patient/visit flow, and model-unavailable response after those screens/services exist. [ ] Record full coverage and failures.
 - **Tools/inputs:** pytest, FastAPI TestClient/httpx, frontend test framework/browser runner.
-- **Deliverables:** CI test suite and verified test report.
-- **Acceptance/testing:** No cross-partition patient overlap; no post-index leakage; denied access tested; deterministic test fixtures; all critical tests pass.
+- **Deliverables:** Data and foundation unit test suites in `data/tests`, `backend/tests`, and `frontend/src`.
+- **Acceptance/testing:** Python pytest 17/17 and data `unittest` 14/14 pass on Python 3.12.10; frontend Vitest 8/8 passes on Node 24.22.2. Tests verify split guards and unavailable app behavior only; no implemented auth, RLS, DB, patient CRUD, or inference path exists to integration-test. Full acceptance remains unmet.
 - **Risks:** Coverage percent alone does not prove clinical correctness.
 
 ### PHASE 55 - Performance and Reliability Testing
@@ -748,6 +748,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 49 | NOT STARTED 0% -> IN PROGRESS 40% | Overall score 19.4% -> 20.0%; in-progress count 4 -> 5 and not-started count 17 -> 16. | Added provisional app routes, six-module flow, component inventory, loading/error/access-denied/unavailable states, research disclaimer placement, and accessibility checklist in `17_PROVISIONAL_UI_UX_ARCHITECTURE.md`. | Representative-user review, final tokens, visual contrast, responsive implementation, and accessibility testing remain outstanding. |
 | 2026-11-05 | 50 | NOT STARTED 0% -> IN PROGRESS 60% | Overall score 20.0% -> 20.9%; in-progress count 5 -> 6 and not-started count 16 -> 15. | Added a static responsive React/TypeScript/Vite app shell, module routes, no-auth/no-data states, typed API URL configuration, reusable Tailwind/shadcn-style components, and tests. Node 24.22.2 typecheck/lint/Vitest 5/5/build and npm audit 0 findings pass. | No Supabase Auth, patient/API integration, route authorization, error boundary, user workflow review, or formal accessibility audit. |
 | 2026-11-05 | 53 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 20.9% -> 21.4%; in-progress count 6 -> 7 and not-started count 15 -> 14. | Added provisional assets, actors, trust boundaries, 16 threat scenarios, required future controls/evidence, and stop conditions in `18_PROVISIONAL_THREAT_MODEL.md`. | No implementation audit, live security tests, penetration test, institutional acceptance, or deployment review has occurred. |
+| 2026-11-05 | 54 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 21.4% -> 21.9%; in-progress count 7 -> 8 and not-started count 14 -> 13. | Added frontend API URL normalization and fail-closed auth-placeholder unit tests. Combined foundation coverage is pytest 17/17, data unittest 14/14, and frontend Vitest 8/8. | No end-to-end user workflow, auth/RLS denial, DB integration, valid model path, or approved-cohort leakage test could run. |
 
 ## How to maintain this plan
 
