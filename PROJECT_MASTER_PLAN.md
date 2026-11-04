@@ -17,18 +17,18 @@
 |---|---:|---|
 | Total phases | 64 | Unique phase IDs 00-63. |
 | COMPLETE | 10 | Acceptance evidence exists for the bounded public-source audit, project-charter work, and reproducible developer environment listed below. |
-| IN PROGRESS | 3 | Documented planning or reusable validation work has begun but is not fully accepted. |
+| IN PROGRESS | 4 | Documented planning or reusable validation work has begun but is not fully accepted. |
 | BLOCKED | 33 | Work depends on approved longitudinal clinical data, endpoint decisions, or clinical/governance input. |
-| NOT STARTED | 18 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
+| NOT STARTED | 17 | No execution evidence exists; mainly application, validation, operations, and handover phases. |
 | NOT APPLICABLE | 0 | Nothing is formally excluded at this time. |
-| Overall progress | **19.0% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
-| Current active phase | Phase 45 - Supabase Authentication and Authorization (IN PROGRESS, 30%; design only). | Trust boundaries and a provisional access matrix are documented; live Auth and RLS remain gated by implementation dependencies and governance. |
+| Overall progress | **19.4% phase-weighted evidence score** | Sum of documented phase completion percentages / 64. Not labor-hours or a prediction of calendar completion. |
+| Current active phase | Phase 46 - FastAPI Backend Implementation (IN PROGRESS, 25%; health-only scaffold). | Typed liveness/readiness routes and tests exist; patient/auth/database/model APIs remain unavailable. |
 | Current critical blocker | Approved longitudinal cohort with genuine dated visits, confirmed CIS status, event and follow-up dates, criteria, and permitted research use. | Public interim cohorts do not meet the target definition. |
-| Next recommended action | Build a non-sensitive FastAPI health/readiness foundation and continue independent UI/UX and React foundations while preserving live-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
+| Next recommended action | Define the UI/UX architecture slice and static React foundation while preserving application integration and clinical-data gates. | Do not train while data feasibility and clinical target adjudication remain unresolved. |
 
 ### Progress calculation
 
-Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, and Phase 45 30%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30) / 64 = 18.984375%`, displayed as **19.0%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
+Progress is **phase-weighted**, using integer completion estimates anchored to verified checklist evidence. COMPLETE phases count 100%; NOT STARTED phases count 0%; IN PROGRESS and BLOCKED phases retain only evidence-backed partial values. Current partial values are Phase 02 50%, Phase 03 25%, Phase 27 60%, Phase 44 50%, Phase 45 30%, and Phase 46 25%. Thus `(10 x 100 + 50 + 25 + 60 + 50 + 30 + 25) / 64 = 19.375%`, displayed as **19.4%**. Phase 02's 50% records the confirmed research objective and label handling principles, not an approved operational target. Phase 01 is complete based on project-owner scope approval and reconciled acceptance documentation. Any institutionally required supervisor review is tracked separately; no supervisor approval is claimed. This is not an effort-weighted estimate.
 
 ### Current verified project state
 
@@ -93,7 +93,7 @@ Status definitions: COMPLETE requires verified acceptance; IN PROGRESS means evi
 | 43 | Model and Preprocessing Artifact Versioning | BLOCKED | 0 | High | 24, 34-36, 42 | No trained model or fitted preprocessing artifact. | No model artifact. |
 | 44 | Supabase PostgreSQL Architecture | IN PROGRESS | 50 | Medium | 01, 03, 08, 12 | Clinical-field, retention, role/RLS, and deployment decisions remain pending. | Provisional logical model, candidate constraints/indexes, and access-boundary decisions in `15_PROVISIONAL_DATA_ARCHITECTURE.md`; no migrations or live data. |
 | 45 | Supabase Authentication and Authorization | IN PROGRESS | 30 | Critical | 08, 44, 46 | Live Auth/RLS implementation waits for Phase 46 and institutional role/patient-scope decisions. | Provisional trust boundaries, access matrix, and security test requirements in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`; no live policies or credentials. |
-| 46 | FastAPI Backend Implementation | NOT STARTED | 0 | Medium | 26, 43-45 | - | No backend application code. |
+| 46 | FastAPI Backend Implementation | IN PROGRESS | 25 | Medium | 26, 43-45 | Patient/auth/database and inference APIs require Phases 43-45, governance, and validated model readiness. | Health-only scaffold with explicit unavailable integrations in `backend/app/main.py`; 3 API tests pass; no clinical routes or persistence. |
 | 47 | Patient and Visit Management | NOT STARTED | 0 | High | 08, 44-46 | - | No database or API CRUD code. |
 | 48 | Prediction and Model Inference Service | NOT STARTED | 0 | Critical | 43, 46-47 | - | No validated model to serve. |
 | 49 | UI/UX Architecture and Design System | NOT STARTED | 0 | Medium | 03, 46, 48 | - | Guidelines exist; implementation/design files absent. |
@@ -541,12 +541,12 @@ Effort estimates are person-days of focused work, excluding institutional approv
 
 ### PHASE 46 - FastAPI Backend Implementation
 
-- **Purpose/outcome:** Implement typed API and service layers. **Status:** NOT STARTED (0%). **Priority:** Medium. **Dependencies:** 26, 43-45. **Effort:** 8-15 days.
-- **Tasks:** [ ] Define Pydantic request/response schemas. [ ] Implement routers/services/repositories. [ ] Add SQLAlchemy sessions and Alembic migration workflow. [ ] Add safe errors, structured logs and OpenAPI review.
+- **Purpose/outcome:** Implement typed API and service layers. **Status:** IN PROGRESS (25%; non-sensitive foundation only). **Priority:** Medium. **Dependencies:** 26, 43-45. **Effort:** 8-15 days.
+- **Tasks:** [x] Add a minimal FastAPI app and typed health response schemas. [x] Add liveness and explicitly not-ready routes with no patient/model details. [x] Add isolated API dependency lock and health endpoint tests. [ ] Define approved patient/model Pydantic contracts. [ ] Implement authorized routers/services/repositories, SQLAlchemy sessions, Alembic workflow, safe errors/logging, and reviewed OpenAPI.
 - **Tools/inputs:** Python 3.12, FastAPI, Pydantic, SQLAlchemy, Alembic, pytest.
-- **Deliverables:** Backend package and API docs.
-- **Acceptance/testing:** Validation errors are actionable; no sensitive values logged; DB errors safely handled; migration applies/rolls back in test DB.
-- **Risks:** API becomes coupled to model-specific schema prematurely. **Remaining:** all implementation; no backend code exists.
+- **Deliverables:** Backend package, API docs, and health/readiness tests for the initial slice.
+- **Acceptance/testing:** `pytest` 17/17, data `unittest` 14/14, Ruff check/format, `pip check`, and `git diff --check` passed locally on Python 3.12.10. No database/migration/security integration test is applicable yet; full acceptance remains unmet.
+- **Risks:** API becomes coupled to model-specific schema prematurely. **Remaining:** all clinical routes, auth, persistence, error/logging review, and integration tests.
 
 ### PHASE 47 - Patient and Visit Management
 
@@ -744,6 +744,7 @@ Effort estimates are person-days of focused work, excluding institutional approv
 | 2026-11-04 | 27 | IN PROGRESS 50% -> BLOCKED 60% | Overall score 17.6% -> 17.7%; in-progress count 2 -> 1 and blocked count 32 -> 33. | Added explicitly test-only synthetic split checks for seeded reproducibility, disjoint patient assignments, complete eligible coverage, and exclusion of unknown outcomes. 14/14 unittest and pytest checks pass on Python 3.12.10. Added a phase-by-phase dependency reassessment. | Phase 25 and approved-cohort-specific tests remain blocked; no actual split manifest or clinical dataset was created. Phase 44 is next for provisional database architecture only. |
 | 2026-11-04 | 44 | NOT STARTED 0% -> IN PROGRESS 50% | Overall score 17.7% -> 18.5%; in-progress count 1 -> 2 and not-started count 20 -> 19. | Added a provisional logical ER model, candidate entity keys/relationships/constraints/indexes, and proposed service boundaries in `15_PROVISIONAL_DATA_ARCHITECTURE.md`. No migrations, cloud resources, credentials, or patient records were created. | Final clinical fields, retention, role/RLS propagation, hosting and governance approval remain open; real database work is not authorized by this design artifact. |
 | 2026-11-04 | 45 | NOT STARTED 0% -> IN PROGRESS 30% | Overall score 18.5% -> 19.0%; in-progress count 2 -> 3 and not-started count 19 -> 18. | Added provisional identity/authentication trust boundaries, access matrix, credential rules, future security tests, and decision gates in `16_PROVISIONAL_AUTHORIZATION_ARCHITECTURE.md`. Supabase documentation was checked; no project, credentials, policies, or patient records were created. | Role provisioning, patient scope, session policy, RLS request context, backend integration, and institutional security review remain unresolved; no live security tests were run. |
+| 2026-11-04 | 46 | NOT STARTED 0% -> IN PROGRESS 25% | Overall score 19.0% -> 19.4%; in-progress count 3 -> 4 and not-started count 18 -> 17. | Added a health-only FastAPI app, separate pinned API dependencies, non-sensitive liveness/readiness routes, and tests. Full pytest 17/17, data unittest 14/14, Ruff and package checks pass locally on Python 3.12.10. | Auth, DB, patient, and model endpoints remain gated; hosted CI result not checked and no clinical integration is claimed. |
 
 ## How to maintain this plan
 
