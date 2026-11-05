@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -17,6 +17,15 @@ function renderAt(path = "/") {
 }
 
 beforeEach(() => {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn((media: string) => ({
+      matches: false,
+      media,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    })),
+  );
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
@@ -41,7 +50,7 @@ describe("research application shell", () => {
 
     expect(
       screen.getByText(
-        "Research prediction only — not a medical diagnosis. Do not use this result to make treatment decisions.",
+        "Research and education only — not a medical diagnosis. Do not use this prototype to make treatment decisions.",
       ),
     ).toBeInTheDocument();
     expect(screen.getByText(/No patient records, authentication provider/)).toBeInTheDocument();
@@ -145,5 +154,46 @@ describe("research application shell", () => {
       "true",
     );
     expect(document.getElementById("application-sidebar")).toHaveClass("flex");
+  });
+
+  it("traps keyboard focus in the mobile drawer and restores it when closed", async () => {
+    renderAt();
+    const trigger = screen.getByRole("button", { name: "Open navigation menu" });
+    fireEvent.click(trigger);
+
+    const dialog = screen.getByRole("dialog", { name: "Mobile navigation" });
+    const firstLink = dialog.querySelector('a[href="/"]');
+    const focusable = dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    const lastFocusable = focusable[focusable.length - 1];
+    await waitFor(() => expect(firstLink).toHaveFocus());
+
+    fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
+    expect(lastFocusable).toHaveFocus();
+
+    fireEvent.keyDown(dialog, { key: "Escape" });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).toHaveFocus();
+  });
+
+  it("closes the mobile drawer when the viewport enters the desktop layout", () => {
+    let onBreakpointChange: ((event: MediaQueryListEvent) => void) | undefined;
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn(() => ({
+        matches: false,
+        media: "(min-width: 1024px)",
+        addEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => {
+          onBreakpointChange = listener;
+        },
+        removeEventListener: vi.fn(),
+      })),
+    );
+    renderAt();
+
+    const trigger = screen.getByRole("button", { name: "Open navigation menu" });
+    fireEvent.click(trigger);
+    act(() => onBreakpointChange?.({ matches: true } as MediaQueryListEvent));
+
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 });

@@ -11,7 +11,7 @@ import {
   Stethoscope,
   UsersRound,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
 
 import { Card } from "@/components/ui/card";
@@ -28,6 +28,54 @@ const navigation = [
 
 function AppShell() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    sidebarRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled])')?.focus();
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const desktopBreakpoint = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMenuOpen(false);
+    };
+    desktopBreakpoint.addEventListener("change", closeOnDesktop);
+    return () => desktopBreakpoint.removeEventListener("change", closeOnDesktop);
+  }, [menuOpen]);
+
+  function closeNavigation() {
+    setMenuOpen(false);
+    if (menuOpen) menuButtonRef.current?.focus();
+  }
+
+  function handleDrawerKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (!menuOpen) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeNavigation();
+      return;
+    }
+    if (event.key !== "Tab") return;
+
+    const focusable = sidebarRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])',
+    );
+    if (!focusable?.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -38,15 +86,20 @@ function AppShell() {
         Skip to main content
       </a>
       <aside
+        ref={sidebarRef}
         id="application-sidebar"
-        className={`fixed inset-y-0 left-0 z-20 w-72 flex-col border-r border-border bg-white px-5 py-6 md:flex ${menuOpen ? "flex" : "hidden"}`}
+        role={menuOpen ? "dialog" : undefined}
+        aria-label={menuOpen ? "Mobile navigation" : undefined}
+        aria-modal={menuOpen || undefined}
+        onKeyDown={handleDrawerKeyDown}
+        className={`fixed inset-y-0 left-0 z-20 w-72 flex-col border-r border-border bg-white px-5 py-6 lg:flex ${menuOpen ? "flex" : "hidden"}`}
       >
         <Link
-          className="flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-primary"
+          className="flex items-center gap-3 rounded-lg"
           to="/"
-          onClick={() => setMenuOpen(false)}
+          onClick={closeNavigation}
         >
-          <span className="flex size-11 items-center justify-center rounded-xl bg-teal-50 text-primary">
+          <span className="flex size-11 items-center justify-center rounded-xl bg-primary-quiet text-primary">
             <HeartPulse aria-hidden="true" size={23} />
           </span>
           <span>
@@ -64,9 +117,9 @@ function AppShell() {
               key={to}
               to={to}
               end={end}
-              onClick={() => setMenuOpen(false)}
+              onClick={closeNavigation}
               className={({ isActive }) =>
-                `flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary ${isActive ? "bg-teal-50 text-primary" : "text-slate-600 hover:bg-slate-50 hover:text-foreground"}`
+                `flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${isActive ? "bg-primary-quiet text-primary" : "text-slate-600 hover:bg-slate-50 hover:text-foreground"}`
               }
             >
               <Icon aria-hidden="true" size={18} strokeWidth={1.8} />
@@ -95,20 +148,21 @@ function AppShell() {
       {menuOpen && (
         <button
           aria-label="Close navigation drawer"
-          className="fixed inset-0 z-10 bg-slate-950/30 md:hidden"
-          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 z-10 bg-slate-950/30 lg:hidden"
+          onClick={closeNavigation}
         />
       )}
 
-      <div className="min-h-screen md:pl-72">
+      <div className="min-h-screen lg:pl-72">
         <header className="sticky top-0 z-10 border-b border-border bg-white/95 px-5 py-3 backdrop-blur md:px-9">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
             <button
+              ref={menuButtonRef}
               aria-controls="application-sidebar"
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="flex size-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-primary md:hidden"
-              onClick={() => setMenuOpen(true)}
+              className="flex size-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden"
+              onClick={menuOpen ? closeNavigation : () => setMenuOpen(true)}
             >
               <Menu aria-hidden="true" size={20} />
             </button>
@@ -117,7 +171,7 @@ function AppShell() {
               Educational research prototype
             </div>
             <Link
-              className="ml-auto rounded-md text-sm font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-primary"
+              className="ml-auto rounded-md text-sm font-semibold text-primary hover:underline"
               to="/login"
             >
               Sign-in status
@@ -125,8 +179,8 @@ function AppShell() {
           </div>
         </header>
 
-        <div className="border-b border-teal-100 bg-teal-50 px-5 py-2.5 text-center text-xs leading-5 text-teal-950 md:px-9">
-          Research prediction only — not a medical diagnosis. Do not use this result to make
+        <div className="border-b border-teal-100 bg-primary-quiet px-5 py-2.5 text-center text-xs leading-5 text-teal-950 md:px-9">
+          Research and education only — not a medical diagnosis. Do not use this prototype to make
           treatment decisions.
         </div>
 
@@ -191,7 +245,7 @@ function OverviewPage() {
           {navigation.slice(1).map(({ label, to, icon: Icon }) => (
             <Link
               key={to}
-              className="group rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="group rounded-2xl"
               to={to}
             >
               <Card className="h-full p-5 transition-shadow group-hover:shadow-md sm:p-6">
@@ -234,7 +288,7 @@ function UnavailablePage({ title, reason }: { title: string; reason: string }) {
           No patient records or prediction results are loaded or generated by this screen.
         </p>
         <Link
-          className="mt-6 inline-flex min-h-10 items-center gap-2 rounded-lg text-sm font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-primary"
+          className="mt-6 inline-flex min-h-10 items-center gap-2 rounded-lg text-sm font-semibold text-primary hover:underline"
           to="/"
         >
           Back to overview <ArrowRight aria-hidden="true" size={16} />

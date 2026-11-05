@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "node scripts/check-contrast.mjs && vitest run",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "5.105.3",
