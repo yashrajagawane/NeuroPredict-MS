@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Activity } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 import { describeCheck, getServiceHealth } from "./service-health";
@@ -28,7 +29,9 @@ export function ServiceStatusCard() {
             </p>
           ) : health.isError ? (
             <p role="status" className="mt-1 text-sm text-muted-foreground">
-              API status is unavailable. Patient and prediction services remain disconnected.
+              {health.isFetching
+                ? "Retrying API status check…"
+                : "API status is unavailable. Patient and prediction services remain disconnected."}
             </p>
           ) : (
             <>
@@ -51,6 +54,16 @@ export function ServiceStatusCard() {
               </dl>
             </>
           )}
+          <Button
+            className="mt-3"
+            size="sm"
+            variant="secondary"
+            type="button"
+            disabled={health.isFetching}
+            onClick={() => void health.refetch()}
+          >
+            {health.isFetching ? "Checking…" : health.isError ? "Retry API check" : "Refresh status"}
+          </Button>
         </div>
       </div>
     </Card>

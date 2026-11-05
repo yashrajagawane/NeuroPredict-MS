@@ -68,7 +68,7 @@ describe("research application shell", () => {
     expect(screen.getByText("Model").parentElement!).toHaveTextContent("Not available");
   });
 
-  it("shows a generic API failure state without surfacing server details", async () => {
+  it("shows a generic API failure state and supports a safe health-check retry", async () => {
     vi.stubGlobal("fetch", vi.fn(() => Promise.reject(new Error("patient data leaked"))));
     renderAt();
 
@@ -76,6 +76,28 @@ describe("research application shell", () => {
       expect(screen.getByText(/API status is unavailable/)).toBeVisible();
     });
     expect(screen.queryByText(/patient data leaked/)).not.toBeInTheDocument();
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) => {
+        const body = String(input).endsWith("health/live")
+          ? { status: "ok" }
+          : {
+              status: "not_ready",
+              checks: {
+                database: "not_configured",
+                authentication: "not_configured",
+                model: "not_available",
+              },
+            };
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(body) } as Response);
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Retry API check" }));
+
+    await waitFor(() =>
+      expect(screen.getByText(/API process available; application readiness is not ready/)).toBeVisible(),
+    );
   });
 
   it("announces a pending health check while both endpoints are loading", async () => {

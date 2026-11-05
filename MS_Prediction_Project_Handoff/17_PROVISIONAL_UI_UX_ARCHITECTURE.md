@@ -103,7 +103,20 @@ The current frontend uses a light neutral canvas, navy text, and a restrained te
 
 The check is reproducible with `npm run check:contrast` and runs as part of `npm test`. Existing utility-color combinations were also checked: amber copy on amber-50 is 7.92:1; teal-950 notice text on the quiet teal surface is 13.87:1; slate-600 on white is 7.58:1. This is a targeted palette check, not a full-page accessibility audit. Decorative borders are not used as the sole focus or state indicator.
 
-The desktop navigation is a fixed sidebar, the tablet/mobile navigation is a keyboard-operable drawer, and module cards reflow at the existing responsive breakpoints. The drawer closes when a resized viewport enters the desktop layout. Global focus styling supports forced-colors mode, and reduced-motion settings suppress transitions and animation. Browser checks covered 390px mobile, 768px tablet, and 1440px desktop widths. All six module routes rendered at 390px without horizontal overflow. These checks do not replace user review, zoom/reflow assessment, or assistive-technology testing.
+The desktop navigation is a fixed sidebar, the tablet/mobile navigation is a keyboard-operable drawer, and module cards reflow at the existing responsive breakpoints. The drawer closes when a resized viewport enters the desktop layout. Global focus styling supports forced-colors mode, and reduced-motion settings suppress transitions and animation. Browser checks covered 320px, 390px, 640px, 720px, 768px, and 1440px widths. All six modules and the registration preview rendered without horizontal overflow at 320px and 640px. At a 1280px reference width, 640px and 320px are equivalent CSS viewport widths for 200% and 400% zoom reflow. The available browser bridge did not expose a native browser-zoom control, so these are viewport-equivalent reflow checks, not verification of native zoom behavior.
+
+## 8. Technical accessibility review
+
+**Review date:** 2026-11-05. **Scope:** Local static React prototype; no patient data or authenticated workflow.
+
+- Lighthouse mobile accessibility snapshots scored 100 for the six module routes and the patient-registration preview. This automated score indicates no Lighthouse accessibility audit failures on those snapshots; it is not WCAG certification or a substitute for assistive-technology testing.
+- The browser accessibility snapshot exposed the page title, skip link, banner, main/content-info landmarks, named service-status region, level-one page heading, module headings, and named navigation links. The live service-status message is exposed as a polite status announcement. Registration and clinical-entry labels are associated with their disabled controls.
+- Keyboard checks confirmed the skip link and menu trigger are reachable, the menu opens from the keyboard, focus moves into the labelled navigation dialog, Tab and Shift+Tab wrap inside it, a route can be opened by keyboard, and Escape closes it and returns focus to the trigger. The visible focus outline was present and used the primary teal color. Automated tests also cover focus trapping, Escape, focus restoration, and resize-to-desktop closure.
+- With `prefers-reduced-motion: reduce` emulated, the media query matched and a representative control's transition and animation duration resolved to `0.00001s`.
+- The contrast script checks six core text/control/focus pairs. It does not inspect every rendered color combination or certify the whole interface.
+- A Lighthouse navigation run logged a console error because the local health-only API was not running; patient and prediction services remained disconnected. Lighthouse also flagged missing/invalid `robots.txt`, `llms.txt`, and `ai-catalog.json` metadata. These are recorded as environment/discovery findings, not accessibility failures or evidence of an application data issue.
+
+**Still required:** Test native browser zoom at 200% and 400% on a supported browser, run a real screen reader and keyboard review across routes, assess text resizing/reflow in representative browsers, and collect feedback from actual clinical reviewers. No accessibility certification or clinical-user acceptance is claimed.
 
 ## 7. Explicitly deferred design decisions
 
