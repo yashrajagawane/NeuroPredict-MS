@@ -15,6 +15,8 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
 
 import { Card } from "@/components/ui/card";
+import { RouteErrorBoundary } from "@/components/routing/RouteErrorBoundary";
+import { ModuleCard } from "@/features/dashboard/ModuleCard";
 import { ServiceStatusCard } from "@/features/system/ServiceStatusCard";
 
 const navigation = [
@@ -243,26 +245,13 @@ function OverviewPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {navigation.slice(1).map(({ label, to, icon: Icon }) => (
-            <Link
+            <ModuleCard
               key={to}
-              className="group rounded-2xl"
+              title={label}
+              description="This module will remain unavailable until its approved services are implemented."
               to={to}
-            >
-              <Card className="h-full p-5 transition-shadow group-hover:shadow-md sm:p-6">
-                <div className="mb-5 flex items-center justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
-                    <Icon aria-hidden="true" size={20} strokeWidth={1.8} />
-                  </span>
-                  <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600">
-                    Not connected
-                  </span>
-                </div>
-                <h3 className="font-semibold">{label}</h3>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  This module will remain unavailable until its approved services are implemented.
-                </p>
-              </Card>
-            </Link>
+              icon={Icon}
+            />
           ))}
         </div>
       </section>
@@ -302,65 +291,79 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route element={<AppShell />}>
-        <Route index element={<OverviewPage />} />
+        <Route index element={<RouteErrorBoundary><OverviewPage /></RouteErrorBoundary>} />
         <Route
           path="login"
           element={
-            <UnavailablePage
-              title="Sign-in is not configured"
-              reason="Account provisioning and the authentication policy are still under design. No login form or session is active."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Sign-in is not configured"
+                reason="Account provisioning and the authentication policy are still under design. No login form or session is active."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="patients/*"
           element={
-            <UnavailablePage
-              title="Patient management is not connected"
-              reason="Patient registration and record access require approved data governance, backend authorization, and database policies."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Patient management is not connected"
+                reason="Patient registration and record access require approved data governance, backend authorization, and database policies."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="visits/*"
           element={
-            <UnavailablePage
-              title="Visit history is not connected"
-              reason="No dated patient visits are loaded. The final project requires genuine, source-supported longitudinal observations."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Visit history is not connected"
+                reason="No dated patient visits are loaded. The final project requires genuine, source-supported longitudinal observations."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="clinical-data/*"
           element={
-            <UnavailablePage
-              title="Clinical data management is not connected"
-              reason="Clinical fields, units, validation rules, and access permissions must come from an approved source and data dictionary."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Clinical data management is not connected"
+                reason="Clinical fields, units, validation rules, and access permissions must come from an approved source and data dictionary."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="research-prediction/*"
           element={
-            <UnavailablePage
-              title="Research prediction is unavailable"
-              reason="There is no approved longitudinal cohort or validated, versioned model. This system does not provide a class or probability."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Research prediction is unavailable"
+                reason="There is no approved longitudinal cohort or validated, versioned model. This system does not provide a class or probability."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="prediction-history/*"
           element={
-            <UnavailablePage
-              title="Prediction history is not connected"
-              reason="No prediction requests or results are stored. History will require authorized backend records and model provenance."
-            />
+            <RouteErrorBoundary>
+              <UnavailablePage
+                title="Prediction history is not connected"
+                reason="No prediction requests or results are stored. History will require authorized backend records and model provenance."
+              />
+            </RouteErrorBoundary>
           }
         />
         <Route
           path="*"
           element={
-            <UnavailablePage title="Page not found" reason="The requested page is not part of this prototype." />
+            <RouteErrorBoundary>
+              <UnavailablePage title="Page not found" reason="The requested page is not part of this prototype." />
+            </RouteErrorBoundary>
           }
         />
       </Route>
