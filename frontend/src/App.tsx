@@ -18,6 +18,14 @@ import { Card } from "@/components/ui/card";
 import { RouteErrorBoundary } from "@/components/routing/RouteErrorBoundary";
 import { ModuleCard } from "@/features/dashboard/ModuleCard";
 import { ServiceStatusCard } from "@/features/system/ServiceStatusCard";
+import {
+  ClinicalDataEntryPage,
+  PatientManagementPage,
+  PatientRegistrationPage,
+  PatientVisitHistoryPage,
+  PredictionHistoryPage,
+  ResearchPredictionPage,
+} from "@/features/workspace/StaticWorkflowPages";
 
 const navigation = [
   { label: "Overview", to: "/", icon: LayoutDashboard, end: true },
@@ -304,59 +312,32 @@ export function AppRoutes() {
           }
         />
         <Route
-          path="patients/*"
+          path="patients/register"
           element={
             <RouteErrorBoundary>
-              <UnavailablePage
-                title="Patient management is not connected"
-                reason="Patient registration and record access require approved data governance, backend authorization, and database policies."
-              />
+              <PatientRegistrationPage />
             </RouteErrorBoundary>
           }
+        />
+        <Route
+          path="patients/*"
+          element={<RouteErrorBoundary><PatientManagementPage /></RouteErrorBoundary>}
         />
         <Route
           path="visits/*"
-          element={
-            <RouteErrorBoundary>
-              <UnavailablePage
-                title="Visit history is not connected"
-                reason="No dated patient visits are loaded. The final project requires genuine, source-supported longitudinal observations."
-              />
-            </RouteErrorBoundary>
-          }
+          element={<RouteErrorBoundary><PatientVisitHistoryPage /></RouteErrorBoundary>}
         />
         <Route
           path="clinical-data/*"
-          element={
-            <RouteErrorBoundary>
-              <UnavailablePage
-                title="Clinical data management is not connected"
-                reason="Clinical fields, units, validation rules, and access permissions must come from an approved source and data dictionary."
-              />
-            </RouteErrorBoundary>
-          }
+          element={<RouteErrorBoundary><ClinicalDataEntryPage /></RouteErrorBoundary>}
         />
         <Route
           path="research-prediction/*"
-          element={
-            <RouteErrorBoundary>
-              <UnavailablePage
-                title="Research prediction is unavailable"
-                reason="There is no approved longitudinal cohort or validated, versioned model. This system does not provide a class or probability."
-              />
-            </RouteErrorBoundary>
-          }
+          element={<RouteErrorBoundary><ResearchPredictionPage /></RouteErrorBoundary>}
         />
         <Route
           path="prediction-history/*"
-          element={
-            <RouteErrorBoundary>
-              <UnavailablePage
-                title="Prediction history is not connected"
-                reason="No prediction requests or results are stored. History will require authorized backend records and model provenance."
-              />
-            </RouteErrorBoundary>
-          }
+          element={<RouteErrorBoundary><PredictionHistoryPage /></RouteErrorBoundary>}
         />
         <Route
           path="*"

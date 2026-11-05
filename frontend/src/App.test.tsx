@@ -120,7 +120,7 @@ describe("research application shell", () => {
     renderAt("/research-prediction");
 
     expect(screen.getByRole("heading", { name: "Research prediction is unavailable" })).toBeVisible();
-    expect(screen.getByText(/does not provide a class or probability/)).toBeVisible();
+    expect(screen.getByText(/No prediction class, probability/)).toBeVisible();
     expect(screen.queryByText(/Class [01]|\b\d+%\b/)).not.toBeInTheDocument();
   });
 
@@ -130,9 +130,47 @@ describe("research application shell", () => {
       screen.getByRole("navigation", { name: "Main navigation" }).querySelector('a[href="/patients"]')!,
     );
 
-    expect(screen.getByRole("heading", { name: "Patient management is not connected" })).toBeVisible();
-    expect(screen.getByText(/No patient records or prediction results are loaded/)).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Patient management" })).toBeVisible();
+    expect(screen.getByText("No patient records are available")).toBeVisible();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
+  it("keeps registration controls disabled and does not save a patient", () => {
+    renderAt("/patients/register");
+
+    expect(screen.getByRole("heading", { name: "Patient registration" })).toBeVisible();
+    expect(screen.getByLabelText("Pseudonymous patient ID")).toBeDisabled();
+    expect(screen.getByLabelText("CIS index date")).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Save patient" })).toBeDisabled();
+    expect(screen.getByText("No information has been entered or stored.")).toBeVisible();
+  });
+
+  it("shows a visit-history empty state without synthetic timeline entries", () => {
+    renderAt("/visits");
+
+    expect(screen.getByRole("heading", { name: "Patient visit history" })).toBeVisible();
+    expect(screen.getByLabelText("Patient")).toBeDisabled();
+    expect(screen.getByText("No visit timeline is available")).toBeVisible();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
+  });
+
+  it("keeps clinical entry fields disabled pending an approved feature dictionary", () => {
+    renderAt("/clinical-data");
+
+    expect(screen.getByRole("heading", { name: "Clinical data entry" })).toBeVisible();
+    expect(screen.getByLabelText("Measurement")).toBeDisabled();
+    expect(screen.getByLabelText("Value")).toBeDisabled();
+    expect(screen.getByLabelText("Observed at")).toBeDisabled();
+    expect(screen.getByText(/Do not enter patient information/)).toBeVisible();
+  });
+
+  it("shows prediction history as empty without fabricated results", () => {
+    renderAt("/prediction-history");
+
+    expect(screen.getByRole("heading", { name: "Prediction history" })).toBeVisible();
+    expect(screen.getByText("No prediction history is available")).toBeVisible();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Class [01]|\b\d+%\b/)).not.toBeInTheDocument();
   });
 
   it("keeps sign-in disabled until the authentication policy exists", () => {
