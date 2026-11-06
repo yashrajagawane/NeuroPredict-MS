@@ -1,5 +1,7 @@
 """Non-sensitive service health endpoints for the research application."""
 
+from typing import Literal
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -14,17 +16,17 @@ app = FastAPI(
 
 
 class LivenessResponse(BaseModel):
-    status: str
+    status: Literal["ok"]
 
 
 class ReadinessChecks(BaseModel):
-    database: str
-    authentication: str
-    model: str
+    database: Literal["connected", "not_configured", "not_available"]
+    authentication: Literal["connected", "not_configured", "not_available"]
+    model: Literal["connected", "not_configured", "not_available"]
 
 
 class ReadinessResponse(BaseModel):
-    status: str
+    status: Literal["ready", "not_ready"]
     checks: ReadinessChecks
 
 

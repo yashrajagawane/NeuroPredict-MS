@@ -21,7 +21,7 @@ export function StaticWorkflowPage({
           <Icon aria-hidden="true" size={17} />
           Unavailable in this build
         </p>
-        <h1 id="page-title" className="text-2xl font-bold tracking-tight sm:text-3xl">
+        <h1 id="page-title" tabIndex={-1} className="text-2xl font-bold tracking-tight sm:text-3xl">
           {title}
         </h1>
         <p className="mt-3 leading-7 text-muted-foreground">{description}</p>

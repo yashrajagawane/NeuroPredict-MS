@@ -41,3 +41,20 @@ def test_patient_and_prediction_endpoints_are_not_exposed() -> None:
     paths = set(app.openapi()["paths"])
 
     assert paths == {"/api/v1/health/live", "/api/v1/health/ready"}
+
+
+def test_openapi_documents_literal_health_contracts() -> None:
+    schemas = app.openapi()["components"]["schemas"]
+
+    liveness_status = schemas["LivenessResponse"]["properties"]["status"]
+    liveness_values = (
+        [liveness_status["const"]] if "const" in liveness_status else liveness_status["enum"]
+    )
+    assert liveness_values == ["ok"]
+    assert schemas["ReadinessResponse"]["properties"]["status"]["enum"] == [
+        "ready",
+        "not_ready",
+    ]
+    expected_check_statuses = ["connected", "not_configured", "not_available"]
+    for name in ("database", "authentication", "model"):
+        assert schemas["ReadinessChecks"]["properties"][name]["enum"] == expected_check_statuses

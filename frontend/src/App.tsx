@@ -12,7 +12,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { Link, NavLink, Outlet, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 
 import { Card } from "@/components/ui/card";
 import { RouteErrorBoundary } from "@/components/routing/RouteErrorBoundary";
@@ -40,6 +40,14 @@ function AppShell() {
   const [menuOpen, setMenuOpen] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const location = useLocation();
+  const previousPathnameRef = useRef(location.pathname);
+
+  useEffect(() => {
+    if (previousPathnameRef.current === location.pathname) return;
+    previousPathnameRef.current = location.pathname;
+    document.querySelector<HTMLElement>("#main-content h1")?.focus();
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -214,7 +222,7 @@ function OverviewPage() {
         <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-primary">
           <span className="size-2 rounded-full bg-amber-500" /> Project setup in progress
         </p>
-        <h1 id="page-title" className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 id="page-title" tabIndex={-1} className="text-3xl font-bold tracking-tight sm:text-4xl">
           Longitudinal CIS-to-MS research workspace
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
@@ -277,7 +285,7 @@ function UnavailablePage({ title, reason }: { title: string; reason: string }) {
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Not available in this build
         </p>
-        <h1 id="page-title" className="mt-2 text-2xl font-bold tracking-tight">
+        <h1 id="page-title" tabIndex={-1} className="mt-2 text-2xl font-bold tracking-tight">
           {title}
         </h1>
         <p className="mt-3 leading-7 text-muted-foreground">{reason}</p>

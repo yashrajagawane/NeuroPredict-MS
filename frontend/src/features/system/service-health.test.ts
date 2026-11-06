@@ -49,6 +49,44 @@ describe("read-only API health contract", () => {
     );
   });
 
+  it("preserves abort cancellation instead of converting it to an API outage", async () => {
+    const controller = new AbortController();
+    const abortError = new DOMException("The request was aborted", "AbortError");
+    controller.abort();
+    vi.stubGlobal("fetch", vi.fn(() => Promise.reject(abortError)));
+
+    await expect(getServiceHealth(controller.signal)).rejects.toBe(abortError);
+  });
+
+  it("normalizes unknown future dependency values to a safe typed state", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) =>
+        Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve(
+              String(input).endsWith("health/live")
+                ? liveResponse
+                : {
+                    status: "not_ready",
+                    checks: {
+                      database: "future-private-status",
+                      authentication: "not_configured",
+                      model: "not_available",
+                    },
+                  },
+            ),
+        } as Response),
+      ),
+    );
+
+    const health = await getServiceHealth(new AbortController().signal);
+
+    expect(health.checks.database).toBe("unknown");
+    expect(describeCheck(health.checks.database)).toBe("Unknown");
+  });
+
   it("uses a fixed safe label for unknown dependency status values", () => {
     expect(describeCheck("unexpected sensitive detail")).toBe("Unknown");
     expect(describeCheck("__proto__")).toBe("Unknown");

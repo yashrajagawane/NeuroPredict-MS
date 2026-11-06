@@ -157,6 +157,17 @@ describe("research application shell", () => {
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
   });
 
+  it("moves focus to the new page heading after in-app navigation", async () => {
+    renderAt();
+    fireEvent.click(
+      screen.getByRole("navigation", { name: "Main navigation" }).querySelector('a[href="/patients"]')!,
+    );
+
+    await waitFor(() =>
+      expect(screen.getByRole("heading", { name: "Patient management" })).toHaveFocus(),
+    );
+  });
+
   it("keeps registration controls disabled and does not save a patient", () => {
     renderAt("/patients/register");
 
